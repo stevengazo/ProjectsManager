@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ProjectsControl.Models.Asistance>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBegin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBegin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AsistanceId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AsistanceId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AsistanceId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
