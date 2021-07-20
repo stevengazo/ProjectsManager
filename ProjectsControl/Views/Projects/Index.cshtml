@@ -4,13 +4,16 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Index</h1>
+<div class="text-center">
+    <h1>Lista de Proyectos</h1>
+    <hr/>
+    <p>Lista de proyectos inscritos en el sistema.</p>
+</div>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-responsive-sm table-bordered" >
     <thead>
         <tr>
             <th>
@@ -39,9 +42,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TypeOfJob)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Details)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ubication)
@@ -86,16 +86,13 @@
                 @Html.DisplayFor(modelItem => item.TypeOfJob)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Details)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Ubication)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+                @Html.DisplayFor(modelItem => item.Customer.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Saleman.SalemanId)
+                @Html.DisplayFor(modelItem => item.Saleman.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |

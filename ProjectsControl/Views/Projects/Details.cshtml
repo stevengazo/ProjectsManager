@@ -36,16 +36,16 @@
             @Html.DisplayFor(model => model.OC)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OCDate.ToShortDateString())
+            @Html.DisplayNameFor(model => model.OCDate)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.OCDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BeginDate.ToShortDateString())
+            @Html.DisplayNameFor(model => model.BeginDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BeginDate.ToShortDateString())
+            @Html.DisplayFor(model => model.BeginDate)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.EndDate)
@@ -81,13 +81,13 @@
             @Html.DisplayNameFor(model => model.Customer)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.CustomerId)
+            @Html.DisplayFor(model => model.Customer.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Saleman)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Saleman.SalemanId)
+            @Html.DisplayFor(model => model.Saleman.Name)
         </dd>
     </dl>
 </div>
