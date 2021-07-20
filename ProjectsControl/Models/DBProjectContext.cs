@@ -90,6 +90,7 @@ namespace ProjectsControl.Models
                 EmployeeId = oEmployee.EmployeeId,
                 AsistanceId = oAsistance.AsistanceId
             };
+            
             modelBuilder.Entity<Saleman>().HasData(oSaleman);
             modelBuilder.Entity<Customer>().HasData(oCustomer);
             modelBuilder.Entity<Employee>().HasData(oEmployee);

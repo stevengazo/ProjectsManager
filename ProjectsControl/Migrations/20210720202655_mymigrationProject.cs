@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectsControl.Migrations
 {
-    public partial class myDBProject : Migration
+    public partial class mymigrationProject : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,20 @@ namespace ProjectsControl.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Salemans", x => x.SalemanId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Week",
+                columns: table => new
+                {
+                    WeekId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NumberOfWeek = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BeginOfWeek = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndOfWeek = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Week", x => x.WeekId);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,7 +104,8 @@ namespace ProjectsControl.Migrations
                     DateOfBegin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    WeekId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,6 +118,58 @@ namespace ProjectsControl.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Asistances_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Asistances_Week_WeekId",
+                        column: x => x.WeekId,
+                        principalTable: "Week",
+                        principalColumn: "WeekId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bill",
+                columns: table => new
+                {
+                    BillId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NumberOfBill = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cost = table.Column<float>(type: "real", nullable: false),
+                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bill", x => x.BillId);
+                    table.ForeignKey(
+                        name: "FK_Bill_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Report",
+                columns: table => new
+                {
+                    ReportId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NumberOfReport = table.Column<int>(type: "int", nullable: false),
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BeginDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Report", x => x.ReportId);
+                    table.ForeignKey(
+                        name: "FK_Report_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "ProjectId",
@@ -121,7 +188,8 @@ namespace ProjectsControl.Migrations
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsPaid = table.Column<bool>(type: "bit", nullable: false),
                     EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    AsistanceId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    AsistanceId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    WeekId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -138,37 +206,43 @@ namespace ProjectsControl.Migrations
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ExtraHours_Week_WeekId",
+                        column: x => x.WeekId,
+                        principalTable: "Week",
+                        principalColumn: "WeekId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "CustomerId", "Name", "Sector" },
-                values: new object[] { "b2abc4a6-e855-4221-b355-532ac1aa3b7c", "SalemanTesting", "Private" });
+                values: new object[] { "2c4a486b-f004-4f6e-adca-f7b465f0d6bc", "SalemanTesting", "Private" });
 
             migrationBuilder.InsertData(
                 table: "Employees",
                 columns: new[] { "EmployeeId", "DateofHiring", "Name", "Position" },
-                values: new object[] { "56d2c825-78ba-45fe-af15-036dc1f095fb", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sample of Employee", "Sample" });
+                values: new object[] { "575a8bc9-d295-4fcd-9469-27b9dbb2b87f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sample of Employee", "Sample" });
 
             migrationBuilder.InsertData(
                 table: "Salemans",
                 columns: new[] { "SalemanId", "Name" },
-                values: new object[] { "b3175ee2-85de-4e92-9554-50bb8c5de282", "CustomerTesting" });
+                values: new object[] { "e659c905-5cda-4535-a674-58b3b322ca0f", "CustomerTesting" });
 
             migrationBuilder.InsertData(
                 table: "Asistances",
-                columns: new[] { "AsistanceId", "DateOfBegin", "DateOfEnd", "EmployeeId", "ProjectId" },
-                values: new object[] { "01761896-68e6-4e21-856d-7c98f782977b", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "56d2c825-78ba-45fe-af15-036dc1f095fb", null });
+                columns: new[] { "AsistanceId", "DateOfBegin", "DateOfEnd", "EmployeeId", "ProjectId", "WeekId" },
+                values: new object[] { "0853a0b0-126d-4c6e-93c0-9750993a7de8", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "575a8bc9-d295-4fcd-9469-27b9dbb2b87f", null, null });
 
             migrationBuilder.InsertData(
                 table: "Projects",
                 columns: new[] { "ProjectId", "BeginDate", "CustomerId", "Details", "EndDate", "IsOver", "Name", "NumberOfTask", "OC", "OCDate", "OfferId", "SalemanId", "TypeOfJob", "Ubication" },
-                values: new object[] { "4a8e7daf-8b09-44e0-a4b6-111a5b618258", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "b2abc4a6-e855-4221-b355-532ac1aa3b7c", "Details sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Project Sample", 1234, "1234Sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1234Sample", "b3175ee2-85de-4e92-9554-50bb8c5de282", "installation", null });
+                values: new object[] { "87c21411-53ab-4ca3-8adb-01ea5ad07d74", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "2c4a486b-f004-4f6e-adca-f7b465f0d6bc", "Details sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Project Sample", 1234, "1234Sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1234Sample", "e659c905-5cda-4535-a674-58b3b322ca0f", "installation", null });
 
             migrationBuilder.InsertData(
                 table: "ExtraHours",
-                columns: new[] { "ExtraHourId", "AsistanceId", "BeginTime", "EmployeeId", "EndTime", "IsPaid", "Notes", "Reason", "TypeOfHour" },
-                values: new object[] { "4f91bb7a-0730-41eb-8570-a490e801c594", "01761896-68e6-4e21-856d-7c98f782977b", new DateTime(2021, 7, 19, 20, 27, 39, 470, DateTimeKind.Local).AddTicks(9955), "56d2c825-78ba-45fe-af15-036dc1f095fb", new DateTime(2021, 7, 19, 20, 27, 39, 472, DateTimeKind.Local).AddTicks(5243), true, null, "SAMPLE", "double" });
+                columns: new[] { "ExtraHourId", "AsistanceId", "BeginTime", "EmployeeId", "EndTime", "IsPaid", "Notes", "Reason", "TypeOfHour", "WeekId" },
+                values: new object[] { "5ce4fc75-89bb-421e-9f7c-23610b308607", "0853a0b0-126d-4c6e-93c0-9750993a7de8", new DateTime(2021, 7, 20, 14, 26, 54, 456, DateTimeKind.Local).AddTicks(5344), "575a8bc9-d295-4fcd-9469-27b9dbb2b87f", new DateTime(2021, 7, 20, 14, 26, 54, 458, DateTimeKind.Local).AddTicks(2874), true, null, "SAMPLE", "double", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Asistances_EmployeeId",
@@ -178,6 +252,16 @@ namespace ProjectsControl.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Asistances_ProjectId",
                 table: "Asistances",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Asistances_WeekId",
+                table: "Asistances",
+                column: "WeekId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bill_ProjectId",
+                table: "Bill",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
@@ -191,6 +275,11 @@ namespace ProjectsControl.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExtraHours_WeekId",
+                table: "ExtraHours",
+                column: "WeekId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_CustomerId",
                 table: "Projects",
                 column: "CustomerId");
@@ -199,12 +288,23 @@ namespace ProjectsControl.Migrations
                 name: "IX_Projects_SalemanId",
                 table: "Projects",
                 column: "SalemanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Report_ProjectId",
+                table: "Report",
+                column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Bill");
+
+            migrationBuilder.DropTable(
                 name: "ExtraHours");
+
+            migrationBuilder.DropTable(
+                name: "Report");
 
             migrationBuilder.DropTable(
                 name: "Asistances");
@@ -214,6 +314,9 @@ namespace ProjectsControl.Migrations
 
             migrationBuilder.DropTable(
                 name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Week");
 
             migrationBuilder.DropTable(
                 name: "Customers");

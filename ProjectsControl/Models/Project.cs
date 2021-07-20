@@ -31,6 +31,8 @@ namespace ProjectsControl.Models
         public string Ubication { get; set; }
         /*---------------*/
         public ICollection<Asistance> Asistances { get; set; }
+        public ICollection<Report> Reports { get; set; }
+        public ICollection<Bill> Bills { get; set; }
 
         // relation with customers
         public string CustomerId { get; set; }
