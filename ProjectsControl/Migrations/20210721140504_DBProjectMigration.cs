@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectsControl.Migrations
 {
-    public partial class mymigrationProject : Migration
+    public partial class DBProjectMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,28 @@ namespace ProjectsControl.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Week", x => x.WeekId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contact",
+                columns: table => new
+                {
+                    ContactId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact", x => x.ContactId);
+                    table.ForeignKey(
+                        name: "FK_Contact_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,32 +239,42 @@ namespace ProjectsControl.Migrations
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "CustomerId", "Name", "Sector" },
-                values: new object[] { "2c4a486b-f004-4f6e-adca-f7b465f0d6bc", "SalemanTesting", "Private" });
+                values: new object[] { "42fbf4fd-4877-4181-9362-8610119bcd9f", "SalemanTesting", "Private" });
 
             migrationBuilder.InsertData(
                 table: "Employees",
                 columns: new[] { "EmployeeId", "DateofHiring", "Name", "Position" },
-                values: new object[] { "575a8bc9-d295-4fcd-9469-27b9dbb2b87f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sample of Employee", "Sample" });
+                values: new object[] { "8f0d9007-7f05-4c01-98d1-9d38b151fb8d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sample of Employee", "Sample" });
 
             migrationBuilder.InsertData(
                 table: "Salemans",
                 columns: new[] { "SalemanId", "Name" },
-                values: new object[] { "e659c905-5cda-4535-a674-58b3b322ca0f", "CustomerTesting" });
+                values: new object[] { "6ab592b9-0660-4982-b1c2-a7c6f5280888", "CustomerTesting" });
+
+            migrationBuilder.InsertData(
+                table: "Week",
+                columns: new[] { "WeekId", "BeginOfWeek", "EndOfWeek", "NumberOfWeek" },
+                values: new object[] { "39810adb-d340-4628-a7df-a6590a1b7739", new DateTime(2021, 7, 21, 8, 5, 3, 811, DateTimeKind.Local).AddTicks(5575), new DateTime(2021, 7, 21, 8, 5, 3, 813, DateTimeKind.Local).AddTicks(4637), "1-2011'" });
 
             migrationBuilder.InsertData(
                 table: "Asistances",
                 columns: new[] { "AsistanceId", "DateOfBegin", "DateOfEnd", "EmployeeId", "ProjectId", "WeekId" },
-                values: new object[] { "0853a0b0-126d-4c6e-93c0-9750993a7de8", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "575a8bc9-d295-4fcd-9469-27b9dbb2b87f", null, null });
+                values: new object[] { "b70dede3-8504-407b-aa09-e8551a686b72", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "8f0d9007-7f05-4c01-98d1-9d38b151fb8d", null, "39810adb-d340-4628-a7df-a6590a1b7739" });
+
+            migrationBuilder.InsertData(
+                table: "Contact",
+                columns: new[] { "ContactId", "CustomerId", "Email", "Name", "PhoneNumber", "Position" },
+                values: new object[] { "f2571f85-8758-4887-8956-4196c5d409fa", "42fbf4fd-4877-4181-9362-8610119bcd9f", "Sample@sample.com", "Contact Sample", 88888888, "Manager sample" });
 
             migrationBuilder.InsertData(
                 table: "Projects",
                 columns: new[] { "ProjectId", "BeginDate", "CustomerId", "Details", "EndDate", "IsOver", "Name", "NumberOfTask", "OC", "OCDate", "OfferId", "SalemanId", "TypeOfJob", "Ubication" },
-                values: new object[] { "87c21411-53ab-4ca3-8adb-01ea5ad07d74", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "2c4a486b-f004-4f6e-adca-f7b465f0d6bc", "Details sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Project Sample", 1234, "1234Sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1234Sample", "e659c905-5cda-4535-a674-58b3b322ca0f", "installation", null });
+                values: new object[] { "70abe29b-c975-4917-945d-de3fc737944c", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "42fbf4fd-4877-4181-9362-8610119bcd9f", "Details sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Project Sample", 1234, "1234Sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1234Sample", "6ab592b9-0660-4982-b1c2-a7c6f5280888", "installation", null });
 
             migrationBuilder.InsertData(
                 table: "ExtraHours",
                 columns: new[] { "ExtraHourId", "AsistanceId", "BeginTime", "EmployeeId", "EndTime", "IsPaid", "Notes", "Reason", "TypeOfHour", "WeekId" },
-                values: new object[] { "5ce4fc75-89bb-421e-9f7c-23610b308607", "0853a0b0-126d-4c6e-93c0-9750993a7de8", new DateTime(2021, 7, 20, 14, 26, 54, 456, DateTimeKind.Local).AddTicks(5344), "575a8bc9-d295-4fcd-9469-27b9dbb2b87f", new DateTime(2021, 7, 20, 14, 26, 54, 458, DateTimeKind.Local).AddTicks(2874), true, null, "SAMPLE", "double", null });
+                values: new object[] { "479727c2-6279-4fd8-9ed5-d391ff1ade11", "b70dede3-8504-407b-aa09-e8551a686b72", new DateTime(2021, 7, 21, 8, 5, 3, 814, DateTimeKind.Local).AddTicks(6249), "8f0d9007-7f05-4c01-98d1-9d38b151fb8d", new DateTime(2021, 7, 21, 8, 5, 3, 814, DateTimeKind.Local).AddTicks(6740), true, null, "SAMPLE", "double", "39810adb-d340-4628-a7df-a6590a1b7739" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Asistances_EmployeeId",
@@ -263,6 +295,11 @@ namespace ProjectsControl.Migrations
                 name: "IX_Bill_ProjectId",
                 table: "Bill",
                 column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contact_CustomerId",
+                table: "Contact",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExtraHours_AsistanceId",
@@ -299,6 +336,9 @@ namespace ProjectsControl.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Bill");
+
+            migrationBuilder.DropTable(
+                name: "Contact");
 
             migrationBuilder.DropTable(
                 name: "ExtraHours");

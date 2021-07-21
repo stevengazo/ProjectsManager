@@ -21,7 +21,7 @@ namespace ProjectsControl.Controllers
         // GET: ExtraHours
         public async Task<IActionResult> Index()
         {
-            var dBProjectContext = _context.ExtraHours.Include(e => e.Asistance).Include(e => e.Employee);
+            var dBProjectContext = _context.ExtraHours.Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week);
             return View(await dBProjectContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace ProjectsControl.Controllers
             var extraHour = await _context.ExtraHours
                 .Include(e => e.Asistance)
                 .Include(e => e.Employee)
+                .Include(e => e.Week)
                 .FirstOrDefaultAsync(m => m.ExtraHourId == id);
             if (extraHour == null)
             {
@@ -50,6 +51,7 @@ namespace ProjectsControl.Controllers
         {
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             return View();
         }
 
@@ -58,7 +60,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId")] ExtraHour extraHour)
+        public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +70,7 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
@@ -86,6 +89,7 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
@@ -94,7 +98,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId")] ExtraHour extraHour)
+        public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
         {
             if (id != extraHour.ExtraHourId)
             {
@@ -123,6 +127,7 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
@@ -137,6 +142,7 @@ namespace ProjectsControl.Controllers
             var extraHour = await _context.ExtraHours
                 .Include(e => e.Asistance)
                 .Include(e => e.Employee)
+                .Include(e => e.Week)
                 .FirstOrDefaultAsync(m => m.ExtraHourId == id);
             if (extraHour == null)
             {

@@ -37,6 +37,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Asistance)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Week)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -66,6 +69,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Asistance.AsistanceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Week.WeekId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ExtraHourId">Edit</a> |

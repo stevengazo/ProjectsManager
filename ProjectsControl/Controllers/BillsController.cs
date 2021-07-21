@@ -9,22 +9,23 @@ using ProjectsControl.Models;
 
 namespace ProjectsControl.Controllers
 {
-    public class SalemenController : Controller
+    public class BillsController : Controller
     {
         private readonly DBProjectContext _context;
 
-        public SalemenController(DBProjectContext context)
+        public BillsController(DBProjectContext context)
         {
             _context = context;
         }
 
-        // GET: Salemen
+        // GET: Bills
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Salemans.ToListAsync());
+            var dBProjectContext = _context.Bill.Include(b => b.Project);
+            return View(await dBProjectContext.ToListAsync());
         }
 
-        // GET: Salemen/Details/5
+        // GET: Bills/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -32,39 +33,42 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
 
-            var saleman = await _context.Salemans
-                .FirstOrDefaultAsync(m => m.SalemanId == id);
-            if (saleman == null)
+            var bill = await _context.Bill
+                .Include(b => b.Project)
+                .FirstOrDefaultAsync(m => m.BillId == id);
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(saleman);
+            return View(bill);
         }
 
-        // GET: Salemen/Create
+        // GET: Bills/Create
         public IActionResult Create()
         {
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             return View();
         }
 
-        // POST: Salemen/Create
+        // POST: Bills/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SalemanId,Name")] Saleman saleman)
+        public async Task<IActionResult> Create([Bind("BillId,NumberOfBill,DateOfCreation,Author,cost,ProjectId")] Bill bill)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(saleman);
+                _context.Add(bill);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(saleman);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", bill.ProjectId);
+            return View(bill);
         }
 
-        // GET: Salemen/Edit/5
+        // GET: Bills/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -72,22 +76,23 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
 
-            var saleman = await _context.Salemans.FindAsync(id);
-            if (saleman == null)
+            var bill = await _context.Bill.FindAsync(id);
+            if (bill == null)
             {
                 return NotFound();
             }
-            return View(saleman);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", bill.ProjectId);
+            return View(bill);
         }
 
-        // POST: Salemen/Edit/5
+        // POST: Bills/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("SalemanId,Name")] Saleman saleman)
+        public async Task<IActionResult> Edit(string id, [Bind("BillId,NumberOfBill,DateOfCreation,Author,cost,ProjectId")] Bill bill)
         {
-            if (id != saleman.SalemanId)
+            if (id != bill.BillId)
             {
                 return NotFound();
             }
@@ -96,12 +101,12 @@ namespace ProjectsControl.Controllers
             {
                 try
                 {
-                    _context.Update(saleman);
+                    _context.Update(bill);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SalemanExists(saleman.SalemanId))
+                    if (!BillExists(bill.BillId))
                     {
                         return NotFound();
                     }
@@ -112,10 +117,11 @@ namespace ProjectsControl.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(saleman);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", bill.ProjectId);
+            return View(bill);
         }
 
-        // GET: Salemen/Delete/5
+        // GET: Bills/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -123,30 +129,31 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
 
-            var saleman = await _context.Salemans
-                .FirstOrDefaultAsync(m => m.SalemanId == id);
-            if (saleman == null)
+            var bill = await _context.Bill
+                .Include(b => b.Project)
+                .FirstOrDefaultAsync(m => m.BillId == id);
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(saleman);
+            return View(bill);
         }
 
-        // POST: Salemen/Delete/5
+        // POST: Bills/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var saleman = await _context.Salemans.FindAsync(id);
-            _context.Salemans.Remove(saleman);
+            var bill = await _context.Bill.FindAsync(id);
+            _context.Bill.Remove(bill);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SalemanExists(string id)
+        private bool BillExists(string id)
         {
-            return _context.Salemans.Any(e => e.SalemanId == id);
+            return _context.Bill.Any(e => e.BillId == id);
         }
     }
 }

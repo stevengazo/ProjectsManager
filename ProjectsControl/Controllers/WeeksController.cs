@@ -9,22 +9,22 @@ using ProjectsControl.Models;
 
 namespace ProjectsControl.Controllers
 {
-    public class SalemenController : Controller
+    public class WeeksController : Controller
     {
         private readonly DBProjectContext _context;
 
-        public SalemenController(DBProjectContext context)
+        public WeeksController(DBProjectContext context)
         {
             _context = context;
         }
 
-        // GET: Salemen
+        // GET: Weeks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Salemans.ToListAsync());
+            return View(await _context.Week.ToListAsync());
         }
 
-        // GET: Salemen/Details/5
+        // GET: Weeks/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
 
-            var saleman = await _context.Salemans
-                .FirstOrDefaultAsync(m => m.SalemanId == id);
-            if (saleman == null)
+            var week = await _context.Week
+                .FirstOrDefaultAsync(m => m.WeekId == id);
+            if (week == null)
             {
                 return NotFound();
             }
 
-            return View(saleman);
+            return View(week);
         }
 
-        // GET: Salemen/Create
+        // GET: Weeks/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Salemen/Create
+        // POST: Weeks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SalemanId,Name")] Saleman saleman)
+        public async Task<IActionResult> Create([Bind("WeekId,NumberOfWeek,BeginOfWeek,EndOfWeek")] Week week)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(saleman);
+                _context.Add(week);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(saleman);
+            return View(week);
         }
 
-        // GET: Salemen/Edit/5
+        // GET: Weeks/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
 
-            var saleman = await _context.Salemans.FindAsync(id);
-            if (saleman == null)
+            var week = await _context.Week.FindAsync(id);
+            if (week == null)
             {
                 return NotFound();
             }
-            return View(saleman);
+            return View(week);
         }
 
-        // POST: Salemen/Edit/5
+        // POST: Weeks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("SalemanId,Name")] Saleman saleman)
+        public async Task<IActionResult> Edit(string id, [Bind("WeekId,NumberOfWeek,BeginOfWeek,EndOfWeek")] Week week)
         {
-            if (id != saleman.SalemanId)
+            if (id != week.WeekId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace ProjectsControl.Controllers
             {
                 try
                 {
-                    _context.Update(saleman);
+                    _context.Update(week);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SalemanExists(saleman.SalemanId))
+                    if (!WeekExists(week.WeekId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace ProjectsControl.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(saleman);
+            return View(week);
         }
 
-        // GET: Salemen/Delete/5
+        // GET: Weeks/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
 
-            var saleman = await _context.Salemans
-                .FirstOrDefaultAsync(m => m.SalemanId == id);
-            if (saleman == null)
+            var week = await _context.Week
+                .FirstOrDefaultAsync(m => m.WeekId == id);
+            if (week == null)
             {
                 return NotFound();
             }
 
-            return View(saleman);
+            return View(week);
         }
 
-        // POST: Salemen/Delete/5
+        // POST: Weeks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var saleman = await _context.Salemans.FindAsync(id);
-            _context.Salemans.Remove(saleman);
+            var week = await _context.Week.FindAsync(id);
+            _context.Week.Remove(week);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SalemanExists(string id)
+        private bool WeekExists(string id)
         {
-            return _context.Salemans.Any(e => e.SalemanId == id);
+            return _context.Week.Any(e => e.WeekId == id);
         }
     }
 }

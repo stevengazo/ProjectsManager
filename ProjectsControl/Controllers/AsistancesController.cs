@@ -21,7 +21,7 @@ namespace ProjectsControl.Controllers
         // GET: Asistances
         public async Task<IActionResult> Index()
         {
-            var dBProjectContext = _context.Asistances.Include(a => a.Employee).Include(a => a.Project);
+            var dBProjectContext = _context.Asistances.Include(a => a.Employee).Include(a => a.Project).Include(a => a.Week);
             return View(await dBProjectContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace ProjectsControl.Controllers
             var asistance = await _context.Asistances
                 .Include(a => a.Employee)
                 .Include(a => a.Project)
+                .Include(a => a.Week)
                 .FirstOrDefaultAsync(m => m.AsistanceId == id);
             if (asistance == null)
             {
@@ -50,6 +51,7 @@ namespace ProjectsControl.Controllers
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             return View();
         }
 
@@ -58,7 +60,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId")] Asistance asistance)
+        public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +70,7 @@ namespace ProjectsControl.Controllers
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", asistance.EmployeeId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", asistance.ProjectId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", asistance.WeekId);
             return View(asistance);
         }
 
@@ -86,6 +89,7 @@ namespace ProjectsControl.Controllers
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", asistance.EmployeeId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", asistance.ProjectId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", asistance.WeekId);
             return View(asistance);
         }
 
@@ -94,7 +98,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId")] Asistance asistance)
+        public async Task<IActionResult> Edit(string id, [Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
         {
             if (id != asistance.AsistanceId)
             {
@@ -123,6 +127,7 @@ namespace ProjectsControl.Controllers
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", asistance.EmployeeId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", asistance.ProjectId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", asistance.WeekId);
             return View(asistance);
         }
 
@@ -137,6 +142,7 @@ namespace ProjectsControl.Controllers
             var asistance = await _context.Asistances
                 .Include(a => a.Employee)
                 .Include(a => a.Project)
+                .Include(a => a.Week)
                 .FirstOrDefaultAsync(m => m.AsistanceId == id);
             if (asistance == null)
             {

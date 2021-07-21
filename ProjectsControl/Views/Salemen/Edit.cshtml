@@ -1,17 +1,11 @@
 ﻿@model ProjectsControl.Models.Saleman
 
 @{
-    Layout = "_Layout";
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
+<h1>Edit</h1>
 
 <h4>Saleman</h4>
 <hr />
@@ -39,5 +33,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>
