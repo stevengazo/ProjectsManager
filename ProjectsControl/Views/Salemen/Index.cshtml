@@ -10,25 +10,31 @@
 <p>
     <a asp-action="Create">Registrar nuevo vendedor</a>
 </p>
-<table class="table">
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Id
             </th>
-            <th></th>
+            <th>
+                Nombre
+            </th>
+            <th>Acciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="font-size: 12px;">
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalemanId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.SalemanId">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.SalemanId">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.SalemanId">Eliminar</a>
+                <a  style="color:red" asp-action="Delete" asp-route-id="@item.SalemanId">Eliminar</a>
             </td>
         </tr>
 }

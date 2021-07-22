@@ -10,40 +10,40 @@
 <p>
     <a asp-action="Create">Registrar Nuevo Tiempo Extra</a>
 </p>
-<table class="table">
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BeginTime)
+                Inicio               
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                Fin               
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TypeOfHour)
+                Tipo de hora
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Reason)
+                Motivo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Notes)
+                Notas
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsPaid)
+                Pagado
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employee)
+                Empleado
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Asistance)
+                Día de Asistencia
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Week)
+                Numero de Semana
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="font-size: 12px;">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -65,18 +65,18 @@
                 @Html.DisplayFor(modelItem => item.IsPaid)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+                @Html.DisplayFor(modelItem => item.Employee.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Asistance.AsistanceId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Week.WeekId)
+                @Html.DisplayFor(modelItem => item.Week.NumberOfWeek)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ExtraHourId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ExtraHourId">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.ExtraHourId">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@item.ExtraHourId">Editar</a> 
+                <a asp-action="Details" asp-route-id="@item.ExtraHourId">Detalles</a> 
+                <a style="color:red" asp-action="Delete" asp-route-id="@item.ExtraHourId">Eliminar</a>
             </td>
         </tr>
 }

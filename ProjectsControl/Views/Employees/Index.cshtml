@@ -10,22 +10,22 @@
 <p>
     <a asp-action="Create">Registrar nuevo empleado</a>
 </p>
-<table class="table">
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Nombre                
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateofHiring)
+                Fecha Contratación                
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Position)
+                Cargo                
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="font-size: 12px;">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.Position)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EmployeeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.EmployeeId">Details</a> 
+                <a style="color:red" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
             </td>
         </tr>
 }
