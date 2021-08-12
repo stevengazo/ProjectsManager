@@ -54,8 +54,12 @@ namespace ProjectsControl.Models
                     Name = "Project Sample",
                     OfferId = "1234Sample",
                     OC = "1234Sample",
-                    TypeOfJob="installation",
+                    TypeOfJob = "installation",
                     IsOver = false,
+                    Estatus = "sample",
+                    Amount = 0,
+                    Manager = "sample",
+                    Currency = "dolar",    
                     Details = "Details sample",
                     SalemanId = oSaleman.SalemanId,
                     CustomerId = oCustomer.CustomerId
@@ -68,10 +72,11 @@ namespace ProjectsControl.Models
 
                 };
             Asistance oAsistance = new Asistance
-                {
-                    AsistanceId = Guid.NewGuid().ToString(),
-                    EmployeeId = oEmployee.EmployeeId,
-                    WeekId= oWeek.WeekId                
+            {
+                AsistanceId = Guid.NewGuid().ToString(),
+                EmployeeId = oEmployee.EmployeeId,
+                WeekId = oWeek.WeekId,
+                ProjectId = oProject.ProjectId                   
                 };
             ExtraHour oExtra = new ExtraHour
                 {
@@ -89,7 +94,9 @@ namespace ProjectsControl.Models
                                     NumberOfBill = "1234AVF",
                                     DateOfCreation= DateTime.Now,
                                     Author="Sample Author",
-                                    cost= 123.12f,
+                                    Amount= 123.12f,
+                                    Currency="dolar",
+                                    Notes="sample",
                                     ProjectId = oProject.ProjectId
             };
             Report oReport = new Report {

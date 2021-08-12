@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectsControl.Models
 {
-    public class Saleman
+    public class Saleman 
     {
         [Key]
         [Required]

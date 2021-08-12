@@ -22,9 +22,14 @@ namespace ProjectsControl.Models
         public DateTime OCDate { get; set; }
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string Manager { get; set; }
+        public string Estatus { get; set; }
         [Required]
         public bool IsOver { get; set; }
         [Required]
+        public float Amount { get; set; }
+        public string Currency { get; set; }
+        public double PendingAmount { get; set; }
         public string TypeOfJob { get; set; }
         [Required]
         public string Details { get; set; }

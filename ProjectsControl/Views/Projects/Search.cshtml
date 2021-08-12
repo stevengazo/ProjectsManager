@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ProjectsControl.Models.Project>
+@using ProjectsControl.Models; 
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>
+    Busqueda de dispositivos
+</h2>
+
+
+<div>
+    <label>Año</label>
+    <select>
+        <option value="">Seleccione un año...</option>
+        @foreach (var item in ViewBag.YearOfProject)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+
+    <select>
+        <option value="">Seleccione un vendedor</option>
+        @foreach (var item in ViewBag.Customers)
+        {
+            <option value="@item.CustomerId ">@item.Name</option>
+        }
+    </select>
+</div>

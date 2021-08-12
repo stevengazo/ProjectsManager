@@ -56,7 +56,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BillId,NumberOfBill,DateOfCreation,Author,cost,ProjectId")] Bill bill)
+        public async Task<IActionResult> Create([Bind("BillId,NumberOfBill,DateOfCreation,Author,Amount,ProjectId")] Bill bill)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("BillId,NumberOfBill,DateOfCreation,Author,cost,ProjectId")] Bill bill)
+        public async Task<IActionResult> Edit(string id, [Bind("BillId,NumberOfBill,DateOfCreation,Author,Amount,ProjectId")] Bill bill)
         {
             if (id != bill.BillId)
             {

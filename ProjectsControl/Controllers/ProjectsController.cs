@@ -71,6 +71,14 @@ namespace ProjectsControl.Controllers
             return View(project);
         }
 
+        /// GET> Projects/Search
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.YearOfProject = (from project in _context.Projects select project.OCDate.Year).Distinct().ToList();
+            ViewBag.Customers = (from customer in _context.Customers select customer).ToList();
+            return View();
+        }
+
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(string id)
         {

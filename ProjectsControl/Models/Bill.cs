@@ -17,7 +17,9 @@ namespace ProjectsControl.Models
         [Required]
         public string Author { get; set; }
         [Required]
-        public float cost { get; set; }
+        public float Amount { get; set; }
+        public string Currency { get; set; }
+        public string Notes { get;set; }
 
 
         public string ProjectId { get; set; }

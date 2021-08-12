@@ -10,8 +10,8 @@ using ProjectsControl.Models;
 namespace ProjectsControl.Migrations
 {
     [DbContext(typeof(DBProjectContext))]
-    [Migration("20210721140504_DBProjectMigration")]
-    partial class DBProjectMigration
+    [Migration("20210812183837_MyMigration")]
+    partial class MyMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,11 +54,12 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            AsistanceId = "b70dede3-8504-407b-aa09-e8551a686b72",
+                            AsistanceId = "544339f0-8ff0-4dc1-b165-97509649648c",
                             DateOfBegin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EmployeeId = "8f0d9007-7f05-4c01-98d1-9d38b151fb8d",
-                            WeekId = "39810adb-d340-4628-a7df-a6590a1b7739"
+                            EmployeeId = "f10759fb-fdb6-4191-abb6-b896ec0d3ba2",
+                            ProjectId = "34b10602-9994-481b-961a-8ab506efaf32",
+                            WeekId = "a1e0620b-f0ad-4d41-82ee-9b3eaabd2418"
                         });
                 });
 
@@ -67,12 +68,21 @@ namespace ProjectsControl.Migrations
                     b.Property<string>("BillId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
+
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumberOfBill")
                         .IsRequired()
@@ -80,9 +90,6 @@ namespace ProjectsControl.Migrations
 
                     b.Property<string>("ProjectId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<float>("cost")
-                        .HasColumnType("real");
 
                     b.HasKey("BillId");
 
@@ -122,8 +129,8 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ContactId = "f2571f85-8758-4887-8956-4196c5d409fa",
-                            CustomerId = "42fbf4fd-4877-4181-9362-8610119bcd9f",
+                            ContactId = "b40a147a-91c7-4b57-a69d-97a136b5207a",
+                            CustomerId = "bee46401-0d98-42cb-86be-e8f3faa0820c",
                             Email = "Sample@sample.com",
                             Name = "Contact Sample",
                             PhoneNumber = 88888888,
@@ -151,7 +158,7 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            CustomerId = "42fbf4fd-4877-4181-9362-8610119bcd9f",
+                            CustomerId = "bee46401-0d98-42cb-86be-e8f3faa0820c",
                             Name = "SalemanTesting",
                             Sector = "Private"
                         });
@@ -180,7 +187,7 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            EmployeeId = "8f0d9007-7f05-4c01-98d1-9d38b151fb8d",
+                            EmployeeId = "f10759fb-fdb6-4191-abb6-b896ec0d3ba2",
                             DateofHiring = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sample of Employee",
                             Position = "Sample"
@@ -234,15 +241,15 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ExtraHourId = "479727c2-6279-4fd8-9ed5-d391ff1ade11",
-                            AsistanceId = "b70dede3-8504-407b-aa09-e8551a686b72",
-                            BeginTime = new DateTime(2021, 7, 21, 8, 5, 3, 814, DateTimeKind.Local).AddTicks(6249),
-                            EmployeeId = "8f0d9007-7f05-4c01-98d1-9d38b151fb8d",
-                            EndTime = new DateTime(2021, 7, 21, 8, 5, 3, 814, DateTimeKind.Local).AddTicks(6740),
+                            ExtraHourId = "411a1f70-bfea-4ffb-a0bc-3bf8a1e320b8",
+                            AsistanceId = "544339f0-8ff0-4dc1-b165-97509649648c",
+                            BeginTime = new DateTime(2021, 8, 12, 12, 38, 36, 476, DateTimeKind.Local).AddTicks(9079),
+                            EmployeeId = "f10759fb-fdb6-4191-abb6-b896ec0d3ba2",
+                            EndTime = new DateTime(2021, 8, 12, 12, 38, 36, 476, DateTimeKind.Local).AddTicks(9520),
                             IsPaid = true,
                             Reason = "SAMPLE",
                             TypeOfHour = "double",
-                            WeekId = "39810adb-d340-4628-a7df-a6590a1b7739"
+                            WeekId = "a1e0620b-f0ad-4d41-82ee-9b3eaabd2418"
                         });
                 });
 
@@ -251,8 +258,14 @@ namespace ProjectsControl.Migrations
                     b.Property<string>("ProjectId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
+
                     b.Property<DateTime>("BeginDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)");
@@ -264,8 +277,14 @@ namespace ProjectsControl.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Estatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsOver")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Manager")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -284,11 +303,13 @@ namespace ProjectsControl.Migrations
                     b.Property<string>("OfferId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("PendingAmount")
+                        .HasColumnType("float");
+
                     b.Property<string>("SalemanId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TypeOfJob")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ubication")
@@ -305,18 +326,23 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ProjectId = "70abe29b-c975-4917-945d-de3fc737944c",
+                            ProjectId = "34b10602-9994-481b-961a-8ab506efaf32",
+                            Amount = 0f,
                             BeginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = "42fbf4fd-4877-4181-9362-8610119bcd9f",
+                            Currency = "dolar",
+                            CustomerId = "bee46401-0d98-42cb-86be-e8f3faa0820c",
                             Details = "Details sample",
                             EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Estatus = "sample",
                             IsOver = false,
+                            Manager = "sample",
                             Name = "Project Sample",
                             NumberOfTask = 1234,
                             OC = "1234Sample",
                             OCDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OfferId = "1234Sample",
-                            SalemanId = "6ab592b9-0660-4982-b1c2-a7c6f5280888",
+                            PendingAmount = 0.0,
+                            SalemanId = "51783fb6-1590-4093-b04b-70a6f29bfa97",
                             TypeOfJob = "installation"
                         });
                 });
@@ -371,7 +397,7 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            SalemanId = "6ab592b9-0660-4982-b1c2-a7c6f5280888",
+                            SalemanId = "51783fb6-1590-4093-b04b-70a6f29bfa97",
                             Name = "CustomerTesting"
                         });
                 });
@@ -397,9 +423,9 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            WeekId = "39810adb-d340-4628-a7df-a6590a1b7739",
-                            BeginOfWeek = new DateTime(2021, 7, 21, 8, 5, 3, 811, DateTimeKind.Local).AddTicks(5575),
-                            EndOfWeek = new DateTime(2021, 7, 21, 8, 5, 3, 813, DateTimeKind.Local).AddTicks(4637),
+                            WeekId = "a1e0620b-f0ad-4d41-82ee-9b3eaabd2418",
+                            BeginOfWeek = new DateTime(2021, 8, 12, 12, 38, 36, 473, DateTimeKind.Local).AddTicks(8455),
+                            EndOfWeek = new DateTime(2021, 8, 12, 12, 38, 36, 475, DateTimeKind.Local).AddTicks(5515),
                             NumberOfWeek = "1-2011'"
                         });
                 });
