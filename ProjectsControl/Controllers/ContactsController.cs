@@ -56,7 +56,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,Name,PhoneNumber,Email,Position,CustomerId")] Contact contact)
+        public async Task<IActionResult> Create([Bind("ContactId,ProjectName,PhoneNumber,Email,Position,CustomerId")] Contact contact)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ContactId,Name,PhoneNumber,Email,Position,CustomerId")] Contact contact)
+        public async Task<IActionResult> Edit(string id, [Bind("ContactId,ProjectName,PhoneNumber,Email,Position,CustomerId")] Contact contact)
         {
             if (id != contact.ContactId)
             {

@@ -58,7 +58,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,NumberOfTask,Name,OfferId,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,SalemanId")] Project project)
+        public async Task<IActionResult> Create([Bind("ProjectId,NumberOfTask,ProjectName,OfferId,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,SalemanId")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -71,14 +71,16 @@ namespace ProjectsControl.Controllers
             return View(project);
         }
 
-        /// GET> Projects/Search
-        public async Task<IActionResult> Search()
+        /// GET Projects/Search
+        [HttpGet]
+        public async Task<IActionResult> Search(string SearchName, string IdToSearch, int MonthToSearch, int SearchYear, string StatusToSearch)
         {
             ViewBag.YearOfProject = (from project in _context.Projects select project.OCDate.Year).Distinct().ToList();
-            ViewBag.Customers = (from customer in _context.Customers select customer).ToList();
-            return View();
-        }
+            ViewBag.Status = (from project in _context.Projects select project.Estatus).Distinct().ToList();
+            var aux = new List<Project>();           
+            return View(aux);
 
+        }
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -102,7 +104,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,Name,OfferId,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,SalemanId")] Project project)
+        public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OfferId,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,SalemanId")] Project project)
         {
             if (id != project.ProjectId)
             {
@@ -168,6 +170,40 @@ namespace ProjectsControl.Controllers
         private bool ProjectExists(string id)
         {
             return _context.Projects.Any(e => e.ProjectId == id);
+        }
+
+        /// <summary>
+        /// Consult in the database the information by the values
+        /// </summary>
+        /// <param name="SearchName">ProjectName of the Project</param>
+        /// <param name="IdToSearch">Id To Search</param>
+        /// <param name="MonthToSearch"></param>
+        /// <param name="SearchYear"></param>        
+        /// <param name="StatusToSearch"></param>
+        /// <returns></returns>
+      private List<Project> Consult(  string SearchName= null,
+                                        string IdToSearch = null,
+                                        int MonthToSearch=0, 
+                                        int SearchYear= 0, 
+                                        string StatusToSearch= null)
+        {
+            List<Project> LisProjects = new List<Project>();
+            if(  (SearchName!=null) && (IdToSearch!= null) && (MonthToSearch!=0) && (SearchYear!=0) && (StatusToSearch != null))
+            {
+               using( var DB = _context)
+                {
+                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                                                                WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
+                                                                and		(ProjectName like CONCAT('%',{SearchName},'%'))
+                                                                and		(MONTH(OCDate) ={MonthToSearch})
+                                                                and		(YEAR(OCDate)= {SearchYear})
+                                                                and		(Estatus = {StatusToSearch})").ToList();
+                }
+            }
+            else
+            {
+                return (new List<Project>());
+            }
         }
     }
 }

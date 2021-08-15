@@ -1,32 +1,146 @@
 ﻿@model IEnumerable<ProjectsControl.Models.Project>
-@using ProjectsControl.Models; 
+@using ProjectsControl.Models
 
 @{
     ViewData["Title"] = "Search";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
 
 
 <h2>
-    Busqueda de dispositivos
+    Busqueda de Proyectos
 </h2>
 
 
-<div>
-    <label>Año</label>
-    <select>
-        <option value="">Seleccione un año...</option>
-        @foreach (var item in ViewBag.YearOfProject)
-        {
-            <option value="@item">@item</option>
-        }
-    </select>
+<form asp-controller="Projects" asp-action="Search" method="get" class="form-group">
+    <div>
+        <p>
+            <label class="col-form-label-sm">Nombre</label>
+            <input type="text" name="SearchName" />
+            <label class="col-form-label-sm">Id</label>
+            <input type="text" name="IdToSearch" />
+            <label class="col-form-label-sm">Mes</label>
+            <select name="MonthToSearch">
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>            
+            <label>Año</label>
+            <select name="SearchYear">
+                <option value="">Seleccione un año...</option>
+                @foreach (var item in ViewBag.YearOfProject)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>           
+            <label>Estado</label>
+            <select name="StatusToSearch">
+                <option value="">Seleccione...</option>
+                @foreach (var item in ViewBag.Status)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </p>
+    </div>
+    <div>
+        <input type="submit" value="Buscar" class="btn btn-outline-dark" />
+    </div>   
+</form>
 
-    <select>
-        <option value="">Seleccione un vendedor</option>
-        @foreach (var item in ViewBag.Customers)
+
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Tarea
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Id Oferta
+            </th>
+            <th>
+                OC
+            </th>
+            <th>
+                Fecha OC
+            </th>
+            <th>
+                Fecha Inicio
+            </th>
+            <th>
+                Fecha Finalizacion
+            </th>
+            <th>
+                Tipo Trabajo
+            </th>
+            <th>
+                Ubicacion
+            </th>
+            <th>
+                Cliente
+            </th>
+            <th>
+                Vendedor
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+        @foreach (var item in Model)
         {
-            <option value="@item.CustomerId ">@item.Name</option>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OCDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfJob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ubication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Saleman.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+                </td>
+            </tr>
         }
-    </select>
-</div>
+    </tbody>
+</table>
+

@@ -245,17 +245,17 @@ namespace ProjectsControl.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "CustomerId", "Name", "Sector" },
+                columns: new[] { "CustomerId", "ProjectName", "Sector" },
                 values: new object[] { "bee46401-0d98-42cb-86be-e8f3faa0820c", "SalemanTesting", "Private" });
 
             migrationBuilder.InsertData(
                 table: "Employees",
-                columns: new[] { "EmployeeId", "DateofHiring", "Name", "Position" },
+                columns: new[] { "EmployeeId", "DateofHiring", "ProjectName", "Position" },
                 values: new object[] { "f10759fb-fdb6-4191-abb6-b896ec0d3ba2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sample of Employee", "Sample" });
 
             migrationBuilder.InsertData(
                 table: "Salemans",
-                columns: new[] { "SalemanId", "Name" },
+                columns: new[] { "SalemanId", "ProjectName" },
                 values: new object[] { "51783fb6-1590-4093-b04b-70a6f29bfa97", "CustomerTesting" });
 
             migrationBuilder.InsertData(
@@ -265,12 +265,12 @@ namespace ProjectsControl.Migrations
 
             migrationBuilder.InsertData(
                 table: "Contact",
-                columns: new[] { "ContactId", "CustomerId", "Email", "Name", "PhoneNumber", "Position" },
+                columns: new[] { "ContactId", "CustomerId", "Email", "ProjectName", "PhoneNumber", "Position" },
                 values: new object[] { "b40a147a-91c7-4b57-a69d-97a136b5207a", "bee46401-0d98-42cb-86be-e8f3faa0820c", "Sample@sample.com", "Contact Sample", 88888888, "Manager sample" });
 
             migrationBuilder.InsertData(
                 table: "Projects",
-                columns: new[] { "ProjectId", "Amount", "BeginDate", "Currency", "CustomerId", "Details", "EndDate", "Estatus", "IsOver", "Manager", "Name", "NumberOfTask", "OC", "OCDate", "OfferId", "PendingAmount", "SalemanId", "TypeOfJob", "Ubication" },
+                columns: new[] { "ProjectId", "Amount", "BeginDate", "Currency", "CustomerId", "Details", "EndDate", "Estatus", "IsOver", "Manager", "ProjectName", "NumberOfTask", "OC", "OCDate", "OfferId", "PendingAmount", "SalemanId", "TypeOfJob", "Ubication" },
                 values: new object[] { "34b10602-9994-481b-961a-8ab506efaf32", 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "dolar", "bee46401-0d98-42cb-86be-e8f3faa0820c", "Details sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "sample", false, "sample", "Project Sample", 1234, "1234Sample", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1234Sample", 0.0, "51783fb6-1590-4093-b04b-70a6f29bfa97", "installation", null });
 
             migrationBuilder.InsertData(

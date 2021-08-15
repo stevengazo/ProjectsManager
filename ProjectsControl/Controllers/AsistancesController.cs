@@ -50,7 +50,7 @@ namespace ProjectsControl.Controllers
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            ViewData["Name"] = new SelectList(_context.Employees, "Name", "Name");
+            ViewData["ProjectName"] = new SelectList(_context.Employees, "ProjectName", "ProjectName");
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             return View();

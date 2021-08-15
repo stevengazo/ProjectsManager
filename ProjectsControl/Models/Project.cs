@@ -16,7 +16,7 @@ namespace ProjectsControl.Models
         [Required]
         [MinLength(10)]
         [MaxLength(120)]
-        public string Name { get; set; }
+        public string ProjectName { get; set; }
         public string OfferId { get; set; }
         public string OC { get; set; }
         public DateTime OCDate { get; set; }

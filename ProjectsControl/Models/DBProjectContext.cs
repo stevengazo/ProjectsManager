@@ -51,7 +51,7 @@ namespace ProjectsControl.Models
                 {
                     ProjectId = Guid.NewGuid().ToString(),
                     NumberOfTask = 1234,
-                    Name = "Project Sample",
+                    ProjectName = "Project Sample",
                     OfferId = "1234Sample",
                     OC = "1234Sample",
                     TypeOfJob = "installation",
