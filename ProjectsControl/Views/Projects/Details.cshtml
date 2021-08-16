@@ -130,6 +130,7 @@
 </div>
 <div>
     <h3>Informes Registrados</h3>
+    <p>Informes existentes en la base de datos correspondientes al presente proyecto</p>
     <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
         <thead>
             <tr>
@@ -188,8 +189,56 @@
 </div>
 <div>
     <h3>Asistencias Registradas del Proyecto</h3>
+    <p>Asistencias del proyecto registradas por empleado. Dichas asistencias identifican el personal encargado de la realización proyecto</p>
+    <table class="table table-hover   table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+        <thead>
+            <tr>
+                <th>
+                    Día de Inicio
+                </th>
+                <th>
+                    Día Finalización
+                </th>
+                <th>
+                    Empleado
+                </th>
+                <th>
+                    N° Semana
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Asistances)
+            {
+                <tr>
+                    <td>
+                        @item.DateOfBegin
+                    </td>
+                    <td>
+                        @item.DateOfEnd
+                    </td>
+                    <td>
+                        @item.Employee.Name
+                    </td>
+                    <td>
+                        @item.Week.NumberOfWeek
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AsistanceId">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.AsistanceId">Details</a>
+                        <a style="color:red" asp-action="Delete" asp-route-id="@item.AsistanceId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
 
 <div>
     <h3>Horas Extras Registradas</h3>
+   <p>Cantidad de horas extras registradas por persona en el proyecto actual</p>
 </div>

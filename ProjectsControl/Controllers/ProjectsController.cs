@@ -32,6 +32,7 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Asistances = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == id).Include(E=>E.Employee).Include(W=>W.Week);
             ViewBag.BillsOfProyect = (from bill in _context.Bill select bill).Where(W => W.ProjectId == id);
             ViewBag.Reports = (from reports in _context.Report select reports).Where(R=>R.ProjectId == id);
             var project = await _context.Projects
