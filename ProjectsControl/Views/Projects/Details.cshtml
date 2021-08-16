@@ -5,93 +5,191 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfTask)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfTask)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProjectName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OfferId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OfferId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OC)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OC)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OCDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OCDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BeginDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BeginDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsOver)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsOver)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TypeOfJob)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TypeOfJob)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Details)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Details)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ubication)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ubication)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.CustomerId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Saleman)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Saleman.SalemanId)
-        </dd>
-    </dl>
-</div>
+<h1>Detalles del Proyecto</h1>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ProjectId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <tbody>
+        <tr>
+            <th>Nombre de Tarea</th>
+            <td>@Html.DisplayFor(model => model.NumberOfTask)</td>
+        </tr>
+        <tr>
+            <th>Nombre del Proyecto</th>
+            <td>@Html.DisplayFor(model => model.ProjectName)</td>
+        </tr>
+        <tr>
+            <th>Id de oferta</th>
+            <td>@Html.DisplayFor(model => model.OfferId)</td>
+        </tr>
+        <tr>
+            <th>Id Orden de Compra</th>
+            <td>@Html.DisplayFor(model => model.OC)</td>
+        </tr>
+        <tr>
+            <th>Fecha de Compra</th>
+            <td>@Html.DisplayFor(model => model.OCDate)</td>
+        </tr>
+        <tr>
+            <th>Monto</th>
+            <td>@Html.DisplayFor(model => model.Amount)</td>
+        </tr>
+        <tr>
+            <th>Moneda</th>
+            <td>@Html.DisplayFor(model => model.Currency)</td></td>
+        </tr>
+        <tr>
+            <th>Encargado</th>
+            <td>@Html.DisplayFor(M => M.Manager)</td>
+        </tr>
+        <tr>
+            <th>Fecha de Inicio</th>
+            <td>@Html.DisplayFor(model => model.BeginDate)</td>
+        </tr>
+        <tr>
+            <th>Fecha Finalizacion</th>
+            <td>@Html.DisplayFor(model => model.EndDate)</td>
+        </tr>
+        <tr>
+            <th>Finalizado</th>
+            <td>@Html.DisplayFor(model => model.IsOver)</td>
+        </tr>
+        <tr>
+            <th>Tipo de Trabajo</th>
+            <td>@Html.DisplayFor(model => model.TypeOfJob)</td>
+        </tr>
+        <tr>
+            <th>Detalles</th>
+            <td>@Html.DisplayFor(model => model.Details)</td>
+        </tr>
+        <tr>
+            <th>Ubicacion</th>
+            <td>@Html.DisplayFor(model => model.Ubication)</td>
+        </tr>
+        <tr>
+            <th>Id de Cliente</th>
+            <td>@Html.DisplayFor(model => model.Customer.CustomerId)</td>
+        </tr>
+        <tr>
+            <th>Id de Vendedor</th>
+            <td>@Html.DisplayFor(model => model.Saleman.SalemanId)</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<div>
+    <h2>Facturas registradas</h2>
+    <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+        <thead>
+            <tr>
+                <th>
+                    Número de Factura
+                </th>
+                <th>
+                    Fecha de Creación
+                </th>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Monto
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.BillsOfProyect)
+            {
+                <tr>
+                    <td>
+                        @item.NumberOfBill
+                    </td>
+                    <td>
+                        @item.DateOfCreation
+                    </td>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.Amount
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.BillId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.BillId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.BillId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <h3>Informes Registrados</h3>
+    <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+        <thead>
+            <tr>
+                <th>
+                    Numero de Reporte
+                </th>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Inicio
+                </th>
+                <th>
+                    Fin
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Notas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 12px;">
+            @foreach (var item in ViewBag.Reports)
+            {
+                <tr>
+                    <td>
+                        @item.NumberOfReport
+                    </td>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.BeginDate
+                    </td>
+                    <td>
+                        @item.EndDate
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    <td>
+                        @item.Notes
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ReportId">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.ReportId">Detalles</a> |
+                        <a style="color:red" asp-action="Delete" asp-route-id="@item.ReportId">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <h3>Asistencias Registradas del Proyecto</h3>
+</div>
+
+<div>
+    <h3>Horas Extras Registradas</h3>
 </div>
