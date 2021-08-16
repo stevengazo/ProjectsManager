@@ -9,8 +9,8 @@
 
 <h4>Project</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div >
+    <div >
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -41,6 +41,37 @@
             <div class="form-group">
                 <label asp-for="OCDate" class="control-label"></label>
                 <input asp-for="OCDate" class="form-control" />
+                <span asp-validation-for="OCDate" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Currency" class="control-label"></label>
+                <select asp-for="Currency" class="form-control">
+                    <option value="">Seleccione...</option>
+                    <option value="Dolar">Dolar</option>
+                    <option value="Colón">Colón</option>
+                    <option value="Euro">Euro</option>
+                </select>
+                <span asp-validation-for="Currency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manager" class="control-label"></label>
+                <input asp-for="Manager" class="form-control" />
+                <span asp-validation-for="Manager" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estatus" class="control-label"></label>
+                <select asp-for="Estatus" class="form-control">
+                    <option value="">Seleccione...</option>
+                    <option value="Finalizado">Finalizado</option>
+                    <option value="Pendiente de coordinar">Pendiente de coordinar</option>
+                    <option value="En ejecución">En ejecución</option>
+                    <option value="Atrasado por el cliente">Atrasado por el cliente</option>
+                </select>
                 <span asp-validation-for="OCDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -75,11 +106,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="SalemanId" class="control-label"></label>
-                <select asp-for="SalemanId" class ="form-control" asp-items="ViewBag.SalemanId"></select>
+                <select asp-for="SalemanId" class="form-control" asp-items="ViewBag.SalemanId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

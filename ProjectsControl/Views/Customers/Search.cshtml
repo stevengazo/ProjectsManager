@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ProjectsControl.Models.Customer>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>
+    Busqueda de Clientes
+</h2>
+
+<form asp-controller="Customers" asp-action="Search" method="get" class="form-group">
+    <label>Cedula</label>
+    <input type="text" name="IdToSearch" class="col-form-label-sm" />
+    <label>Nombre</label>
+    <input type="text" name="NameToSearch" class="col-form-label-sm" />
+    <label>Tipo</label>
+    <select name="TypeToSearch" class="col-form-label-sm">
+        <option value="">Seleccione una opcion...</option>
+        @foreach (var item in ViewBag.TypesOfCustomers)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+    <input type="submit" value="Buscar" class="btn-outline-dark" />
+</form>
+<div >
+    
+    <p style="position:center; color:red;">@ViewBag.Message</p>
+</div>
+
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Cedula
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Sector
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sector)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CustomerId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.CustomerId">Detalles</a> |
+                    <a style="color:red" asp-action="Delete" asp-route-id="@item.CustomerId">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

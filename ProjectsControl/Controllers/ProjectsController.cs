@@ -58,7 +58,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,NumberOfTask,ProjectName,OfferId,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,SalemanId")] Project project)
+        public async Task<IActionResult> Create([Bind("ProjectId,NumberOfTask,ProjectName,OfferId,OC,OCDate,BeginDate,EndDate,Manager,Amount,Estatus,currency,IsOver,TypeOfJob,Details,Ubication,CustomerId,SalemanId")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -75,8 +75,8 @@ namespace ProjectsControl.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(string SearchName=null, string IdToSearch=null, int MonthToSearch=0, int SearchYear=0, string StatusToSearch= null)
         {
-            var consult = new List<Project>();
             ViewBag.YearOfProject = (from project in _context.Projects select project.OCDate.Year).Distinct().ToList();
+            var consult = new List<Project>().ToList();
             ViewBag.Status = (from project in _context.Projects select project.Estatus).Distinct().ToList();
             if( (SearchName != null)||(IdToSearch!= null)||(SearchYear!=0)||(MonthToSearch!=0)||(StatusToSearch!= null))
             {

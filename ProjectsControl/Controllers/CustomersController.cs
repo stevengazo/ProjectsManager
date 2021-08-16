@@ -144,9 +144,82 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Search(string IdToSearch= null,string NameToSearch= null, string TypeToSearch = null)
+        {
+            ViewBag.TypesOfCustomers = (from cust in _context.Customers select cust.Sector).Distinct().ToList();
+            if((IdToSearch != null) ||(NameToSearch!=null) || (TypeToSearch!= null))
+            {
+                var query = Consult(IdToSearch,NameToSearch,TypeToSearch);
+                if (query.Count > 0)
+                {
+                    ViewBag.Message = "";
+                    return View(query);
+                }
+                else
+                {
+                    ViewBag.Message = "No hay coincidencias";
+                    return View(query);
+                }
+            }
+            return View(new List<Customer>());
+        }
+
         private bool CustomerExists(string id)
         {
             return _context.Customers.Any(e => e.CustomerId == id);
         }
+
+
+        /// <summary>
+        /// Seach customers in the database 
+        /// </summary>
+        /// <param name="IdToSearch">Id of the Customer</param>
+        /// <param name="NameToSearch">Customer's name</param>
+        /// <param name="TypeToSearch">Type of customer</param>
+        /// <returns>List of customers</returns>
+        private List<Customer> Consult(string IdToSearch = null, string NameToSearch = null, string TypeToSearch = null)
+        {
+            var query = new List<Customer>();
+            if ((IdToSearch != null) && (NameToSearch != null) && (TypeToSearch != null))
+            {
+                query=( _context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
+                                                                WHERE	(CustomerId LIKE CONCAT('%',{IdToSearch},'%'))
+                                                                AND		(Name LIKE CONCAT('%',{NameToSearch},'%'))
+                                                                AND		(Sector LIKE CONCAT('%',{TypeToSearch},'%'))")).ToList();
+            }
+            else if ((IdToSearch != null) && (NameToSearch != null) && (TypeToSearch == null))
+            {
+                query = (_context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
+                                                                WHERE	(CustomerId LIKE CONCAT('%',{IdToSearch},'%'))
+                                                                AND		(Name LIKE CONCAT('%',{NameToSearch},'%'))")).ToList();
+            }
+            else if ((IdToSearch != null) && (NameToSearch == null) && (TypeToSearch == null))
+            {
+                query = (_context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
+                                                                WHERE	(CustomerId LIKE CONCAT('%',{IdToSearch},'%'))")).ToList();
+            }
+            else if ((IdToSearch == null) && (NameToSearch != null) && (TypeToSearch != null))
+            {
+                query = (_context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
+                                                                WHERE	(Name LIKE CONCAT('%',{NameToSearch},'%'))
+                                                                AND		(Sector LIKE CONCAT('%',{TypeToSearch},'%'))")).ToList();
+            }
+            else if ((IdToSearch == null) && (NameToSearch == null) && (TypeToSearch != null))
+            {
+                query = (_context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
+                                                                WHERE	(Sector LIKE CONCAT('%',{TypeToSearch},'%'))")).ToList();
+            }
+            else if ((IdToSearch == null) && (NameToSearch != null) && (TypeToSearch == null))
+            {
+                query = (_context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
+                                                                WHERE	(Name LIKE CONCAT('%',{NameToSearch},'%'))")).ToList();
+            }
+            else
+            {              
+            }
+            return query;
+        }
+
     }
 }

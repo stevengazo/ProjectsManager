@@ -1,0 +1,106 @@
+﻿
+@model IEnumerable<ProjectsControl.Models.Report>
+@using ProjectsControl.Models;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>
+    Busqueda de informes
+</h2>
+
+<form asp-controller="Reports" asp-action="Search" method="get" class="form-group" >
+    <label>Id Reporte </label>
+    <input type="text"  name="IdToSearch"/>
+    <label>Autor</label>
+    <select name="AuthorToSearch" >
+        <option value="">Seleccione un autor...</option>
+        @foreach (var item in ViewBag.Authors)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+    <label>Estado</label>
+    <select name="StatusToSearch">
+        <option value="">Seleccione un estado...</option>
+        @foreach (var item in ViewBag.status)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+    <label>Proyecto</label>
+    <select name="ProjectIdToSearch">
+        <option value="">Seleccione un proyecto...</option>
+        @foreach (var item in ViewBag.Projects)
+	{
+		 <option value="@item.ProjectId">@item.ProjectName</option>
+	}
+    </select>
+    <input type="submit" value="Buscar" class="btn btn-outline-dark" />
+</form>
+
+
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Numero de Reporte
+            </th>
+            <th>
+                Autor
+            </th>
+            <th>
+                Inicio
+            </th>
+            <th>
+                Fin
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Notas
+            </th>
+            <th>
+                Proyecto
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfReport)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.ProjectName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ReportId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReportId">Detalles</a> |
+                    <a style="color:red" asp-action="Delete" asp-route-id="@item.ReportId">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
