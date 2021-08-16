@@ -21,6 +21,7 @@
             <input type="text" name="IdToSearch" />
             <label class="col-form-label-sm">Mes</label>
             <select name="MonthToSearch">
+                <option value="0">Seleccione un valor...</option>
                 <option value="1">Enero</option>
                 <option value="2">Febrero</option>
                 <option value="3">Marzo</option>
@@ -36,7 +37,7 @@
             </select>            
             <label>Año</label>
             <select name="SearchYear">
-                <option value="">Seleccione un año...</option>
+                <option value="0">Seleccione un año...</option>
                 @foreach (var item in ViewBag.YearOfProject)
                 {
                     <option value="@item">@item</option>
@@ -54,6 +55,7 @@
     </div>
     <div>
         <input type="submit" value="Buscar" class="btn btn-outline-dark" />
+        <p style="color:red;"> @ViewBag.Message</p>
     </div>   
 </form>
 
@@ -61,6 +63,9 @@
 <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
+            <th>
+                Id
+            </th>
             <th>
                 Tarea
             </th>
@@ -100,46 +105,49 @@
     <tbody style="font-size: 12px;">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfTask)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OfferId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OC)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OCDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BeginDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeOfJob)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ubication)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Saleman.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
-                    <a asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfTask)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfferId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OCDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeginDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ubication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saleman.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
+                <a asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

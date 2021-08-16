@@ -14,7 +14,10 @@
     <thead>
         <tr>
             <th>
-               Tarea
+                Id
+            </th>
+            <th>
+                Tarea
             </th>
             <th>
                 Nombre
@@ -53,6 +56,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.NumberOfTask)
             </td>
             <td>
@@ -75,7 +81,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TypeOfJob)
-            </td>          
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ubication)
             </td>
@@ -86,8 +92,8 @@
                 @Html.DisplayFor(modelItem => item.Saleman.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a> 
-                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a> 
+                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
                 <a asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
             </td>
         </tr>
