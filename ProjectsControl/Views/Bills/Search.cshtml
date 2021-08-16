@@ -17,7 +17,7 @@
     <label>Autor</label>
     <input type="text" name="AuthorToSearch" />
     <label>Id de Projecto</label>
-    <select>
+    <select name="ProjectIdToSearch">
         <option value="">Seleccione un proyecto...</option>
     </select>
     <input type="submit" value="Buscar" />
@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Project.ProjectId)
+                @Html.DisplayFor(modelItem => item.ProjectId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BillId">Edit</a> |

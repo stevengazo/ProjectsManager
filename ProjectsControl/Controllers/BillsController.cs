@@ -46,7 +46,7 @@ namespace ProjectsControl.Controllers
 
         // GET: Bills/Create
         public IActionResult Create()
-        {
+        {            
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             return View();
         }
@@ -151,14 +151,72 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Search()
+        [HttpGet]
+        public async Task<IActionResult> Search(string IdToSearch=null,string AuthorToSearch = null, string ProjectIdToSearch=null)
         {
+            List<Bill> Bills = new List<Bill>();
+            if ((IdToSearch != null) || (AuthorToSearch != null) || (ProjectIdToSearch != null))
+            {
+                Bills = Consult(IdToSearch, AuthorToSearch,ProjectIdToSearch);
+                if(Bills.Count > 0)
+                {
+                    ViewBag.Message = "";
+                    return View(Bills);
+                }
+                else
+                {
+                    ViewBag.Message = "No hay coincidencias";
+                    return View(Bills);
+                }
+            }
             return View(new List<Bill>());
         }
 
         private bool BillExists(string id)
         {
             return _context.Bill.Any(e => e.BillId == id);
+        }
+
+        public List<Bill> Consult(string IdToSearch = null, string AuthorToSearch = null, string ProjectIdToSearch = null)
+        {
+            if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch != null))
+            {
+                return _context.Bill.FromSqlInterpolated($@"SELECT * FROM Bill
+                                                            WHERE	( BillId LIKE CONCAT('%',{IdToSearch},'%') )
+                                                            AND		( Author LIKE CONCAT('%',{AuthorToSearch},'%') )
+                                                            AND		( ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%') )").ToList();
+            }
+            else if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch == null))
+            {
+                return _context.Bill.FromSqlInterpolated($@"SELECT * FROM Bill
+                                                            WHERE	( BillId LIKE CONCAT('%',{IdToSearch},'%') )
+                                                            AND		( Author LIKE CONCAT('%',{AuthorToSearch},'%') )").ToList();
+            }
+            else if ((IdToSearch != null) && (AuthorToSearch == null) && (ProjectIdToSearch == null))
+            {
+                return _context.Bill.FromSqlInterpolated($@"SELECT * FROM Bill
+                                                            WHERE	( BillId LIKE CONCAT('%',{IdToSearch},'%') )").ToList();
+            }
+            else if ((IdToSearch == null) && (AuthorToSearch != null) && (ProjectIdToSearch != null))
+            {
+                return _context.Bill.FromSqlInterpolated($@"SELECT * FROM Bill
+                                                            WHERE	( Author LIKE CONCAT('%',{AuthorToSearch},'%') )
+                                                            AND		( ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%') )").ToList();
+            }
+            else if ((IdToSearch == null) && (AuthorToSearch == null) && (ProjectIdToSearch != null))
+            {
+                return _context.Bill.FromSqlInterpolated($@"SELECT * FROM Bill
+                                                            WHERE	( ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%') )").ToList();
+            }
+            else if ((IdToSearch == null) && (AuthorToSearch != null) && (ProjectIdToSearch == null))
+            {
+                return _context.Bill.FromSqlInterpolated($@"SELECT * FROM Bill
+                                                            WHERE	( Author LIKE CONCAT('%',{AuthorToSearch},'%'))").ToList();
+            }
+            else
+            {
+                return (new List<Bill>());
+            }
         }
     }
 }

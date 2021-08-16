@@ -14,42 +14,42 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
+                <label class="control-label">Numero de Proyecto</label>
                 <input asp-for="ProjectId" class="form-control" />
                 <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberOfTask" class="control-label"></label>
+                <label class="control-label">Numero de Tarea en Bitrix</label>
                 <input asp-for="NumberOfTask" class="form-control" />
                 <span asp-validation-for="NumberOfTask" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectName" class="control-label"></label>
+                <label class="control-label">Nombre del Proyecto</label>
                 <input asp-for="ProjectName" class="form-control" />
                 <span asp-validation-for="ProjectName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OfferId" class="control-label"></label>
+                <label class="control-label">Numero de Oferta</label>
                 <input asp-for="OfferId" class="form-control" />
                 <span asp-validation-for="OfferId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OC" class="control-label"></label>
+                <label class="control-label">Orden de Compra</label>
                 <input asp-for="OC" class="form-control" />
                 <span asp-validation-for="OC" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OCDate" class="control-label"></label>
+                <label class="control-label">Fecha de Orden de Compra</label>
                 <input asp-for="OCDate" class="form-control" />
                 <span asp-validation-for="OCDate" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="Amount" class="control-label"></label>
+                <label class="control-label">Monto Sin IVA</label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Currency" class="control-label"></label>
+                <label class="control-label">Moneda</label>
                 <select asp-for="Currency" class="form-control">
                     <option value="">Seleccione...</option>
                     <option value="Dolar">Dolar</option>
@@ -59,12 +59,12 @@
                 <span asp-validation-for="Currency" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Manager" class="control-label"></label>
+                <label class="control-label">Ing. Encargado</label>
                 <input asp-for="Manager" class="form-control" />
                 <span asp-validation-for="Manager" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Estatus" class="control-label"></label>
+                <label class="control-label">Estado</label>
                 <select asp-for="Estatus" class="form-control">
                     <option value="">Seleccione...</option>
                     <option value="Finalizado">Finalizado</option>
@@ -75,12 +75,12 @@
                 <span asp-validation-for="OCDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BeginDate" class="control-label"></label>
+                <label class="control-label">Fecha de Inicio</label>
                 <input asp-for="BeginDate" class="form-control" />
                 <span asp-validation-for="BeginDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
+                <label class="control-label">Fecha de Finalización</label>
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
@@ -90,8 +90,21 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="TypeOfJob" class="control-label"></label>
-                <input asp-for="TypeOfJob" class="form-control" />
+                <label class="control-label">Tipo de Trabajo</label>                
+                <select asp-for="TypeOfJob" class="form-control" >
+                    <option value="">Seleccione...</option>
+                    <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
+                    <option value="Instalación Ionizante">Instalación Ionizante</option>
+                    <option value="Instalación Supresores">Instalación Supresores</option>
+                    <option value="Instalación Torre">Instalación Torre</option>
+                    <option value="Mantenimiento RAYOS-NO">Mantenimiento RAYOS-NO</option>
+                    <option value="Mantenimiento Ionizante">Mantenimiento Ionizante</option>
+                    <option value="Mantenimiento Torre">Mantenimiento Torre</option>
+                    <option value="Estudio SPAT">Estudio SPAT</option>
+                    <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
+                    <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
+                    <option value="Otros">Otros</option>
+                </select>
                 <span asp-validation-for="TypeOfJob" class="text-danger"></span>
             </div>
             <div class="form-group">
