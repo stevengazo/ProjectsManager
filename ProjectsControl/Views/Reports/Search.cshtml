@@ -12,6 +12,10 @@
     Busqueda de informes
 </h2>
 
+<div>
+    <a asp-controller="Reports" asp-action="Create">Registrar Informe</a> | <a asp-controller="Reports" asp-action="Index">Listar Informes</a>
+</div>
+
 <form asp-controller="Reports" asp-action="Search" method="get" class="form-group" >
     <label>Id Reporte </label>
     <input type="text"  name="IdToSearch"/>

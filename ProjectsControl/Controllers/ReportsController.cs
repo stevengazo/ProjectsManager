@@ -151,15 +151,15 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Search(string IdToSearch = null, string AuthorToSearch = null, string ProjectIdToSearch = null)
+        public async Task<IActionResult> Search(string IdToSearch = null, string AuthorToSearch = null, string ProjectIdToSearch = null, string StatusToSearch=null)
         {
             ViewBag.Authors = (from report in _context.Report select report.Author).Distinct().ToList();
             ViewBag.status = (from report in _context.Report select report.Status).Distinct().ToList();
             ViewBag.Projects = (from project in _context.Projects select project).Where(P => P.IsOver == false).ToList();
 
-            if ((IdToSearch != null)||(AuthorToSearch != null)||(ProjectIdToSearch != null))
+            if ((IdToSearch != null)||(AuthorToSearch != null)||(ProjectIdToSearch != null) || (StatusToSearch != null))
             {
-                var aux = Consult(IdToSearch,AuthorToSearch,ProjectIdToSearch);
+                var aux = Consult(IdToSearch,AuthorToSearch,ProjectIdToSearch, StatusToSearch);
                 return View(aux);
             }
                 return View(new List<Report>());
@@ -177,37 +177,56 @@ namespace ProjectsControl.Controllers
         /// <param name="AuthorToSearch"></param>
         /// <param name="ProjectIdToSearch"></param>
         /// <returns>List of Reports</returns>
-        private List<Report> Consult(string IdToSearch= null, string AuthorToSearch =null,string ProjectIdToSearch=null)
+        private List<Report> Consult(string IdToSearch= null, string AuthorToSearch =null,string ProjectIdToSearch=null, string StatusToSearch = null)
         {
             var listaR = new List<Report>();
-            if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch !=null))
+            if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch !=null)&&(StatusToSearch!=null))
+            {
+                listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
+                                                                WHERE	(ReportId LIKE CONCAT('%',{IdToSearch},'%'))
+                                                                AND		(Author LIKE CONCAT('%',{AuthorToSearch},'%'))
+                                                                AND		(ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%'))
+                                                                AND		(Status LIKE CONCAT('%',{StatusToSearch},'%'))").ToList();
+            }
+            else if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch != null) && (StatusToSearch == null))
             {
                 listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
                                                                 WHERE	(ReportId LIKE CONCAT('%',{IdToSearch},'%'))
                                                                 AND		(Author LIKE CONCAT('%',{AuthorToSearch},'%'))
                                                                 AND		(ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%'))").ToList();
             }
-            else if ((IdToSearch == null) && (AuthorToSearch != null) && (ProjectIdToSearch != null))
-            {
-                listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
-                                                                WHERE	(Author LIKE CONCAT('%',{AuthorToSearch},'%'))
-                                                                AND		(ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%'))").ToList();
-            }
-            else if ((IdToSearch == null) && (AuthorToSearch == null) && (ProjectIdToSearch != null))
-            {
-                listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
-                                                                WHERE	(ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%'))").ToList();
-            }
-            else if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch == null))
+            else if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch == null) && (StatusToSearch == null))
             {
                 listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
                                                                 WHERE	(ReportId LIKE CONCAT('%',{IdToSearch},'%'))
                                                                 AND		(Author LIKE CONCAT('%',{AuthorToSearch},'%'))").ToList();
             }
-            else if ((IdToSearch != null) && (AuthorToSearch == null) && (ProjectIdToSearch == null))
+            else if ((IdToSearch != null) && (AuthorToSearch == null) && (ProjectIdToSearch == null) && (StatusToSearch == null))
             {
-                listaR = (_context.Report.FromSqlInterpolated($@"SELECT * FROM Report
-                                                                WHERE	(ReportId LIKE CONCAT('%',{IdToSearch},'%'))")).ToList();
+                listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
+                                                                WHERE	(ReportId LIKE CONCAT('%',{IdToSearch},'%'))").ToList();
+            }
+            else if ((IdToSearch == null) && (AuthorToSearch != null) && (ProjectIdToSearch != null) && (StatusToSearch != null))
+            {
+                listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
+                                                                WHERE	(Author LIKE CONCAT('%',{AuthorToSearch},'%'))
+                                                                AND		(ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%'))
+                                                                AND		(Status LIKE CONCAT('%',{StatusToSearch},'%'))").ToList();
+            }
+            else if ((IdToSearch == null) && (AuthorToSearch == null) && (ProjectIdToSearch != null) && (StatusToSearch != null))
+            {
+                listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
+                                                                WHERE	(ProjectId LIKE CONCAT('%',{ProjectIdToSearch},'%'))
+                                                                AND		(Status LIKE CONCAT('%',{StatusToSearch},'%'))").ToList();
+            }
+            else if ((IdToSearch == null) && (AuthorToSearch == null) && (ProjectIdToSearch == null) && (StatusToSearch != null))
+            {
+                listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
+                                                                WHERE	(Status LIKE CONCAT('%',{StatusToSearch},'%'))").ToList();
+            }
+            else
+            {
+                listaR = new List<Report>();
             }
             return listaR;
         }

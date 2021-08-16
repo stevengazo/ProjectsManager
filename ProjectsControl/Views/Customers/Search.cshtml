@@ -10,6 +10,10 @@
     Busqueda de Clientes
 </h2>
 
+<div>
+    <a asp-controller="Customers" asp-action="Create">Registrar Cliente</a> | <a asp-controller="Customers" asp-action="Index">Listar Clientes </a>
+</div>
+
 <form asp-controller="Customers" asp-action="Search" method="get" class="form-group">
     <label>Cedula</label>
     <input type="text" name="IdToSearch" class="col-form-label-sm" />

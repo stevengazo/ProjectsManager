@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ProjectsControl.Models.Bill>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de Facturación de proyectos</h1>
+
+<div>
+    <a asp-action="Create">Registrar nueva factura</a> | <a asp-controller="Bills" asp-action="Index">Listar Facturas</a>
+</div>
+    
+<form asp-controller="Bills" asp-action="Search" method="get">
+    <label>Numero de Factura</label>
+    <input type="text" name="IdToSearch" />
+    <label>Autor</label>
+    <input type="text" name="AuthorToSearch" />
+    <label>Id de Projecto</label>
+    <select>
+        <option value="">Seleccione un proyecto...</option>
+    </select>
+    <input type="submit" value="Buscar" />
+</form>
+
+    
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfBill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfCreation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfBill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BillId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BillId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BillId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

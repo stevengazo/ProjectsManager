@@ -11,6 +11,9 @@
     Busqueda de Proyectos
 </h2>
 
+<div style="text-align:left;">
+    <a asp-controller="Projects" asp-action="Create">Crear nuevo proyecto</a>  | <a asp-controller="Projects" asp-action="Index">Mostrar todos los Proyectos</a>
+</div>
 
 <form asp-controller="Projects" asp-action="Search" method="get" class="form-group">
     <div>
@@ -54,8 +57,7 @@
         </p>
     </div>
     <div>
-        <input type="submit" value="Buscar" class="btn btn-outline-dark" />
-        <p style="color:red;"> @ViewBag.Message</p>
+        <input type="submit" value="Buscar" class="btn btn-outline-dark" /> <p style="color:red;"> @ViewBag.Message</p>        
     </div>   
 </form>
 

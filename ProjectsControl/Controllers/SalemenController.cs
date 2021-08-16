@@ -144,6 +144,12 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        public async Task<IActionResult> Search()
+        {
+            return View(new List<Saleman>());
+        }
+
         private bool SalemanExists(string id)
         {
             return _context.Salemans.Any(e => e.SalemanId == id);

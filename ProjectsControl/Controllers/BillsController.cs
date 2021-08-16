@@ -151,6 +151,11 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Search()
+        {
+            return View(new List<Bill>());
+        }
+
         private bool BillExists(string id)
         {
             return _context.Bill.Any(e => e.BillId == id);
