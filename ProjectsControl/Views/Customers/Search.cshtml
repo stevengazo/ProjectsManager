@@ -16,11 +16,11 @@
 
 <form asp-controller="Customers" asp-action="Search" method="get" class="form-group">
     <label>Cedula</label>
-    <input type="text" name="IdToSearch" class="col-form-label-sm" />
+    <input type="text" name="IdToSearch" class="col-form-label-sm bg-transparent rounded " />
     <label>Nombre</label>
-    <input type="text" name="NameToSearch" class="col-form-label-sm" />
+    <input type="text" name="NameToSearch" class="col-form-label-sm bg-transparent rounded" />
     <label>Tipo</label>
-    <select name="TypeToSearch" class="col-form-label-sm">
+    <select name="TypeToSearch" class="col-form-label-sm bg-transparent rounded">
         <option value="">Seleccione una opcion...</option>
         @foreach (var item in ViewBag.TypesOfCustomers)
         {
@@ -30,7 +30,6 @@
     <input type="submit" value="Buscar" class="btn-outline-dark" />
 </form>
 <div >
-    
     <p style="position:center; color:red;">@ViewBag.Message</p>
 </div>
 

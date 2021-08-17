@@ -9,48 +9,54 @@
 
 <h4>Report</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div >
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ReportId" />
             <div class="form-group">
-                <label asp-for="NumberOfReport" class="control-label"></label>
+                <label class="control-label">Numero de Reporte</label>
                 <input asp-for="NumberOfReport" class="form-control" />
                 <span asp-validation-for="NumberOfReport" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
+                <label class="control-label">Autor</label>
                 <input asp-for="Author" class="form-control" />
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BeginDate" class="control-label"></label>
+                <label class="control-label">Fecha de Inicio</label>
                 <input asp-for="BeginDate" class="form-control" />
                 <span asp-validation-for="BeginDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
+                <label class="control-label">Fecha de Finalización</label>
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <label class="control-label">Estado</label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">Seleccione...</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En ejecución">En ejecucion</option>
+                    <option value="En revision">En revision</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
+                <label class="control-label">Notas</label>
                 <input asp-for="Notes" class="form-control" />
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
+                <label class="control-label">Id de Proyecto</label>
                 <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
                 <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
     </div>

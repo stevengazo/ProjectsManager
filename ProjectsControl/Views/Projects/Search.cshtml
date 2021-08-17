@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Search";
-    Layout = "~/Views/Shared/_Layout.cshtml";    
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -19,11 +19,11 @@
     <div>
         <p>
             <label class="col-form-label-sm">Nombre</label>
-            <input type="text" name="SearchName" />
+            <input class="bg-transparent rounded" type="text" name="SearchName" />
             <label class="col-form-label-sm">Id</label>
-            <input type="text" name="IdToSearch" />
-            <label class="col-form-label-sm">Mes</label>
-            <select name="MonthToSearch">
+            <input class="bg-transparent rounded" type="text" name="IdToSearch" />
+            <label class="bg-transparent col-form-label-sm">Mes</label>
+            <select name="MonthToSearch" class="bg-transparent rounded">
                 <option value="0">Seleccione un valor...</option>
                 <option value="1">Enero</option>
                 <option value="2">Febrero</option>
@@ -37,17 +37,17 @@
                 <option value="10">Octubre</option>
                 <option value="11">Noviembre</option>
                 <option value="12">Diciembre</option>
-            </select>            
+            </select>
             <label>Año</label>
-            <select name="SearchYear">
+            <select name="SearchYear" class="bg-transparent rounded">
                 <option value="0">Seleccione un año...</option>
                 @foreach (var item in ViewBag.YearOfProject)
                 {
                     <option value="@item">@item</option>
                 }
-            </select>           
+            </select>
             <label>Estado</label>
-            <select name="StatusToSearch">
+            <select name="StatusToSearch" class="bg-transparent rounded">
                 <option value="">Seleccione...</option>
                 @foreach (var item in ViewBag.Status)
                 {
@@ -57,12 +57,13 @@
         </p>
     </div>
     <div>
-        <input type="submit" value="Buscar" class="btn btn-outline-dark" /> <p style="color:red;"> @ViewBag.Message</p>        
-    </div>   
+        <input type="submit" value="Buscar" class="btn btn-outline-dark" />
+    </div>
 </form>
 
+<p class="text-danger text-center"> @ViewBag.Message</p>
 
-<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
             <th>
@@ -107,49 +108,49 @@
     <tbody style="font-size: 12px;">
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfTask)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfferId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OCDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeginDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfJob)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ubication)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Saleman.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
-                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
-                <a style="color:red;" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OCDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfJob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ubication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Saleman.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
+                    <a style="color:red;" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

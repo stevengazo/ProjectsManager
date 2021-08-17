@@ -9,37 +9,37 @@
 
 <h4>Bill</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div >
+    <div >
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="BillId" class="control-label"></label>
+                <label class="control-label">Id de Factura</label>
                 <input asp-for="BillId" class="form-control" />
                 <span asp-validation-for="BillId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberOfBill" class="control-label"></label>
+                <label class="control-label">Numero de Factura</label>
                 <input asp-for="NumberOfBill" class="form-control" />
                 <span asp-validation-for="NumberOfBill" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateOfCreation" class="control-label"></label>
+                <label class="control-label">Fecha de Creación</label>
                 <input asp-for="DateOfCreation" class="form-control" />
                 <span asp-validation-for="DateOfCreation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
+                <label class="control-label">Autor</label>
                 <input asp-for="Author" class="form-control" />
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
+                <label class="control-label">Monto</label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
+                <label class="control-label">Id de Proyecto</label>
                 <select asp-for="ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
             </div>
             <div class="form-group">

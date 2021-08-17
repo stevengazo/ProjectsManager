@@ -18,9 +18,9 @@
 
 <form asp-controller="Reports" asp-action="Search" method="get" class="form-group" >
     <label>Id Reporte </label>
-    <input type="text"  name="IdToSearch"/>
+    <input class="bg-transparent rounded" type="text"  name="IdToSearch"  />
     <label>Autor</label>
-    <select name="AuthorToSearch" >
+    <select class="bg-transparent rounded" name="AuthorToSearch" >
         <option value="">Seleccione un autor...</option>
         @foreach (var item in ViewBag.Authors)
         {
@@ -28,7 +28,7 @@
         }
     </select>
     <label>Estado</label>
-    <select name="StatusToSearch">
+    <select class="bg-transparent rounded" name="StatusToSearch">
         <option value="">Seleccione un estado...</option>
         @foreach (var item in ViewBag.status)
         {
@@ -36,7 +36,7 @@
         }
     </select>
     <label>Proyecto</label>
-    <select name="ProjectIdToSearch">
+    <select class="bg-transparent rounded" name="ProjectIdToSearch">
         <option value="">Seleccione un proyecto...</option>
         @foreach (var item in ViewBag.Projects)
 	{
@@ -48,7 +48,7 @@
 <p class="text-danger">@ViewBag.Message</p>
 
 
-<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
             <th>

@@ -13,11 +13,11 @@
     
 <form asp-controller="Bills" asp-action="Search" method="get">
     <label>Numero de Factura</label>
-    <input type="text" name="IdToSearch" />
+    <input type="text" name="IdToSearch" class="bg-transparent rounded" />
     <label>Autor</label>
-    <input type="text" name="AuthorToSearch" />
+    <input type="text" name="AuthorToSearch"  class="bg-transparent rounded"/>
     <label>Id de Projecto</label>
-    <select name="ProjectIdToSearch">
+    <select name="ProjectIdToSearch" class="bg-transparent rounded" >
         <option value="">Seleccione un proyecto...</option>
     </select>
     <input type="submit" value="Buscar" />
@@ -60,7 +60,7 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BillId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.BillId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BillId">Delete</a>
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.BillId">Delete</a>
             </td>
         </tr>
 }

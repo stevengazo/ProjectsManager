@@ -10,7 +10,7 @@
 <p>
     <a asp-action="Create">Registrar nuevo proyecto</a>
 </p>
-<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
             <th>
@@ -94,7 +94,7 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
                 <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
-                <a asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
             </td>
         </tr>
 }
