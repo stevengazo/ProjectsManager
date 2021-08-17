@@ -32,9 +32,12 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-            ViewBag.Asistances = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == id).Include(E=>E.Employee).Include(W=>W.Week);
-            ViewBag.BillsOfProyect = (from bill in _context.Bill select bill).Where(W => W.ProjectId == id);
-            ViewBag.Reports = (from reports in _context.Report select reports).Where(R=>R.ProjectId == id);
+
+            List<ExtraHour> extras = new List<ExtraHour>();
+            ViewBag.Asistances = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == id).Include(E=>E.Employee).Include(W=>W.Week);           
+            ViewBag.Extras = extras;
+            ViewBag.BillsOfProyect = await (from bill in _context.Bill select bill).Where(W => W.ProjectId == id).ToListAsync();
+            ViewBag.Reports =  await (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToListAsync();
             var project = await _context.Projects
                 .Include(p => p.Customer)
                 .Include(p => p.Saleman)
@@ -82,7 +85,7 @@ namespace ProjectsControl.Controllers
             ViewBag.Status = (from project in _context.Projects select project.Estatus).Distinct().ToList();
             if( (SearchName != null)||(IdToSearch!= null)||(SearchYear!=0)||(MonthToSearch!=0)||(StatusToSearch!= null))
             {
-                consult = Consult(SearchName, IdToSearch, MonthToSearch, SearchYear, StatusToSearch);
+                consult = await Consult(SearchName, IdToSearch, MonthToSearch, SearchYear, StatusToSearch);
                 if(consult.Count > 0)
                 {
                     ViewBag.Message = "";
@@ -202,7 +205,7 @@ namespace ProjectsControl.Controllers
         /// <param name="SearchYear"></param>        
         /// <param name="StatusToSearch"></param>
         /// <returns></returns>
-      private List<Project> Consult(  string SearchName= null,
+      private async Task<List<Project>> Consult(  string SearchName= null,
                                         string IdToSearch = null,
                                         int MonthToSearch=0, 
                                         int SearchYear= 0, 
@@ -213,121 +216,121 @@ namespace ProjectsControl.Controllers
             {
                using( var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
                                                                 and		(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C=>C.Customer).Include(S=>S.Saleman).ToList();
+                                                                and		(Estatus = {StatusToSearch})").Include(C=>C.Customer).Include(S=>S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch != null) && (MonthToSearch != 0) && (SearchYear != 0) && (StatusToSearch == null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
-                                                                and		(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                                                                and		(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch != null) && (MonthToSearch != 0) && (SearchYear == 0) && (StatusToSearch == null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
-                                                                and		(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                                                                and		(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch != null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch == null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
-                                                                and		(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                                                                and		(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch == null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                                                                WHERE	(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch != null) && (MonthToSearch != 0) && (SearchYear != 0) && (StatusToSearch != null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
                                                                 and		(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch != 0) && (SearchYear != 0) && (StatusToSearch != null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
                                                                 and		(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear != 0) && (StatusToSearch != null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch != null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                                                                WHERE	(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch != null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch == null))  
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                                                                WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch != 0) && (SearchYear == 0) && (StatusToSearch == null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                                                                WHERE	(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear != 0) && (StatusToSearch == null))
             {
                 using (var DB = _context)
                 {
-                    return DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Saleman).ToList();
+                    return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
+                                                                WHERE	(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
                 }
             }
             else
             {
                 return (new List<Project>());
             }
-
+         
         }
     }
 }
