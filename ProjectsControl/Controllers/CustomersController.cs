@@ -31,7 +31,7 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.ProjectsOfCustomer = _context.Projects.Where(P => P.CustomerId == id).OrderByDescending(P=>P.OCDate).ToList();
             var customer = await _context.Customers
                 .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null)
