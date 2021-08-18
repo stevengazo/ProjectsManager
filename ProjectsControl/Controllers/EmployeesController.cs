@@ -53,7 +53,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,ProjectName,DateofHiring,Position")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,Name,DateofHiring,Position")] Employee employee)
         {
             if (ModelState.IsValid)
             {

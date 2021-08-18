@@ -42,11 +42,32 @@ namespace ProjectsControl.Controllers
                 .Include(p => p.Customer)
                 .Include(p => p.Saleman)
                 .FirstOrDefaultAsync(m => m.ProjectId == id);
+
+
+            #region Contar cantidad de Horas en el trabajo por persona
+            Dictionary<string, float> Hours = new Dictionary<string, float>();
+            var aux = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == id).Include(E => E.Employee);
+            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
+            foreach (var employee in employees)
+            {
+                var sum = 0;
+                foreach (var asistence in aux)
+                {
+                    if(employee.Equals(asistence.Employee.Name))
+                    {
+                        TimeSpan time = asistence.DateOfEnd - asistence.DateOfBegin;
+                        sum = sum + time.Hours;
+                    }
+                }
+                Hours.Add(employee, sum);
+            }
+            ViewBag.Hours = Hours;
+            #endregion
+
             if (project == null)
             {
                 return NotFound();
             }
-
             return View(project);
         }
 

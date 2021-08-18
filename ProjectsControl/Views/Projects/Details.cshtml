@@ -195,42 +195,22 @@
         <thead>
             <tr>
                 <th>
-                    Día de Inicio
+                    Persona
                 </th>
                 <th>
-                    Día Finalización
-                </th>
-                <th>
-                    Empleado
-                </th>
-                <th>
-                    N° Semana
-                </th>
-                <th>
-                    Acciones
+                    Cantidad de Horas
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in ViewBag.Asistances)
+            @foreach (var item in ViewBag.Hours)
             {
                 <tr>
                     <td>
-                        @item.DateOfBegin
+                        @item.Key
                     </td>
                     <td>
-                        @item.DateOfEnd
-                    </td>
-                    <td>
-                        @item.Employee.Name
-                    </td>
-                    <td>
-                        @item.Week.NumberOfWeek
-                    </td>
-                    <td>
-                        <a asp-controller="Asistances" asp-action="Edit" asp-route-id="@item.AsistanceId">Edit</a>
-                        <a asp-controller="Asistances" asp-action="Details" asp-route-id="@item.AsistanceId">Details</a>
-                        <a style="color:red" asp-controller="Asistances" asp-action="Delete" asp-route-id="@item.AsistanceId">Delete</a>
+                        @item.Value
                     </td>
                 </tr>
             }
