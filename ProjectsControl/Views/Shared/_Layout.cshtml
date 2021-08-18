@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es-es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,32 +18,59 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Search">Proyectos</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Gestion Proyectos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Search">Buscar Proyectos</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Create">Crear Proyectos</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Bills" asp-action="Search">Buscar Facturas</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Bills" asp-action="Create">Crear Facturas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Reports" asp-action="Search">Busqueda Informes</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Reports" asp-action="Create">Crear Informes</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Reports" asp-action="Index">Proyectos Sin Informes</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Bills" asp-action="Search">Facturas</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Personal y Asistencia
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="Index">Buscar Asistencia</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="Create">Registrar Asistencia</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Create">Registrar Extras</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Buscar Extras</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Pendientes de Pago</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Index">Lista de Empleados</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Create">Nuevo Empleado</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Lista Semanas</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Create">Crear Semana</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Consultar Semanas</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Reports" asp-action="Search">Informes</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Clientes
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Search">Buscar Cliente</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Search">Crear Cliente</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Customers" asp-action="Search">Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Salemen" asp-action="Search">Vendedores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Asistances" asp-action="Index">Asistencia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="ExtraHours" asp-action="Index">Extras</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Employees" asp-action="Index">Empleados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Weeks" asp-action="Index">Semanas</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Vendedores
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Salemen" asp-action="Index">Buscar Vendedor</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Salemen" asp-action="Create">Crear Vendedor</a>
+                            </div>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

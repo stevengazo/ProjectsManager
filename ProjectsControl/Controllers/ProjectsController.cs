@@ -33,8 +33,7 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
 
-            List<ExtraHour> extras = new List<ExtraHour>();
-            ViewBag.Asistances = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == id).Include(E=>E.Employee).Include(W=>W.Week);           
+            List<ExtraHour> extras = new List<ExtraHour>();         
             ViewBag.Extras = extras;
             ViewBag.BillsOfProyect = await (from bill in _context.Bill select bill).Where(W => W.ProjectId == id).ToListAsync();
             ViewBag.Reports =  await (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToListAsync();

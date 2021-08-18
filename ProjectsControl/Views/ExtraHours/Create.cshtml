@@ -9,37 +9,42 @@
 
 <h4>ExtraHour</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div >
+    <div >
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ExtraHourId" class="control-label"></label>
+                <label  class="control-label">Id de Referencia</label>
                 <input asp-for="ExtraHourId" class="form-control" />
                 <span asp-validation-for="ExtraHourId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BeginTime" class="control-label"></label>
+                <label class="control-label">Fecha y tiempo Inicio</label>
                 <input asp-for="BeginTime" class="form-control" />
                 <span asp-validation-for="BeginTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
+                <label class="control-label">Fecha y tiempo Finalización</label>
                 <input asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TypeOfHour" class="control-label"></label>
-                <input asp-for="TypeOfHour" class="form-control" />
+                <label  class="control-label">Tipo de hora</label>
+                <select asp-for="TypeOfHour" class="form-control">
+                    <option value="Tiempo y medio">Tiempo y medio</option>
+                    <option value="Tiempo normal">Tiempo Normal</option>
+                    <option value="Tiempo doble">Tiempo doble</option>
+                    <option value="No especicificado">No especificado</option>
+                </select>
                 <span asp-validation-for="TypeOfHour" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Reason" class="control-label"></label>
+                <label  class="control-label">Motivo</label>
                 <input asp-for="Reason" class="form-control" />
                 <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
+                <label  class="control-label">Notas</label>
                 <input asp-for="Notes" class="form-control" />
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
@@ -49,19 +54,19 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label"></label>
+                <label class="control-label">Empleado</label>
                 <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="AsistanceId" class="control-label"></label>
+                <label  class="control-label">Fecha de asistencia</label>
                 <select asp-for="AsistanceId" class ="form-control" asp-items="ViewBag.AsistanceId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="WeekId" class="control-label"></label>
+                <label  class="control-label">Numero de Semana</label>
                 <select asp-for="WeekId" class ="form-control" asp-items="ViewBag.WeekId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
