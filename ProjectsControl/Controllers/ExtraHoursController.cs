@@ -76,7 +76,7 @@ namespace ProjectsControl.Controllers
 
         public async Task<IActionResult> WithoutPaid()
         {
-            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
+            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E=>E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
             return View(aux);
         }
 
