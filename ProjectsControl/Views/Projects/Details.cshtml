@@ -198,25 +198,37 @@
                     Persona
                 </th>
                 <th>
-                    Cantidad de Horas
+                    Horas
+                </th>
+                <th>
+                    Dias
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in ViewBag.Hours)
             {
-                <tr>
-                    <td>
-                        @item.Key
-                    </td>
-                    <td>
-                        @item.Value
-                    </td>
-                </tr>
-            }
+                @foreach (var i in ViewBag.DaysOfEmployees)
+                {
+                    @if (item.Key.Equals(i.Key))
+                    {
+                        <tr>
+                            <td>
+                                @item.Key
+                            </td>
+                            <td>
+                                @item.Value
+                            </td>
+                            <td>
+
+                                @i.Value
+                            </td>
+                        </tr>
+                     }
+                 }
+             }
         </tbody>
     </table>
-
 </div>
 
 <div>

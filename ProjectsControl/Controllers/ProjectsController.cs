@@ -64,6 +64,23 @@ namespace ProjectsControl.Controllers
             ViewBag.Hours = Hours;
             #endregion
 
+            Dictionary<string, int> Days = new Dictionary<string, int>();
+            var asistancesDays = (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == id).Include(E=>E.Employee);
+            foreach (var item in employees)
+            {
+                var sumDay = 0;
+                foreach (var aD in asistancesDays)
+                {
+                    if (item.Equals(aD.Employee.Name))
+                    {
+                        sumDay = sumDay + 1;
+                    }
+                }
+                Days.Add(item,sumDay);
+            }
+            ViewBag.DaysOfEmployees = Days;
+
+
             if (project == null)
             {
                 return NotFound();
