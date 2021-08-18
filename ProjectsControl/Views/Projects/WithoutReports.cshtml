@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ProjectsControl.Models.Project>
+@using ProjectsControl.Models
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>
+    Lista de Proyecto Sin Informe
+</h2>
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Tarea
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Id Oferta
+            </th>
+            <th>
+                OC
+            </th>
+            <th>
+                Tipo Trabajo
+            </th>
+            <th>
+                Ubicacion
+            </th>
+            <th>
+                Cliente
+            </th>
+            <th>
+                Vendedor
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OC)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfJob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ubication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Saleman.Name)
+                </td>
+                <td>
+                    <button class="btn btn-success btn-sm">Crear Informe</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -74,6 +74,12 @@ namespace ProjectsControl.Controllers
             return View(extraHour);
         }
 
+        public async Task<IActionResult> WithoutPaid()
+        {
+            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
+            return View(aux);
+        }
+
         // GET: ExtraHours/Edit/5
         public async Task<IActionResult> Edit(string id)
         {

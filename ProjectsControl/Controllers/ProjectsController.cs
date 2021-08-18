@@ -62,6 +62,7 @@ namespace ProjectsControl.Controllers
             }
             ViewBag.Hours = Hours;
             #endregion
+           
 
             Dictionary<string, int> Days = new Dictionary<string, int>();
             var asistancesDays = (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == id).Include(E=>E.Employee);
@@ -85,6 +86,18 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
             return View(project);
+        }
+
+        public async Task<IActionResult> WithoutReports()
+        {
+            var AUX = _context.Projects.FromSqlInterpolated($@"
+                                                                Select Projects.*
+                                                                FROM Projects LEFT JOIN (SELECT Report.ProjectId FROM Report
+                                                                GROUP BY Report.ProjectId) AS R
+                                                                ON Projects.ProjectId = R.ProjectId
+                                                                Where r.ProjectId is null
+                                                                ").Include(p => p.Customer).Include(p => p.Saleman);
+            return View(AUX);
         }
 
         // GET: Projects/Create
