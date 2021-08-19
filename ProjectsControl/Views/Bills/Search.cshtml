@@ -8,20 +8,29 @@
 <h1>Lista de Facturación de proyectos</h1>
 
 <div>
-    <a asp-action="Create">Registrar nueva factura</a> | <a asp-controller="Bills" asp-action="Index">Listar Facturas</a>
+ <a asp-controller="Bills" asp-action="Index">Listar Facturas</a>
 </div>
-    
+
 <form asp-controller="Bills" asp-action="Search" method="get">
-    <label>Numero de Factura</label>
-    <input type="text" name="IdToSearch" class="bg-transparent rounded" />
-    <label>Autor</label>
-    <input type="text" name="AuthorToSearch"  class="bg-transparent rounded"/>
-    <label>Id de Projecto</label>
-    <select name="ProjectIdToSearch" class="bg-transparent rounded" >
-        <option value="">Seleccione un proyecto...</option>
-    </select>
-    <input type="submit" value="Buscar" />
+    <div class="form-group row">
+        <div class="col">
+            <input style="background-color: #f5f5f5;" type="text" name="IdToSearch" class="rounded form-control" placeholder="Id de Referencia" />
+        </div>
+        <div class="col">
+            <input style="background-color: #f5f5f5;" type="text" name="AuthorToSearch" class="rounded form-control" placeholder="Autor" />
+        </div>
+        <div class="col">
+            <select style="background-color: #f5f5f5;" name="ProjectIdToSearch" class=" rounded form-control">
+                <option value="">Proyecto</option>
+            </select>
+        </div>
+        <div class="col">
+            <input type="submit" value="Buscar" class="btn btn-light " />
+        </div>
+    </div>
 </form>
+    
+
 
     
 <table class="table">
@@ -32,7 +41,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateOfCreation)
-            </th>
+            </th> 
             <th>
                 @Html.DisplayNameFor(model => model.Author)
             </th>
