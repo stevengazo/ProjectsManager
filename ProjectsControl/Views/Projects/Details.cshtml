@@ -1,7 +1,7 @@
 ﻿@model ProjectsControl.Models.Project
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"Detalles {Model.ProjectName}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -132,6 +132,26 @@
 
             }
         </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>Notas y Bitacorá del Proyecto</h3>
+    <p>A continuación las notas realizadas con respecto al proyecto e información referente a su ejecución. Algunas ideas de la información a registrar es:</p>
+    <ul>
+        <li> Incidentes del Proyecto.</li>
+        <li> Conflictos en el sitio.</li>
+        <li> Cambios en la ejecución del proyecto.</li>
+    </ul>
+    <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+        <thead>
+            <tr>
+                <th> Autor</th>
+                <td> Fecha Creacion</td>
+                <td> Titulo</td>
+                <th></th>
+            </tr>
+        </thead>      
     </table>
 </div>
 <div>
