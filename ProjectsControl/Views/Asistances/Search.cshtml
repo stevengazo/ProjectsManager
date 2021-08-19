@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ProjectsControl.Models.Asistance>
+
+@{
+    ViewData["Title"] = "Busqueda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Buscar Asistencias</h1>
+
+<p>
+    <a asp-action="Create">Registrar asistencia</a>
+</p>
+
+<form asp-controller="Asistances" asp-action="Search" method="get">
+    <div class="form-group row">
+        <div class="col">
+            <select style="background-color: #f5f5f5;" class="rounded form-control" name="NameToSearch">
+                <option value="">Empleado</option>
+            </select>
+        </div>
+        <div class="col">
+            <select style="background-color: #f5f5f5;" class="rounded form-control" name="ProjectToSearch">
+                <option value="">Proyecto</option>
+            </select>
+        </div>
+        <div class="col">
+            <select style="background-color: #f5f5f5;" class="rounded form-control" name="WeekToSearch">
+                <option value="">Semana</option>
+            </select>
+        </div>
+        <div class="col">
+            <input type="submit" value="Buscar" class="btn btn-light " />
+        </div>
+    </div>
+</form>
+
+<table class="table table-hover   table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Día de Inicio
+            </th>
+            <th>
+                Día Finalización
+            </th>
+            <th>
+                Empleado
+            </th>
+            <th>
+                Projecto
+            </th>
+            <th>
+                N° Semana
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBegin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfEnd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WeekId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AsistanceId">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.AsistanceId">Details</a>
+                    <a style="color:red" asp-action="Delete" asp-route-id="@item.AsistanceId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
