@@ -6,11 +6,11 @@
 }
 
 <h1>Detalles del Proyecto</h1>
+<p>A continuación se muestra la información registada del proyecto @Model.ProjectName, para mayor información contacte a los encargados respectivos. </p>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ProjectId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ProjectId">Editar información</a> |
 </div>
-
+<hr class="bg-light" />
 <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
     <tbody>
         <tr>
@@ -83,7 +83,12 @@
 
 
 <div>
-    <h2>Facturas registradas</h2>
+    <h2>Facturas Registradas</h2>
+    <p> A continuación se muestras las facturas realizadas por Grupo Mecsa a el cliente @Model.Customer.Name, para mayor detalle favor consulte con el departamento financiero o con el encargado de la realización de la facturas registradas.</p>
+    <div>
+        <a asp-controller="Bills" asp-action="Create">Registrar Nueva Factura</a> |
+    </div>
+    <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 17px;text-align:center">
         <thead>
             <tr>
@@ -131,7 +136,11 @@
 </div>
 <div>
     <h3>Informes Registrados</h3>
-    <p>Informes existentes en la base de datos correspondientes al presente proyecto</p>
+    <p>Informes existentes en la base de datos correspondientes al presente proyecto. A continuación se muestra la cantidad de informes registrados de este proyecto, así como el estato de cada uno. Para mayor información consulte al departamento de ingeniería o al encargado de la redacción del informe.</p>
+    <div>
+        <a asp-controller="Reports" asp-action="Create">Registrar Nuevo Informe</a> 
+    </div>
+    <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
@@ -190,7 +199,15 @@
 </div>
 <div>
     <h3>Asistencias Registradas del Proyecto</h3>
-    <p>Asistencias del proyecto registradas por empleado. Dichas asistencias identifican el personal encargado de la realización proyecto</p>
+    <p>Asistencias del proyecto registradas por empleado. Dichas asistencias identifican el personal encargado de la realización proyecto. Asimismo se muestra la siguiente informacíon:</p>
+    <ul>
+        <li>Cantidad Total de horas registradas por persona empleadas en el proyecto.</li>
+        <li>Cantidad total de dias registrados por persona empleados en el proyecto.</li>
+    </ul>
+    <div>
+        <a asp-controller="Asistances" asp-action="Create">Registrar Nueva asistencia</a>
+    </div>
+    <hr />
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
@@ -224,9 +241,9 @@
                                 @i.Value
                             </td>
                         </tr>
-                     }
-                 }
-             }
+                    }
+                }
+            }
         </tbody>
     </table>
 </div>
@@ -234,7 +251,7 @@
 <div>
     <h3>Horas Extras Registradas</h3>
     <p>Cantidad de horas extras registradas por persona en el proyecto actual</p>
-
+    <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
