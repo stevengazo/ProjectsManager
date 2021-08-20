@@ -21,7 +21,7 @@ namespace ProjectsControl.Controllers
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-            var dBProjectContext = _context.Projects.Include(p => p.Customer).Include(p => p.Saleman);
+            var dBProjectContext = _context.Projects.Include(p => p.Customer).Include(p => p.Employee);
             return View(await dBProjectContext.ToListAsync());
         }
 
@@ -39,7 +39,7 @@ namespace ProjectsControl.Controllers
             ViewBag.Reports =  await (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToListAsync();
             var project = await _context.Projects
                 .Include(p => p.Customer)
-                .Include(p => p.Saleman)
+                .Include(p => p.Employee)
                 .FirstOrDefaultAsync(m => m.ProjectId == id);
 
 
@@ -96,7 +96,7 @@ namespace ProjectsControl.Controllers
                                                                 GROUP BY Report.ProjectId) AS R
                                                                 ON Projects.ProjectId = R.ProjectId
                                                                 Where r.ProjectId is null
-                                                                ").Include(p => p.Customer).Include(p => p.Saleman);
+                                                                ").Include(p => p.Customer).Include(p => p.Employee);
             return View(AUX);
         }
 
@@ -120,9 +120,9 @@ namespace ProjectsControl.Controllers
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            }           
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["SalemanId"] = new SelectList(_context.Salemans, "SalemanId", "SalemanId", project.SalemanId);
+            ViewData["EmployeeId"] = new SelectList(_context.Salemans, "EmployeeId", "EmployeeId", project.EmployeeId);
             return View(project);
         }
 
@@ -169,7 +169,7 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["SalemanId"] = new SelectList(_context.Salemans, "SalemanId", "SalemanId", project.SalemanId);
+            ViewData["EmployeeId"] = new SelectList(_context.Salemans, "EmployeeId", "EmployeeId", project.Employee);
             return View(project);
         }
 
@@ -178,7 +178,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,SalemanId")] Project project)
+        public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
         {
             if (id != project.ProjectId)
             {
@@ -206,7 +206,7 @@ namespace ProjectsControl.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["SalemanId"] = new SelectList(_context.Salemans, "SalemanId", "SalemanId", project.SalemanId);
+            ViewData["SalemanId"] = new SelectList(_context.Salemans, "SalemanId", "SalemanId", project.EmployeeId);
             return View(project);
         }
 
@@ -220,7 +220,7 @@ namespace ProjectsControl.Controllers
 
             var project = await _context.Projects
                 .Include(p => p.Customer)
-                .Include(p => p.Saleman)
+                .Include(p => p.Employee)
                 .FirstOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
             {
@@ -271,7 +271,7 @@ namespace ProjectsControl.Controllers
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
                                                                 and		(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C=>C.Customer).Include(S=>S.Saleman).ToListAsync();
+                                                                and		(Estatus = {StatusToSearch})").Include(C=>C.Customer).Include(S=>S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch != null) && (MonthToSearch != 0) && (SearchYear != 0) && (StatusToSearch == null))
@@ -282,7 +282,7 @@ namespace ProjectsControl.Controllers
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
-                                                                and		(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                and		(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch != null) && (MonthToSearch != 0) && (SearchYear == 0) && (StatusToSearch == null))
@@ -292,7 +292,7 @@ namespace ProjectsControl.Controllers
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
-                                                                and		(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                and		(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch != null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch == null))
@@ -301,7 +301,7 @@ namespace ProjectsControl.Controllers
                 {
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))
-                                                                and		(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                and		(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName != null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch == null))
@@ -309,7 +309,7 @@ namespace ProjectsControl.Controllers
                 using (var DB = _context)
                 {
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                WHERE	(ProjectName like CONCAT('%',{SearchName},'%'))").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch != null) && (MonthToSearch != 0) && (SearchYear != 0) && (StatusToSearch != null))
@@ -320,7 +320,7 @@ namespace ProjectsControl.Controllers
                                                                 WHERE	(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
                                                                 and		(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch != 0) && (SearchYear != 0) && (StatusToSearch != null))
@@ -332,7 +332,7 @@ namespace ProjectsControl.Controllers
                                                                 and		(ProjectName like CONCAT('%',{SearchName},'%'))
                                                                 and		(MONTH(OCDate) ={MonthToSearch})
                                                                 and		(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear != 0) && (StatusToSearch != null))
@@ -341,7 +341,7 @@ namespace ProjectsControl.Controllers
                 {
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
                                                                 WHERE	(YEAR(OCDate)= {SearchYear})
-                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                and		(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch != null))
@@ -349,7 +349,7 @@ namespace ProjectsControl.Controllers
                 using (var DB = _context)
                 {
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                WHERE	(Estatus = {StatusToSearch})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch != null) && (MonthToSearch == 0) && (SearchYear == 0) && (StatusToSearch == null))  
@@ -357,7 +357,7 @@ namespace ProjectsControl.Controllers
                 using (var DB = _context)
                 {
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                WHERE	(ProjectId like CONCAT('%',{IdToSearch},'%'))").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch != 0) && (SearchYear == 0) && (StatusToSearch == null))
@@ -365,7 +365,7 @@ namespace ProjectsControl.Controllers
                 using (var DB = _context)
                 {
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                WHERE	(MONTH(OCDate) ={MonthToSearch})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else if ((SearchName == null) && (IdToSearch == null) && (MonthToSearch == 0) && (SearchYear != 0) && (StatusToSearch == null))
@@ -373,7 +373,7 @@ namespace ProjectsControl.Controllers
                 using (var DB = _context)
                 {
                     return await DB.Projects.FromSqlInterpolated($@"SELECT * FROM Projects
-                                                                WHERE	(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Saleman).ToListAsync();
+                                                                WHERE	(YEAR(OCDate)= {SearchYear})").Include(C => C.Customer).Include(S => S.Employee).ToListAsync();
                 }
             }
             else

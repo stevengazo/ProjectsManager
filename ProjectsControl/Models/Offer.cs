@@ -57,6 +57,9 @@ namespace ProjectsControl.Models
         /// RELATION WITH CUSTOMER
         public Customer Customer { get; set; }
         public string CustomerId { get; set; }
+        /// RELATION WITH Of_Quo
+        public ICollection<Of_Quo> Of_Quos { get; set; }
+        public ICollection<Project> Projects { get; set; }
         #endregion
     }
 }

@@ -22,6 +22,7 @@ namespace ProjectsControl.Models
         public string Notes { get; set; }
         [Required]
         public bool IsPaid { get; set; }
+        public string AceptedBy { get; set; }
 
         //Relation with Employee
         public string EmployeeId { get; set; }

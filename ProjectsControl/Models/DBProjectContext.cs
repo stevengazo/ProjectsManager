@@ -61,7 +61,6 @@ namespace ProjectsControl.Models
                     Manager = "sample",
                     Currency = "dolar",    
                     Details = "Details sample",
-                    SalemanId = oSaleman.SalemanId,
                     CustomerId = oCustomer.CustomerId
                 };
             Employee oEmployee = new Employee
@@ -105,14 +104,7 @@ namespace ProjectsControl.Models
                                     Status = "Everything is God...",
                                     ProjectId= oProject.ProjectId
             };
-            Contact oContact = new Contact {
-                                    ContactId= Guid.NewGuid().ToString(),
-                                    Name = "Contact Sample",
-                                    PhoneNumber = 88888888,
-                                    Email="Sample@sample.com",
-                                    Position="Manager sample",
-                                    CustomerId= oCustomer.CustomerId
-            };
+
 
             
             modelBuilder.Entity<Saleman>().HasData(oSaleman);
@@ -121,13 +113,11 @@ namespace ProjectsControl.Models
             modelBuilder.Entity<Employee>().HasData(oEmployee);
             modelBuilder.Entity<Project>().HasData(oProject);
             modelBuilder.Entity<Asistance>().HasData(oAsistance);
-            modelBuilder.Entity<ExtraHour>().HasData(oExtra);
-            modelBuilder.Entity<Contact>().HasData(oContact);
+            modelBuilder.Entity<ExtraHour>().HasData(oExtra);          
         }
     
         public DbSet<ProjectsControl.Models.Bill> Bill { get; set; }
-    
-        public DbSet<ProjectsControl.Models.Contact> Contact { get; set; }
+            
     
         public DbSet<ProjectsControl.Models.Report> Report { get; set; }
     

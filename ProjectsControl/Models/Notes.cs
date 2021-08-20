@@ -21,6 +21,11 @@ namespace ProjectsControl.Models
         [MaxLength(340)]
         public string NoteDescription { get; set; }
 
-        
+        #region FOREIGNKEY
+        public Project Project { get; set; }
+        public string ProjectId { get; set; }
+
+        #endregion
+
     }
 }

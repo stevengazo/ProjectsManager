@@ -53,6 +53,7 @@ namespace ProjectsControl.Models
         public DateTime LastModification { get; set; }
 
         #region Foreign Keys
+        public ICollection<Of_Quo> Of_Quos { get; set; }
         
         #endregion
 

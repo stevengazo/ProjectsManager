@@ -96,6 +96,8 @@ namespace ProjectsControl.Models
         public ICollection<Bill> Bills { get; set; }
 
         public ICollection<Notes> Notes { get; set; }
+        
+        public ICollection<Expensive> Expensives { get; set; }
 
         // relation with Employees (Saleman)
         
@@ -106,14 +108,16 @@ namespace ProjectsControl.Models
         /// <summary>
         /// Saleman of the Project
         /// </summary>
-        public Employee Employee { get; set; }
+        public Employee Employee { get; set; }        
 
-        public O
+        // relation with CUSTOMERS
+        public Customer Customer { get; set; }
+        public string CustomerId { get; set; }
 
-        // relation with saleman
-        public string SalemanId { get; set; }
-        public Saleman Saleman { get; set; }
+        // RELATION WITH OFFER
 
+        public Offer Offer { get; set; }
+        public string OfferId { get; set; }
         #endregion
     }
 }
