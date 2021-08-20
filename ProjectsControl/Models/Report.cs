@@ -13,7 +13,7 @@ namespace ProjectsControl.Models {
         [Required]
         public string ReportId { get; set; }
         [Required]
-        public int NumberOfReport { get; set; }
+        public string NumberOfReport { get; set; }
         [MinLength(6)]
         public string Author { get; set; }
         public DateTime BeginDate { get; set; }

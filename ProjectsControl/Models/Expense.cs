@@ -14,7 +14,7 @@ namespace ProjectsControl.Models
         [Required(ErrorMessage = "Dato requerido")]
         public string Author { get; set; }
         [Required(ErrorMessage = "Dato requerido")]
-        public DateTime LastmModification { get; set; }
+        public DateTime LastModification { get; set; }
         [Required(ErrorMessage = "Dato requerido")]
         public string Type { get; set; }
         [Required(ErrorMessage = "Dato requerido")]

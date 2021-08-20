@@ -11,7 +11,7 @@ namespace ProjectsControl.Models
         [Required]
         public string BillId { get; set; }
         [Required]
-        public string NumberOfBill { get; set; }
+        public int NumberOfBill { get; set; }
         [Required]
         public DateTime DateOfCreation { get; set; }
         [Required]

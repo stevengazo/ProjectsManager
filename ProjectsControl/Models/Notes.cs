@@ -13,7 +13,7 @@ namespace ProjectsControl.Models
         public string NotesId { get; set; }
         [Required]
         public string Author { get; set; }
-        public string DateOfCreation { get; set; }
+        public DateTime DateOfCreation { get; set; }
         [Required]
         [MaxLength(120)]
         public string Title { get; set; }

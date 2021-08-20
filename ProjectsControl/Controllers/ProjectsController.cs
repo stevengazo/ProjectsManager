@@ -104,7 +104,7 @@ namespace ProjectsControl.Controllers
         public IActionResult Create()
         {
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
-            ViewData["SalemanId"] = new SelectList(_context.Salemans, "SalemanId", "SalemanId");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             return View();
         }
 
@@ -122,7 +122,7 @@ namespace ProjectsControl.Controllers
                 return RedirectToAction(nameof(Index));
             }           
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Salemans, "EmployeeId", "EmployeeId", project.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", project.EmployeeId);
             return View(project);
         }
 
@@ -169,7 +169,7 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Salemans, "EmployeeId", "EmployeeId", project.Employee);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", project.Employee);
             return View(project);
         }
 
@@ -206,7 +206,7 @@ namespace ProjectsControl.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["SalemanId"] = new SelectList(_context.Salemans, "SalemanId", "SalemanId", project.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", project.EmployeeId);
             return View(project);
         }
 

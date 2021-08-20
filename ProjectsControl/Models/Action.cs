@@ -32,7 +32,7 @@ namespace ProjectsControl.Models
         [Required]
         [MaxLength(340)]
         public string Description { get; set; }
-        public string IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         #region ForeignKey
         public Employee Employee { get; set; }

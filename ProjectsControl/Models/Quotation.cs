@@ -11,6 +11,8 @@ namespace ProjectsControl.Models
         /// <summary>
         /// Id of the Quotation PK for internal Use
         /// </summary>
+        [Key]
+        [Required]
         public string QuotationId { get; set; }
         /// <summary>
         /// Type of Quotation
