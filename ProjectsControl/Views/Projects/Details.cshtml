@@ -139,16 +139,47 @@
         <li> Conflictos en el sitio.</li>
         <li> Cambios en la ejecución del proyecto.</li>
     </ul>
+    <div>
+        <a asp-controller="Notes" asp-action="Create">Registrar Nueva nota</a> |
+    </div>
+    <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
-                <th> Autor</th>
-                <td> Fecha Creacion</td>
-                <td> Titulo</td>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Fecha Creación
+                </th>
+                <th>
+                    Titulo
+                </th>
                 <th></th>
             </tr>
-        </thead>      
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Notes)
+            {
+                <tr>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.DateOfCreation
+                    </td>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        <a asp-controller="Notes" asp-action="Details" asp-route-id="@item.NotesId">Ver</a> |
+                        <a class="text-danger" asp-controller="Notes" asp-action="Delete" asp-route-id="@item.NotesId">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
+
 </div>
 <div>
     <h3>Informes Registrados</h3>
@@ -271,28 +302,8 @@
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
-                <th>
-                    Inicio
-                </th>
-                <th>
-                    Fin
-                </th>
-                <th>
-                    Tipo de hora
-                </th>
-                <th>
-                    Motivo
-                </th>
-                <th>
-                    Notas
-                </th>
-                <th>
-                    Pagado
-                </th>
-                <th>
-                    Empleado
-                </th>
-                <th></th>
+                <th>Persona</th>
+                <th>Horas</th>
             </tr>
         </thead>
         <tbody style="font-size: 12px;">
@@ -300,31 +311,11 @@
             {
                 <tr>
                     <td>
-                        @item.BeginTime
+                        @item.Key
                     </td>
                     <td>
-                        @item.EndTime
-                    </td>
-                    <td>
-                        @item.TypeOfHour
-                    </td>
-                    <td>
-                        @item.Reason
-                    </td>
-                    <td>
-                        @item.Notes
-                    </td>
-                    <td>
-                        @item.IsPaid
-                    </td>
-                    <td>
-                        @item.Employee.Name
-                    </td>
-                    <td>
-                        <a asp-controller="ExtraHours" asp-action="Edit" asp-route-id="@item.ExtraHourId">Editar</a>
-                        <a asp-controller="ExtraHours" asp-action="Details" asp-route-id="@item.ExtraHourId">Detalles</a>
-                        <a style="color:red" asp-controller="ExtraHours" asp-action="Delete" asp-route-id="@item.ExtraHourId">Eliminar</a>
-                    </td>
+                        @(item.Value)
+                    </td>                    
                 </tr>
             }
         </tbody>

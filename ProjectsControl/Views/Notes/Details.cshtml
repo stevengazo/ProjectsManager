@@ -1,16 +1,16 @@
 ﻿@model ProjectsControl.Models.Notes
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"Detalles de {Model.Title}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
     <h4>Notes</h4>
     <hr />
-    <dl class="row">
+    <dl >
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Author)
         </dt>

@@ -1,7 +1,7 @@
 ﻿@model ProjectsControl.Models.Notes
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Notas de Proyecto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,13 +9,13 @@
 
 <h4>Notes</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div >
+    <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="NotesId" class="control-label"></label>
-                <input asp-for="NotesId" class="form-control" />
+                <input asp-for="NotesId" class="form-control" value="@Guid.NewGuid().ToString()" />
                 <span asp-validation-for="NotesId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOfCreation" class="control-label"></label>
-                <input asp-for="DateOfCreation" class="form-control" />
+                <input asp-for="DateOfCreation" class="form-control" value="@DateTime.Now"/>
                 <span asp-validation-for="DateOfCreation" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="NoteDescription" class="control-label"></label>
-                <input asp-for="NoteDescription" class="form-control" />
+                <textarea asp-for="NoteDescription" class="form-control"></textarea>
                 <span asp-validation-for="NoteDescription" class="text-danger"></span>
             </div>
             <div class="form-group">

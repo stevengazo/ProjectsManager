@@ -1,36 +1,71 @@
 ﻿@model ProjectsControl.Models.Employee
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Empleado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Creación</h1>
 
-<h4>Employee</h4>
+<h4>Registro de Empleado</h4>
 <hr />
 <div >
     <div >
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label  class="control-label">Cedula de Empleado</label>
-                <input asp-for="EmployeeId" class="form-control" />
+                <label class="control-label">Id de Referencia Interno</label>
+                <input asp-for="EmployeeId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
                 <span asp-validation-for="EmployeeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Nombre Completo del Empleado</label>
+                <label class="control-label">Cedula</label>
+                <input asp-for="EmployeeDNI" class="form-control" />
+                <span asp-validation-for="EmployeeDNI" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nombre</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Fecha de ingreso</label>
+                <label class="control-label">Cargo</label>
+                <input asp-for="Position" class="form-control" />
+                <span asp-validation-for="Position" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha de nacimiento</label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha de Contratación</label>
                 <input asp-for="DateofHiring" class="form-control" />
                 <span asp-validation-for="DateofHiring" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label  class="control-label">Cargo</label>
-                <input asp-for="Position" class="form-control" />
+                <label class="control-label">Fecha de despido</label>
+                <input asp-for="DateOfFired" class="form-control" />
+                <span asp-validation-for="DateOfFired" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">ESta activo</label>
+                <input asp-for="IsActive" class="form-control" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Numero de Telefono</label>
+                <input asp-for="MobileNumber" class="form-control" />
+                <span asp-validation-for="MobileNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Correo</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Salario</label>
+                <input asp-for="Salary" class="form-control" />
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,7 +76,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver a Index</a>
 </div>
 
 @section Scripts {

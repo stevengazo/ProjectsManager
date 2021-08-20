@@ -9,15 +9,16 @@ namespace ProjectsControl.Models
     public class Notes
     {
         [Key]
-        [Required]
+        [Required(ErrorMessage ="Campo Requerido")]
         public string NotesId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         public string Author { get; set; }
+        [Required(ErrorMessage = "Campo Requerido")]
         public DateTime DateOfCreation { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [MaxLength(120)]
         public string Title { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [MaxLength(340)]
         public string NoteDescription { get; set; }
 

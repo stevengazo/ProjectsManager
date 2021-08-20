@@ -36,6 +36,7 @@ namespace ProjectsControl.Controllers
             List<ExtraHour> extras = new List<ExtraHour>();         
             ViewBag.Extras = extras;
             ViewBag.BillsOfProyect = await (from bill in _context.Bill select bill).Where(W => W.ProjectId == id).ToListAsync();
+            ViewBag.Notes = await(from note in _context.Notes select note).Where(N => N.ProjectId == id).ToListAsync();
             ViewBag.Reports =  await (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToListAsync();
             var project = await _context.Projects
                 .Include(p => p.Customer)
@@ -62,10 +63,29 @@ namespace ProjectsControl.Controllers
             }
             ViewBag.Hours = Hours;
             #endregion
-           
 
+            #region Cantidad de dias por persona
+
+            
+            ViewBag.DaysOfEmployees = await GetDaysByEmployee(id);
+            #endregion
+
+            // Contar Cantidad Extras
+            ViewBag.Extras = await GetExtrasByEmployee(id);
+
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return View(project);
+        }
+        public async Task<Dictionary<string, int>> GetDaysByEmployee(string IdOfProject = "")
+        {
             Dictionary<string, int> Days = new Dictionary<string, int>();
-            var asistancesDays = (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == id).Include(E=>E.Employee);
+            var aux = await (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToListAsync();            
+            var asistancesDays = await (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == IdOfProject).Include(E => E.Employee).ToListAsync();
+            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
             foreach (var item in employees)
             {
                 var sumDay = 0;
@@ -76,16 +96,36 @@ namespace ProjectsControl.Controllers
                         sumDay = sumDay + 1;
                     }
                 }
-                Days.Add(item,sumDay);
+                Days.Add(item, sumDay);
             }
-            ViewBag.DaysOfEmployees = Days;
+            return Days;
+        }
 
 
-            if (project == null)
+        public async Task<Dictionary<string, float>> GetExtrasByEmployee(string IdOfProject="")
+        {
+            var aux = await (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToListAsync();
+            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
+            Dictionary<string, float> Extras = new Dictionary<string, float>();
+            var extrasAux = await _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
+                                                                        from ExtraHours 
+                                                                        left join (	SELECT * FROM Asistances
+                                                                        WHERE Asistances.ProjectId = '{IdOfProject.ToString()}') AS tmp
+                                                                        on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToListAsync();
+            foreach (var item in employees)
             {
-                return NotFound();
+                var sumExtra = 0.0f;
+                foreach (var e in extrasAux)
+                {
+                    if (item.Equals(e.Employee.Name))
+                    {
+                        TimeSpan etime = e.EndTime - e.BeginTime;
+                        sumExtra = sumExtra + etime.Hours;
+                    }
+                }
+                Extras.Add(item, sumExtra);
             }
-            return View(project);
+            return Extras;
         }
 
         public async Task<IActionResult> WithoutReports()
@@ -104,7 +144,8 @@ namespace ProjectsControl.Controllers
         public IActionResult Create()
         {
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
+            var list = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
+            ViewData["EmployeeId"] = new SelectList(list, "EmployeeId", "EmployeeId");
             return View();
         }
 
@@ -122,7 +163,8 @@ namespace ProjectsControl.Controllers
                 return RedirectToAction(nameof(Index));
             }           
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", project.EmployeeId);
+            var list = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
+            ViewData["EmployeeId"] = new SelectList(list, "EmployeeId", "EmployeeId", project.EmployeeId);
             return View(project);
         }
 
