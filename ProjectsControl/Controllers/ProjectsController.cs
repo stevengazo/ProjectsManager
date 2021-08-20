@@ -143,9 +143,8 @@ namespace ProjectsControl.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
-            var list = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
-            ViewData["EmployeeId"] = new SelectList(list, "EmployeeId", "EmployeeId");
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");            
+            ViewBag.Employees=(from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));            
             return View();
         }
 
@@ -164,7 +163,7 @@ namespace ProjectsControl.Controllers
             }           
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
             var list = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
-            ViewData["EmployeeId"] = new SelectList(list, "EmployeeId", "EmployeeId", project.EmployeeId);
+            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
             return View(project);
         }
 
@@ -211,7 +210,7 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", project.Employee);
+            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
             return View(project);
         }
 
@@ -248,7 +247,7 @@ namespace ProjectsControl.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", project.EmployeeId);
+            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
             return View(project);
         }
 
