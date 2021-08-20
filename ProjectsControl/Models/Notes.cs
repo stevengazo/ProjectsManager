@@ -20,5 +20,7 @@ namespace ProjectsControl.Models
         [Required]
         [MaxLength(340)]
         public string NoteDescription { get; set; }
+
+        
     }
 }
