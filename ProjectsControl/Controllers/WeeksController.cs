@@ -148,5 +148,17 @@ namespace ProjectsControl.Controllers
         {
             return _context.Week.Any(e => e.WeekId == id);
         }
+
+        
+        public async Task<IActionResult> ScheduleDetails(string id)
+        {
+            Week week =await (from oweek in _context.Week select oweek).Where(Week =>Week.WeekId == id).FirstOrDefaultAsync();
+            List<Asistance> asistances = await (from asis in _context.Asistances select asis).Where(A => A.WeekId == id).Include(A=>A.Employee).ToListAsync();             
+            TimeSpan aux = week.EndOfWeek - week.BeginOfWeek;
+            ViewBag.Employees= (from empl in asistances select empl.Employee).Distinct().ToList();
+            ViewBag.QuantityOfDays = aux.Days;
+            ViewBag.Asistances = asistances;
+            return View(week);
+        }
     }
 }

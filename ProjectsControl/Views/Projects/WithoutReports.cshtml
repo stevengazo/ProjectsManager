@@ -22,7 +22,7 @@
     <thead>
         <tr>
             <th>
-                Id
+                N° Proyecto
             </th>
             <th>
                 Tarea
@@ -55,9 +55,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectId)
-                </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.NumberOfProject)
+                </th>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumberOfTask)
                 </td>

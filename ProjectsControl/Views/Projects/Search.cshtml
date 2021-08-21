@@ -23,7 +23,7 @@
             <input style="background-color: #f5f5f5;" class=" rounded form-control " type="text" name="SearchName" placeholder="Nombre de Proyecto" />
         </div>
         <div class="col">
-            <input style="background-color: #f5f5f5;" class="rounded form-control" type="text" name="IdToSearch" placeholder="Id de Referencia" />
+            <input style="background-color: #f5f5f5;" class="rounded form-control" type="text" name="NumberOfProjectToSearch" placeholder="Numero de Proyecto" />
         </div>
     </div>
     <div class="row">
@@ -75,91 +75,67 @@
 <table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Tarea
-            </th>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Id Oferta
-            </th>
-            <th>
-                OC
-            </th>
-            <th>
-                Fecha OC
-            </th>
-            <th>
-                Fecha Inicio
-            </th>
-            <th>
-                Fecha Finalizacion
-            </th>
-            <th>
-                Tipo Trabajo
-            </th>
-            <th>
-                Ubicacion
-            </th>
-            <th>
-                Cliente
-            </th>
-            <th>
-                Vendedor
-            </th>
+            <th>N° Proyecto</th>
+            <th>Tarea</th>
+            <th>Nombre</th>
+            <th>Id Oferta</th>
+            <th>OC</th>
+            <th>Fecha OC</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Finalizacion</th>
+            <th>Tipo Trabajo</th>
+            <th>Ubicacion</th>
+            <th>Cliente</th>
+            <th>Vendedor</th>
             <th></th>
         </tr>
     </thead>
     <tbody style="font-size: 12px;">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfTask)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OfferId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OC)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OCDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BeginDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeOfJob)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ubication)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.Name)
-                </td>
-                <td>
-                   
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
-                    <a style="color:red;" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfProject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfTask)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfferId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OCDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeginDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ubication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.Name)
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
+                <a style="color:red;" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

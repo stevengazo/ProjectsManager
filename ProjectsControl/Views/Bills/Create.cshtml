@@ -15,7 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Id de Factura</label>
-                <input asp-for="BillId" class="form-control" />
+                <input asp-for="BillId" class="form-control"value="@Guid.NewGuid().ToString()"  readonly />
                 <span asp-validation-for="BillId" class="text-danger"></span>
             </div>
             <div class="form-group">

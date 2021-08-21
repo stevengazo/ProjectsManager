@@ -1,7 +1,7 @@
 ﻿@model ProjectsControl.Models.ExtraHour
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Tiempo Extra";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label  class="control-label">Id de Referencia</label>
-                <input asp-for="ExtraHourId" class="form-control" />
+                <input asp-for="ExtraHourId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
                 <span asp-validation-for="ExtraHourId" class="text-danger"></span>
             </div>
             <div class="form-group">
