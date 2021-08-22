@@ -24,27 +24,27 @@
 	    {
         <tr>
             <th>@employee.Name</th>
+            @{
+                List<Asistance> LisOfAsis = ViewBag.Asistances;
+                var LisAsisEmpl = LisOfAsis.Where(A => A.EmployeeId.Equals(employee.EmployeeId)).OrderBy(A=>A.DateOfBegin.Date);
+            }
             @for (int i = 0; i < ViewBag.QuantityOfDays; i++)
             {
-                var aux = Model.BeginOfWeek.AddDays(i);
-                foreach (Asistance asist in ViewBag.Asistances)
+                var actualDay = Model.BeginOfWeek.Date.AddDays(i);
+                var exist = LisAsisEmpl.Where(A => A.DateOfBegin.Date.Equals(actualDay.Date)).FirstOrDefault();                               
+                if ( exist!=null)
                 {
-                    if ((asist.EmployeeId.Equals(employee.EmployeeId) && (aux.Date.Equals(asist.DateOfBegin.Date))))
-                    {
-                        var projNam = asist.Project.ProjectName;
-                        <td>
-                            <a asp-controller="Asistances" asp-action="Details" asp-route-id="@asist.AsistanceId">Asistencia</a><br />
-                            <a asp-controller="Projects" asp-action="Details" asp-route-id="@asist.ProjectId">@projNam</a><br />
-                        </td>
-                    }
-                        else
-                        {
-                            <td>
-                                Sin Registro
-                            </td>
-                        }
-                    
+                    <td>
+                        <a asp-controller="Projects" asp-action="Details" asp-route-id="@exist.Project.ProjectId">@exist.Project.ProjectName</a><br />
+                        <a asp-controller="Asistances" asp-action="Details" asp-route-id="@exist.AsistanceId">Asistencia</a><br />
+                    </td>
                 }
+                else
+                {
+                    <td>                            
+                    </td>
+                }
+                
             }
         </tr>
 	    }
