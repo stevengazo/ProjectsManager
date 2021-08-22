@@ -6,7 +6,10 @@
 }
 
 
-<table class="table border-dark">
+<h1>Cronograma de Asistencia- Semana @Model.NumberOfWeek</h1>
+<hr/>
+
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark text-center" >
     <thead>
         <tr>
             <td>Día</td>
@@ -19,16 +22,31 @@
     <tbody>
         @foreach (Employee employee in ViewBag.Employees)
 	    {
-		 <tr>
-             <th>@employee.Name</th>
-             @foreach(Asistance i in ViewBag.Asistance)
+        <tr>
+            <th>@employee.Name</th>
+            @for (int i = 0; i < ViewBag.QuantityOfDays; i++)
+            {
+                var aux = Model.BeginOfWeek.AddDays(i);
+                foreach (Asistance asist in ViewBag.Asistances)
                 {
-                    if (employee.EmployeeId.Equals(i.EmployeeId))
+                    if ((asist.EmployeeId.Equals(employee.EmployeeId) && (aux.Date.Equals(asist.DateOfBegin.Date))))
                     {
-                        <td>@i.AsistanceId - @i.DateOfBegin.ToShortDateString()</td>
+                        var projNam = asist.Project.ProjectName;
+                        <td>
+                            <a asp-controller="Asistances" asp-action="Details" asp-route-id="@asist.AsistanceId">Asistencia</a><br />
+                            <a asp-controller="Projects" asp-action="Details" asp-route-id="@asist.ProjectId">@projNam</a><br />
+                        </td>
                     }
+                        else
+                        {
+                            <td>
+                                Sin Registro
+                            </td>
+                        }
+                    
                 }
-         </tr>
+            }
+        </tr>
 	    }
     </tbody>
 </table>

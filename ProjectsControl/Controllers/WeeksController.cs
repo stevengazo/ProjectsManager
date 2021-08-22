@@ -153,7 +153,7 @@ namespace ProjectsControl.Controllers
         public async Task<IActionResult> ScheduleDetails(string id)
         {
             Week week =await (from oweek in _context.Week select oweek).Where(Week =>Week.WeekId == id).FirstOrDefaultAsync();
-            List<Asistance> asistances = await (from asis in _context.Asistances select asis).Where(A => A.WeekId == id).Include(A=>A.Employee).ToListAsync();             
+            List<Asistance> asistances = await (from asis in _context.Asistances select asis).Where(A => A.WeekId == id).Include(A=>A.Employee).Include(P=>P.Project).ToListAsync();             
             TimeSpan aux = week.EndOfWeek - week.BeginOfWeek;
             ViewBag.Employees= (from empl in asistances select empl.Employee).Distinct().ToList();
             ViewBag.QuantityOfDays = aux.Days;
