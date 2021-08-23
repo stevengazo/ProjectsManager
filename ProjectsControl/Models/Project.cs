@@ -104,7 +104,7 @@ namespace ProjectsControl.Models
         /// <summary>
         /// Saleman Id of the project
         /// </summary>
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
         /// <summary>
         /// Saleman of the Project
         /// </summary>

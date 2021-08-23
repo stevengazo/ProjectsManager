@@ -124,9 +124,9 @@
             <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label">Vendedor</label>
                 <select asp-for="EmployeeId" class="form-control">
-                    @foreach ( var item in ViewBag.Employees)
+                    @foreach ( Employee item in ViewBag.Employees)
 	                {
-	                    <option value="item.EmployeeId">@item.Name</option>	 
+	                    <option value="@item.EmployeeId">@item.Name</option>	 
 	                }
                 </select>
             </div>

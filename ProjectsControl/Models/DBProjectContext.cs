@@ -90,6 +90,20 @@ namespace ProjectsControl.Models
                 QuotationId = oquotation.QuotationId,
 
             };
+            Employee Oemployee = new Employee()
+            {
+                EmployeeId = Guid.NewGuid().ToString(),
+                EmployeeDNI = 1171292,
+                Name = "Sample of name",
+                DateofHiring = DateTime.Today,
+                DateOfBirth = DateTime.Today,
+                DateOfFired = DateTime.Today,
+                IsActive = true,
+                Position = "d",
+                MobileNumber = 888,
+                Email = "sample@grupomecsa.net",
+                Salary = 100
+            };
             Project oProject = new Project()
             {
                 ProjectId = Guid.NewGuid().ToString(),
@@ -112,6 +126,7 @@ namespace ProjectsControl.Models
                 Ubication= "San JoseCosta Rica", 
                 CustomerId= ocustomer.CustomerId,
                 OfferId= oOffer.OfferId,
+                EmployeeId= Oemployee.EmployeeId
             };
             Bill obills = new Bill {
                 BillId = Guid.NewGuid().ToString(),
@@ -150,20 +165,6 @@ namespace ProjectsControl.Models
                 Status = "sample of estatus",
                 Notes = "sample of notes",
                 ProjectId= oProject.ProjectId
-            };
-            Employee Oemployee = new Employee()
-            {
-                EmployeeId = Guid.NewGuid().ToString(),
-                EmployeeDNI = 1171292,
-                Name = "Sample of name",
-                DateofHiring = DateTime.Today,
-                DateOfBirth = DateTime.Today,
-                DateOfFired = DateTime.Today,
-                IsActive = true,
-                Position="d",
-                MobileNumber = 888,
-                Email = "sample@grupomecsa.net",
-                Salary = 100
             };
             Action oaction = new Action {
                 ActionId = Guid.NewGuid().ToString(),

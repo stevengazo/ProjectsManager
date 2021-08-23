@@ -51,6 +51,30 @@ namespace ProjectsControl.Controllers
             return View();
         }
 
+
+
+        [Route("Reports/CreateByProject/{id}")]
+        public async Task<IActionResult> CreateByProject(string id)
+        {
+            var project = (from pj in _context.Projects select pj).Where(P => P.ProjectId == id).FirstOrDefault();
+            ViewBag.Project = project;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateByProject([Bind("ReportId,NumberOfReport,Author,BeginDate,EndDate,Status,Notes,ProjectId")] Report report)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(report);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", report.ProjectId);
+            return View(report);
+        }
+
         // POST: Reports/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

@@ -10,7 +10,7 @@ using ProjectsControl.Models;
 namespace ProjectsControl.Migrations
 {
     [DbContext(typeof(DBProjectContext))]
-    [Migration("20210820194753_mymigration")]
+    [Migration("20210823164958_mymigration")]
     partial class mymigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,11 +61,11 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ActionId = "945e670f-5fbc-42f3-ae7b-96dc4562640a",
+                            ActionId = "38a4bab7-1735-4a89-854a-477070e4aad5",
                             Author = "Sample of author",
-                            DateOfCreation = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "sample of description",
-                            EmployeeId = "d41cd0ae-aa1e-44d1-a6cb-36d1b9c5141a",
+                            EmployeeId = "73b8c82f-ace1-4d71-9989-70f5b3f86226",
                             IsActive = true,
                             Title = "Sample of title",
                             TypeOfAction = "sample of type"
@@ -105,11 +105,11 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            AsistanceId = "24dae821-d80d-4239-86ad-ad4840e98b0b",
-                            DateOfBegin = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateOfEnd = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            EmployeeId = "d41cd0ae-aa1e-44d1-a6cb-36d1b9c5141a",
-                            ProjectId = "4fc0dee0-e3de-452c-b68c-3fc61d47a59f",
+                            AsistanceId = "c9c7b700-4591-4d0f-b0e2-a53d90bb2fcd",
+                            DateOfBegin = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfEnd = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeId = "73b8c82f-ace1-4d71-9989-70f5b3f86226",
+                            ProjectId = "f3d19add-ede9-403c-9293-1458a277e734",
                             WeekId = "01-2010"
                         });
                 });
@@ -150,14 +150,14 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            BillId = "c984ddf6-b995-4812-b3aa-20d10571dcda",
+                            BillId = "9adbab1a-07c1-42b9-abb7-b4b98b132179",
                             Amount = 1f,
                             Author = "Sample",
                             Currency = "Dolar",
-                            DateOfCreation = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Notes = "Sample of notes",
                             NumberOfBill = 1,
-                            ProjectId = "4fc0dee0-e3de-452c-b68c-3fc61d47a59f"
+                            ProjectId = "f3d19add-ede9-403c-9293-1458a277e734"
                         });
                 });
 
@@ -185,7 +185,7 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            CustomerId = "83cfe0e1-086e-4df6-93d6-0e7bea592fab",
+                            CustomerId = "8ad5a493-d428-4c36-b923-e70e433dc62d",
                             DNIOfCustomer = 110,
                             Name = "Sample",
                             Sector = "Private"
@@ -238,10 +238,10 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            EmployeeId = "d41cd0ae-aa1e-44d1-a6cb-36d1b9c5141a",
-                            DateOfBirth = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateOfFired = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateofHiring = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeId = "73b8c82f-ace1-4d71-9989-70f5b3f86226",
+                            DateOfBirth = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfFired = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateofHiring = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "sample@grupomecsa.net",
                             EmployeeDNI = 1171292,
                             IsActive = true,
@@ -290,13 +290,13 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ExpensiveId = "88dd5e21-abf3-4a70-a445-d8273a33aef6",
+                            ExpensiveId = "4ec414e9-230b-42d0-abe2-3d4e6b1071d2",
                             Amount = 1.12f,
                             Author = "Sample Of authot",
                             Currency = "Dolar",
-                            LastModification = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            LastModification = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Note = "Sample",
-                            ProjectId = "4fc0dee0-e3de-452c-b68c-3fc61d47a59f",
+                            ProjectId = "f3d19add-ede9-403c-9293-1458a277e734",
                             Type = "Km Cost"
                         });
                 });
@@ -351,11 +351,11 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ExtraHourId = "cd11d559-341c-4a21-9371-5afe29a36eab",
+                            ExtraHourId = "788bc2c8-3d53-4086-b46e-f1c3ba8eb539",
                             AceptedBy = "Nyree",
-                            AsistanceId = "24dae821-d80d-4239-86ad-ad4840e98b0b",
-                            BeginTime = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            EndTime = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            AsistanceId = "c9c7b700-4591-4d0f-b0e2-a53d90bb2fcd",
+                            BeginTime = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndTime = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             IsPaid = false,
                             Notes = "as",
                             Reason = "ad",
@@ -398,11 +398,11 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            NotesId = "f5d559f4-606e-47e0-a57e-402520e7f17b",
+                            NotesId = "4aecd389-df37-42f9-9352-3745fb9059f8",
                             Author = "Sample",
-                            DateOfCreation = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             NoteDescription = "Description of the action",
-                            ProjectId = "4fc0dee0-e3de-452c-b68c-3fc61d47a59f",
+                            ProjectId = "f3d19add-ede9-403c-9293-1458a277e734",
                             Title = "Sample"
                         });
                 });
@@ -432,9 +432,9 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            Of_QuoId = "17fca443-1f4b-40bd-bdce-753e07dd41f6",
+                            Of_QuoId = "8696bf4e-d0e5-410d-8ad4-12abe53109a3",
                             IsModicable = false,
-                            OfferId = "60962708-8b8f-43ee-b811-283182f2aa94",
+                            OfferId = "f8c7dc11-37ed-44e2-a2ad-239f86dff400",
                             QuotationId = "001-2010"
                         });
                 });
@@ -485,12 +485,12 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            OfferId = "60962708-8b8f-43ee-b811-283182f2aa94",
+                            OfferId = "f8c7dc11-37ed-44e2-a2ad-239f86dff400",
                             Author = "Sample of Author",
-                            CustomerId = "83cfe0e1-086e-4df6-93d6-0e7bea592fab",
-                            DateOfCreation = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            CustomerId = "8ad5a493-d428-4c36-b923-e70e433dc62d",
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "sample of description",
-                            LastEdition = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            LastEdition = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             NumberOfOffer = 1,
                             SaleManName = "Sample of name",
                             Title = "Title Sample",
@@ -519,10 +519,7 @@ namespace ProjectsControl.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmployeeId1")
+                    b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("EndDate")
@@ -574,7 +571,7 @@ namespace ProjectsControl.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("OfferId");
 
@@ -583,22 +580,22 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ProjectId = "4fc0dee0-e3de-452c-b68c-3fc61d47a59f",
+                            ProjectId = "f3d19add-ede9-403c-9293-1458a277e734",
                             Amount = 100f,
-                            BeginDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            BeginDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Currency = "Dolar",
-                            CustomerId = "83cfe0e1-086e-4df6-93d6-0e7bea592fab",
+                            CustomerId = "8ad5a493-d428-4c36-b923-e70e433dc62d",
                             Details = "Sample of details",
-                            EmployeeId = 0,
-                            EndDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeId = "73b8c82f-ace1-4d71-9989-70f5b3f86226",
+                            EndDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Estatus = "In progress",
                             IsOver = false,
                             Manager = "Sample of Name",
                             NumberOfProject = 1,
                             NumberOfTask = 1,
                             OC = "Oc Id Sample",
-                            OCDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            OfferId = "60962708-8b8f-43ee-b811-283182f2aa94",
+                            OCDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            OfferId = "f8c7dc11-37ed-44e2-a2ad-239f86dff400",
                             PendingAmount = 0.0,
                             ProjectName = "Sample Of Project",
                             Technician = "Sample",
@@ -714,13 +711,13 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            ReportId = "669ceb62-bf32-4f7f-8866-dc17319bb9ac",
+                            ReportId = "398acab3-4323-48f6-b149-a3d20cd56c44",
                             Author = "Sample of author",
-                            BeginDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            EndDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            BeginDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Notes = "sample of notes",
                             NumberOfReport = "01-2010",
-                            ProjectId = "4fc0dee0-e3de-452c-b68c-3fc61d47a59f",
+                            ProjectId = "f3d19add-ede9-403c-9293-1458a277e734",
                             Status = "sample of estatus"
                         });
                 });
@@ -747,8 +744,8 @@ namespace ProjectsControl.Migrations
                         new
                         {
                             WeekId = "01-2010",
-                            BeginOfWeek = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local),
-                            EndOfWeek = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Local)
+                            BeginOfWeek = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndOfWeek = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -862,7 +859,7 @@ namespace ProjectsControl.Migrations
 
                     b.HasOne("ProjectsControl.Models.Employee", "Employee")
                         .WithMany("Projects")
-                        .HasForeignKey("EmployeeId1");
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("ProjectsControl.Models.Offer", "Offer")
                         .WithMany("Projects")

@@ -47,7 +47,7 @@ namespace ProjectsControl.Controllers
         // GET: Expensives/Create        
         public IActionResult Create(string id)
         {
-            ViewData["ProjectId"] = id;
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProjectId"] = id;
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             return View(expensive);
         }
 

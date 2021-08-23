@@ -84,7 +84,7 @@
                     @Html.DisplayFor(modelItem => item.Employee.Name)
                 </td>
                 <td>
-                    <button class="btn btn-success btn-sm">Crear Informe</button>
+                    <a asp-controller="Reports" asp-action="CreateByProject" asp-route-id="@item.ProjectId" >Registrar informe</a>                    
                 </td>
             </tr>
         }
