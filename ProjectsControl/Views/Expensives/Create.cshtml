@@ -30,7 +30,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
+                <select asp-for="Type" class="form-control">
+                    <option value="Kilometraje">"Kilometraje"</option>
+                    <option value="Materiales Varios">Materiales Varios</option>
+                    <option value="Materiales Mecsa">Materiales Mecsa</option>
+                    <option value="Viaticos">Viaticos</option>
+                    <option value="Gastos Administrativos">Gastos Administrativos</option>
+                </select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,8 +55,8 @@
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
+                <label class="control-label">Id de Referencia de Proyecto</label>
+                <input asp-for="ProjectId" class="form-control" value="@ViewBag.ProjectId" readonly/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

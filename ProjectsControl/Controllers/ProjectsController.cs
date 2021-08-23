@@ -32,28 +32,65 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-
-            List<ExtraHour> extras = new List<ExtraHour>();         
-            ViewBag.Extras = extras;
-            ViewBag.BillsOfProyect = await (from bill in _context.Bill select bill).Where(W => W.ProjectId == id).ToListAsync();
-            ViewBag.Notes = await(from note in _context.Notes select note).Where(N => N.ProjectId == id).ToListAsync();
-            ViewBag.Reports =  await (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToListAsync();
             var project = await _context.Projects
-                .Include(p => p.Customer)
-                .Include(p => p.Employee)
-                .FirstOrDefaultAsync(m => m.ProjectId == id);
+                            .Include(p => p.Customer)
+                            .Include(p => p.Employee)
+                            .FirstOrDefaultAsync(m => m.ProjectId == id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            // Carga la cantidad de Facturas que tenga asociado el proyecto
+            ViewBag.BillsOfProyect = (from bill in _context.Bill select bill).Where(W => W.ProjectId == id).ToList();
+            // Carga todas la notas que tenga asociado el proyecto
+            ViewBag.Notes = (from note in _context.Notes select note).Where(N => N.ProjectId == id).ToList();
+            // Carga todos los reportes asociados al proyecto
+            ViewBag.Reports = (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToList();
 
+            //Contar cantidad de Horas en el trabajo por persona
+            ViewBag.Hours = GetHoursByEmployee(id);
+            // Cantidad de dias por persona            
+            ViewBag.DaysOfEmployees = GetDaysByEmployee(id);
+            // Contar Cantidad Extras
+            ViewBag.Extras =  GetExtrasByEmployee(id);
+            // Contar la cantidad de gastos registrados por categoria
+            ViewBag.ExpensivesByType = GetExpensivesByProject(id);
+            return View(project);
+        }
 
-            #region Contar cantidad de Horas en el trabajo por persona
+        /// <summary>
+        /// Search all the expensives by category and return a dictionary with the information
+        /// </summary>
+        /// <param name="IdOfProject">Project To Search</param>
+        /// <returns></returns>
+        private Dictionary<string, float> GetExpensivesByProject(string IdOfProject = "")
+        {
+            Dictionary<string, float> ExpensivesByType = new Dictionary<string, float>();
+            var ListOfExpensives = (from exp in _context.Expensives select exp)
+                                                .Where(E => E.ProjectId == IdOfProject)
+                                                .ToList();
+            string[] TypesOfExpensives = (from ob in ListOfExpensives select ob.Type)
+                                                .Distinct()
+                                                .ToArray();
+            foreach (var Etype in TypesOfExpensives)
+            {
+                float AmountAux=0.0f;
+                AmountAux = (from obj in ListOfExpensives select obj).Where(E => E.Type.Equals(Etype)).Sum(E=>E.Amount);
+                ExpensivesByType.Add(Etype, AmountAux);
+            }
+            return ExpensivesByType;
+        }
+        private Dictionary<string, float>  GetHoursByEmployee (string IdofProject = "")
+        {
             Dictionary<string, float> Hours = new Dictionary<string, float>();
-            var aux = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == id).Include(E => E.Employee);
+            var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdofProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
             foreach (var employee in employees)
             {
                 var sum = 0;
                 foreach (var asistence in aux)
                 {
-                    if(employee.Equals(asistence.Employee.Name))
+                    if (employee.Equals(asistence.Employee.Name))
                     {
                         TimeSpan time = asistence.DateOfEnd - asistence.DateOfBegin;
                         sum = sum + time.Hours;
@@ -61,30 +98,13 @@ namespace ProjectsControl.Controllers
                 }
                 Hours.Add(employee, sum);
             }
-            ViewBag.Hours = Hours;
-            #endregion
-
-            #region Cantidad de dias por persona
-
-            
-            ViewBag.DaysOfEmployees = await GetDaysByEmployee(id);
-            #endregion
-
-            // Contar Cantidad Extras
-            ViewBag.Extras = await GetExtrasByEmployee(id);
-
-
-            if (project == null)
-            {
-                return NotFound();
-            }
-            return View(project);
+            return Hours;
         }
-        public async Task<Dictionary<string, int>> GetDaysByEmployee(string IdOfProject = "")
+        public Dictionary<string, int> GetDaysByEmployee(string IdOfProject = "")
         {
             Dictionary<string, int> Days = new Dictionary<string, int>();
-            var aux = await (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToListAsync();            
-            var asistancesDays = await (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == IdOfProject).Include(E => E.Employee).ToListAsync();
+            var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();            
+            var asistancesDays =  (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
             foreach (var item in employees)
             {
@@ -102,16 +122,16 @@ namespace ProjectsControl.Controllers
         }
 
 
-        public async Task<Dictionary<string, float>> GetExtrasByEmployee(string IdOfProject="")
+        public Dictionary<string, float> GetExtrasByEmployee(string IdOfProject="")
         {
-            var aux = await (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToListAsync();
+            var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
             Dictionary<string, float> Extras = new Dictionary<string, float>();
-            var extrasAux = await _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
+            var extrasAux =  _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
                                                                         from ExtraHours 
                                                                         left join (	SELECT * FROM Asistances
                                                                         WHERE Asistances.ProjectId = '{IdOfProject.ToString()}') AS tmp
-                                                                        on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToListAsync();
+                                                                        on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToList();
             foreach (var item in employees)
             {
                 var sumExtra = 0.0f;

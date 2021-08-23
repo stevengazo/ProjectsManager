@@ -44,10 +44,10 @@ namespace ProjectsControl.Controllers
             return View(expensive);
         }
 
-        // GET: Expensives/Create
-        public IActionResult Create()
+        // GET: Expensives/Create        
+        public IActionResult Create(string id)
         {
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
+            ViewData["ProjectId"] = id;
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
+        public async Task<IActionResult> Create(string id,[Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", expensive.ProjectId);
+            ViewData["ProjectId"] = id;
             return View(expensive);
         }
 

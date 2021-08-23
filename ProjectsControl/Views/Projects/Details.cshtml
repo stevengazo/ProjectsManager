@@ -76,7 +76,35 @@
     </tbody>
 </table>
 
+<div>
+    <h2>Gastos Registrados en el Proyecto</h2>
+    <p>A continuación se muestran los gastos registrados en el proyecto, clasificados por tipo.</p>
+    <div>
+            <a asp-controller="Expensives" asp-action="Create" asp-route-id="@Model.ProjectId">Registrar Nuevo Gasto</a>
+        @Html.ActionLink("Registrar Nuevo Gasto", "Create", "Expensives", new { ProjectId = Model.ProjectId.ToString() });
+    </div>
+    
 
+    <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 17px;text-align:center">
+        <thead>
+            <tr>
+                <th>Tipo de Gasto</th>
+                <th>Gasto Registrado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{  Dictionary<string, float> Exp = ViewBag.ExpensivesByType;
+                foreach (var item in Exp)
+                {
+                    <tr>
+                        <td>@item.Key</td>
+                        <td>@item.Value</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
 
 <div>
     <h2>Facturas Registradas</h2>
@@ -284,7 +312,6 @@
                                 @item.Value
                             </td>
                             <td>
-
                                 @i.Value
                             </td>
                         </tr>
