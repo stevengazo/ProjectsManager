@@ -449,5 +449,10 @@ namespace ProjectsControl.Controllers
             }
 
         }
+    /*private int GetLastNumberOfReport()
+        {
+            var aux = (from Rp in _context.Report select Rp.NumberOfReport).Max();
+            return aux;
+        }*/
     }
 }

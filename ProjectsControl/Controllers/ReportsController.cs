@@ -58,6 +58,7 @@ namespace ProjectsControl.Controllers
         {
             var project = (from pj in _context.Projects select pj).Where(P => P.ProjectId == id).FirstOrDefault();
             ViewBag.Project = project;
+            ViewBag.NumberOfReport = GetLastNumberOfReport();
             return View();
         }
 
@@ -71,6 +72,7 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.NumberOfReport = GetLastNumberOfReport();
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", report.ProjectId);
             return View(report);
         }
@@ -88,6 +90,7 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.NumberOfReport = GetLastNumberOfReport();
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", report.ProjectId);
             return View(report);
         }
@@ -297,6 +300,14 @@ namespace ProjectsControl.Controllers
                 listaR = new List<Report>();
             }
             return listaR;
+        }
+        /// <summary>
+        /// Get the last number of report and sum 1
+        /// </summary>
+        /// <returns></returns>
+        private int GetLastNumberOfReport()
+        {
+            return (from pj in _context.Report select pj.NumberOfReport).Max()+1;
         }
     }
 }

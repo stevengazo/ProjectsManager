@@ -158,7 +158,7 @@ namespace ProjectsControl.Models
             };
             Report oReport = new Report() {
                 ReportId = Guid.NewGuid().ToString(),
-                NumberOfReport = "01-2010",
+                NumberOfReport = 1,
                 Author = "Sample of author",
                 BeginDate = DateTime.Today,
                 EndDate = DateTime.Today,
@@ -184,15 +184,16 @@ namespace ProjectsControl.Models
                 WeekId = oweek.WeekId,
                 ProjectId= oProject.ProjectId
             };
-            ExtraHour oextra = new ExtraHour() { 
-                ExtraHourId= Guid.NewGuid().ToString(),
-                BeginTime= DateTime.Today,
-                EndTime= DateTime.Today,
-                TypeOfHour= "double",
-                Reason= "ad",
-                Notes="as",
-                IsPaid=false,
-                AceptedBy="Nyree",
+            ExtraHour oextra = new ExtraHour() {
+                ExtraHourId = Guid.NewGuid().ToString(),
+                BeginTime = DateTime.Today,
+                EndTime = DateTime.Today,
+                TypeOfHour = "double",
+                Reason = "ad",
+                Notes = "as",
+                IsPaid = false,
+                AceptedBy = "Nyree",
+                EmployeeId = Oemployee.EmployeeId,
                 AsistanceId= oAsistance.AsistanceId,
                 WeekId= oweek.WeekId
             };
