@@ -18,12 +18,28 @@
 
 
 <form asp-controller="Projects" asp-action="Search" method="get" class="form-group">
-    <div class="form-group row" >
-        <div class="col">
+    <div class="form-group row">
+        <div class="col col-4">
             <input style="background-color: #f5f5f5;" class=" rounded form-control " type="text" name="SearchName" placeholder="Nombre de Proyecto" />
         </div>
-        <div class="col">
+        <div class="col col-4">
             <input style="background-color: #f5f5f5;" class="rounded form-control" type="text" name="NumberOfProjectToSearch" placeholder="Numero de Proyecto" />
+        </div>
+        <div class="col col-4">
+            <select style="background-color:#f5f5f5;" name="TypeToSearch" class="rounded form-control">
+                <option value="">Seleccione...</option>
+                <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
+                <option value="Instalación Ionizante">Instalación Ionizante</option>
+                <option value="Instalación Supresores">Instalación Supresores</option>
+                <option value="Instalación Torre">Instalación Torre</option>
+                <option value="Mantenimiento RAYOS-NO">Mantenimiento RAYOS-NO</option>
+                <option value="Mantenimiento Ionizante">Mantenimiento Ionizante</option>
+                <option value="Mantenimiento Torre">Mantenimiento Torre</option>
+                <option value="Estudio SPAT">Estudio SPAT</option>
+                <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
+                <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
+                <option value="Otros">Otros</option>
+            </select>
         </div>
     </div>
     <div class="row">
