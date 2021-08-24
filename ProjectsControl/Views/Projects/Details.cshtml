@@ -80,7 +80,7 @@
     <h2>Gastos Registrados en el Proyecto</h2>
     <p>A continuación se muestran los gastos registrados en el proyecto, clasificados por tipo.</p>
     <div>
-            <a asp-controller="Expensives" asp-action="Create" asp-route-id="@Model.ProjectId">Registrar Nuevo Gasto</a>
+            <a asp-controller="Expensives" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nuevo Gasto</a>
 
     </div>
     
@@ -168,7 +168,7 @@
         <li> Cambios en la ejecución del proyecto.</li>
     </ul>
     <div>
-        <a asp-controller="Notes" asp-action="Create">Registrar Nueva nota</a> |
+        <a asp-controller="Notes" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nueva Nota</a>
     </div>
     <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">

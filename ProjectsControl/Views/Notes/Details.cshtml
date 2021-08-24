@@ -12,38 +12,38 @@
     <hr />
     <dl >
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
+            Autor
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Author)
+            @Model.Author
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfCreation)
+            Fecha de Creación
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateOfCreation)
+            @Model.DateOfCreation.ToShortDateString()
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            Titulo
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            @Model.Title
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NoteDescription)
+            Descripción
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NoteDescription)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
+            Proyecto
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.ProjectId)
+        <dd class="col-sm-10">
+            @Model.Project.NumberOfProject - @Model.Project.ProjectName
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.NotesId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.NotesId">Editar</a> |
+    <a asp-action="Index">Volver al index</a>
 </div>

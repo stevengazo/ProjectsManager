@@ -44,6 +44,35 @@ namespace ProjectsControl.Controllers
             return View(expensive);
         }
 
+
+
+        // GET: Expensives/Create        
+        public IActionResult CreateByProject(string id)
+        {
+            ViewData["ProjectId"] = id;
+            return View();
+        }
+
+
+        // POST: Expensives/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateByProject(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(expensive);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ProjectId"] = id;
+            return View(expensive);
+        }
+
+
+
         // GET: Expensives/Create        
         public IActionResult Create(string id)
         {

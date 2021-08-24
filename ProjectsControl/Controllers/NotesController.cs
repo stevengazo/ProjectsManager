@@ -50,7 +50,29 @@ namespace ProjectsControl.Controllers
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             return View();
         }
+        // GET: Notes/Create
+        public IActionResult CreateByProject(string id)
+        {
+            ViewData["ProjectId"] = id;
+            return View();
+        }
 
+        // POST: Notes/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateByProject(string id, [Bind("NotesId,Author,DateOfCreation,Title,NoteDescription,ProjectId")] Notes notes)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(notes);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ProjectId"] = id;
+            return View(notes);
+        }
         // POST: Notes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

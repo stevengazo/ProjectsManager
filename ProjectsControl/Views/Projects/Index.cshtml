@@ -10,6 +10,22 @@
 <p>
     <a asp-action="Create">Registrar nuevo proyecto</a>
 </p>
+
+<div>
+    <form asp-action="Index" class="form-group align-content-center " >
+        <select name="QuantityOfProjects" class="form-control-sm bg-transparent">
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        @for (int i = 0; i < 10; i++)
+        {
+            var number = i;
+            <input type="button" value="@number" class="btn"  />
+        }
+    </form>
+</div>
+
 <table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
