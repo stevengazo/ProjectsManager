@@ -47,7 +47,9 @@ namespace ProjectsControl.Controllers
         // GET: Reports/Create
         public IActionResult Create()
         {
+            ViewBag.ActivesProjects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
+            ViewBag.NumberOfReport = GetLastNumberOfReport();
             return View();
         }
 
@@ -90,6 +92,8 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.NumberOfReport = GetLastNumberOfReport();
+            ViewBag.ActivesProjects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
             ViewBag.NumberOfReport = GetLastNumberOfReport();
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", report.ProjectId);
             return View(report);

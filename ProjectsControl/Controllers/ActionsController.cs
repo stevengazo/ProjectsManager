@@ -48,6 +48,7 @@ namespace ProjectsControl.Controllers
         // GET: Actions/Create
         public IActionResult Create()
         {
+            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.IsActive == true).ToList();
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             return View();
         }
@@ -65,6 +66,7 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.IsActive == true).ToList();
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", oaction.EmployeeId);
             return View(oaction);
         }

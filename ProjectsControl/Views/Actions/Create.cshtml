@@ -1,7 +1,7 @@
 ﻿@model ProjectsControl.Models.Action
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Creación Acción Personal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,32 +14,47 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ActionId" class="control-label"></label>
+                <label class="control-label">Id de Referencia Interno</label>
                 <input asp-for="ActionId" class="form-control" value="@Guid.NewGuid().ToString()"  readonly/>
                 <span asp-validation-for="ActionId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label class="control-label">Titulo</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateOfCreation" class="control-label"></label>
+                <label class="control-label">Fecha de Creación</label>
                 <input asp-for="DateOfCreation" class="form-control" />
                 <span asp-validation-for="DateOfCreation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
+                <label class="control-label">Autor</label>
                 <input asp-for="Author" class="form-control" />
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TypeOfAction" class="control-label"></label>
-                <input asp-for="TypeOfAction" class="form-control" />
-                <span asp-validation-for="TypeOfAction" class="text-danger"></span>
+                <label asp-for="TypeOfAction" class="control-label">Tipo de Acción de Personal</label>               
+                <select asp-for="TypeOfAction" class="form-control">
+                    <option value="Nuevo Ingreso">Nuevo Ingreso</option>
+                    <option value="Cambio de Puesto">Cambio de Puesto</option>
+                    <option value="Vacaciones">Vacaciones</option>
+                    <option value="Bonificacion">Bonificación</option>
+                    <option value="Incremento de sueldo">Incremento de sueldo</option>
+                    <option value="Otros">Otros</option>
+                    <option value="Traslado">Traslado</option>
+                    <option value="Incapacidad">Incapacidiad</option>
+                    <option value="Permiso sin goce de Salario">Permiso sin goce de salario</option>
+                    <option value="Permiso con goce de salario">Permiso con goce de salario</option>
+                    <option value="Llamada de atención">Llamada de atención</option>
+                    <option value="Suspención laboral">Suspención laboral</option>
+                    <option value="Renuncia">Renuncia</option>
+                    <option value="Descuento en planilla">Descuento en planilla</option>
+                    <option value="Despido">Despido</option>
+                </select>                
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label">Descripción</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
@@ -49,11 +64,16 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label"></label>
-                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
+                <label asp-for="EmployeeId" class="control-label">Empleado</label>
+                <select asp-for="EmployeeId" class ="form-control">
+                    @foreach (Employee i in ViewBag.Employees)
+                    {
+                        <option value="@i.EmployeeId">@i.Name</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Registrar" class="btn btn-primary" />
             </div>
         </form>
     </div>
