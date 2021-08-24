@@ -31,7 +31,8 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-
+            var actions = (from act in _context.Actions select act).Where(E => E.EmployeeId == id).OrderByDescending(E=>E.DateOfCreation).ToList();
+            ViewBag.actions = actions;
             var employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
             if (employee == null)

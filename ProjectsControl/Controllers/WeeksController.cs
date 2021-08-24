@@ -45,6 +45,9 @@ namespace ProjectsControl.Controllers
         // GET: Weeks/Create
         public IActionResult Create()
         {
+            GetCodeOfWeek(out string code, out int eweek, out int year);
+            ViewBag.Code = code;
+            ViewBag.BeginDate = (from eek in _context.Week select eek.EndOfWeek).Max().AddDays(1);
             return View();
         }
 
@@ -55,6 +58,9 @@ namespace ProjectsControl.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WeekId,NumberOfWeek,BeginOfWeek,EndOfWeek")] Week week)
         {
+            GetCodeOfWeek(out string code, out int eweek, out int year);
+            ViewBag.Code = code;
+            ViewBag.BeginDate = (from eek in _context.Week select eek.EndOfWeek).Max().AddDays(1);
             if (ModelState.IsValid)
             {
                 _context.Add(week);
@@ -147,6 +153,39 @@ namespace ProjectsControl.Controllers
         private bool WeekExists(string id)
         {
             return _context.Week.Any(e => e.WeekId == id);
+        }
+
+
+        private void GetCodeOfWeek(out string Code, out int NWeek, out int NYear)
+        {
+            int aux = 0;
+            var ActualYear = DateTime.Today.Year.ToString();
+            var query = (from week in _context.Weeks
+                         where week.NumberOfWeek.Contains(ActualYear)
+                         select week
+                         ).ToList();
+            foreach (var item in query)
+            {
+                string[] codearray = item.NumberOfWeek.Split('-');
+                int.TryParse(codearray[1], out int result);
+                if (result > aux)
+                {
+                    aux = result;
+                }      
+            }
+            int.TryParse(ActualYear, out int yresult);
+            if (aux >= 50)
+            {
+                aux = 1;                
+                NYear = yresult + 1;
+            }
+            else
+            {
+                aux = aux + 1;
+                NYear = yresult;
+            }
+            Code = NYear.ToString() + "-" + aux.ToString();
+            NWeek = aux;
         }
 
         
