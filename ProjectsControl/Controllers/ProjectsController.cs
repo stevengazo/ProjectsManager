@@ -331,77 +331,46 @@ namespace ProjectsControl.Controllers
                                           string TypeToSearch=null)
         {
             List<Project> LisProjects = new List<Project>();
-            FormattableString Query =$"";
-            bool band = false;
-            if(SearchName!= null)
+            
+
+            if (SearchYear ==0  || MonthToSearch == 0 )
             {
-                Query = $"{Query.ToString()} (ProjectName like CONCAT('%','{SearchName.ToString()}','%'))";
-                band = true;
-            }
-            if(NumberOfProject!=null)
-            {
-                if (band)
+                if(SearchYear == 0 && MonthToSearch != 0)
                 {
-                    Query = $" {Query} and (NumberOfProject like CONCAT('%',{NumberOfProject},'%'))";                    
+                    var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects NULL, NULL, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
+                                                                            
+                    LisProjects = consult.ToList();
+
+                }
+                else if(SearchYear != 0 && MonthToSearch == 0)
+                {
+                    var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects null, {SearchYear.ToString()}, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
+
+                    LisProjects = consult.ToList();
                 }
                 else
                 {
-                    Query = $" {Query}  (NumberOfProject like CONCAT('%',{NumberOfProject},'%'))";
-                    band = true;
+                    var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects null, NULL, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
+
+                    LisProjects = consult.ToList();
                 }
             }
-            if(MonthToSearch != 0)
+            else
             {
-                if (band)
-                {
-                    Query = $"{Query} and (MONTH(OCDate) ={MonthToSearch})";
-                }
-                else
-                {
-                    Query = $"{Query.ToString()} (MONTH(OCDate) ='{MonthToSearch.ToString()}')";
-                    band = true;
-                }
+                var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects {MonthToSearch.ToString()}, {SearchYear.ToString()}, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
+
+                LisProjects = consult.ToList();
             }
-            if(SearchYear != 0)
+            List<Project> LisPro = new List<Project>();
+            foreach (var item in LisProjects)
             {
-                if (band)
-                {
-                    Query = $"{Query.ToString()} (YEAR(OCDate)= {SearchYear})";
-                }
-                else
-                {
-                    Query = $"{Query.ToString()} and (YEAR(OCDate)= {SearchYear})";
-                    band = true;
-                }
+                item.Customer = (from i in _context.Customers select i).Where(C => C.CustomerId == item.CustomerId).FirstOrDefault();
+                item.Employee = (from i in _context.Employees select i).Where(C => C.EmployeeId == item.EmployeeId).FirstOrDefault();
             }
-            /*if((StatusToSearch != null))
+
+            if (LisProjects.Count > 0)
             {
-                if (band)
-                {
-                    Query = Query + " and " + $"(Estatus = {StatusToSearch})";
-                }
-                else
-                {
-                    Query = Query + " " + $"(Estatus = {StatusToSearch})";
-                    band = true;
-                }
-            }
-            if(TypeToSearch != null)
-            {
-                if (band)
-                {
-                    Query = Query + " and " + $"(TypeOfJob = {TypeToSearch})";
-                }
-                else
-                {
-                    Query = Query + "  " + $"(TypeOfJob = {TypeToSearch})";
-                    band = true;
-                }
-            }*/
-            var consult = _context.Projects.FromSqlInterpolated($@"select * from projects where {Query}").ToList();
-            if (consult.Count > 0)
-            {
-                return consult;
+                return LisProjects;
             }
             else
             {
