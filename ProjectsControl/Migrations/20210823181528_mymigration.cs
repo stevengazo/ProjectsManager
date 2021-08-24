@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using ProjectsControl.Models.StoredProcedures;
 
 namespace ProjectsControl.Migrations
 {
@@ -527,6 +528,10 @@ namespace ProjectsControl.Migrations
                 name: "IX_Report_ProjectId",
                 table: "Report",
                 column: "ProjectId");
+
+
+            var SP = SP_Project.GetSPSearchProjects();
+            migrationBuilder.Sql(SP );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
