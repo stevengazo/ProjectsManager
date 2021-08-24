@@ -377,10 +377,10 @@ namespace ProjectsControl.Controllers
                 return (new List<Project>());
             }
         }
-    /*private int GetLastNumberOfReport()
-        {
-            var aux = (from Rp in _context.Report select Rp.NumberOfReport).Max();
-            return aux;
-        }*/
+        private int GetLastNumberOfReport()
+            {
+                var aux = (from Rp in _context.Report select Rp.NumberOfReport).Max();
+                return aux;
+            }
     }
 }
