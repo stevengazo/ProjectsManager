@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-ProjectsControl-E2CB10CD-D8F3-4D5F-9C25-BBA40530BE53</UserSecretsId>
+    <Authors>Steven Fabricio Gazo Maliaño</Authors>
+    <Product>Sistema de Control de Proyectos</Product>
+    <Description>Sistema para el gestión de control interno de proyectos para una compañia en especifico.
+Este sistema se encarga de la gestión interna de:
+-Proyectos
+-Asistencia
+-Horas extras
+-Gastos</Description>
+    <PackageProjectUrl>https://github.com/stevengazo/Platzi-MVC</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

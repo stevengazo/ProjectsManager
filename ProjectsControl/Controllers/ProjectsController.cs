@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using static System.FormattableString;
 using ProjectsControl.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ProjectsControl.Controllers
 {
+
     public class ProjectsController : Controller
     {
         private readonly DBProjectContext _context;
