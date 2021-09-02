@@ -5,45 +5,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
-    <h4>Bill</h4>
+    <h4>Factura</h4>
     <hr />
-    <dl class="row">
+    <dl >
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfBill)
+            Numero de Factura
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NumberOfBill)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfCreation)
+            Fecha de Creación
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateOfCreation)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
+            Autor
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Author)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Amount)
+            Monto
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Amount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
+            Proyecto
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.ProjectId)
+            @Model.Project.ProjectName - @Model.Project.ProjectId
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.BillId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.BillId">Editar</a> |    
 </div>

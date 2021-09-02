@@ -52,6 +52,13 @@ namespace ProjectsControl.Controllers
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
+            var aux = (from a in _context.Employees select a).ToList();
+            var dicEmpl = new Dictionary<string, string>();
+            foreach (var item in aux)
+            {
+                dicEmpl.Add(item.EmployeeId, item.Name);
+            }
+            ViewBag.ListOfEmployes = dicEmpl;
             return View();
         }
 

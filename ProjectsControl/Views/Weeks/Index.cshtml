@@ -41,7 +41,7 @@
                 <a asp-action="ScheduleDetails" asp-route-id="@item.WeekId">Cronograma</a> |
                 <a asp-action="Edit" asp-route-id="@item.WeekId">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.WeekId">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.WeekId">Eliminar</a>
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.WeekId">Eliminar</a>
             </td>
         </tr>
 }

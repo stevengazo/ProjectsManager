@@ -53,6 +53,25 @@ namespace ProjectsControl.Controllers
             ViewData["ProjectName"] = new SelectList(_context.Employees, "ProjectName", "ProjectName");
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
+
+            var aux = (from a in _context.Employees select a).ToList();
+            var dicEmpl = new Dictionary<string, string>();
+            foreach (var item in aux)
+            {
+                dicEmpl.Add(item.EmployeeId, item.Name);
+            }
+
+            ViewBag.ListOfEmployes = dicEmpl;
+
+            
+            
+            var listProj = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
+            var dicProj = new Dictionary<string, string>();
+            foreach (var item in listProj)
+            {
+                dicProj.Add(item.ProjectId, item.ProjectName);
+            }
+            ViewBag.Projects = dicProj;
             return View();
         }
 
@@ -77,6 +96,22 @@ namespace ProjectsControl.Controllers
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", asistance.EmployeeId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", asistance.ProjectId);
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", asistance.WeekId);
+            var aux = (from a in _context.Employees select a).ToList();
+            var dicEmpl = new Dictionary<string, string>();
+            foreach (var item in aux)
+            {
+                dicEmpl.Add(item.EmployeeId, item.Name);
+            }
+
+            ViewBag.ListOfEmployes = dicEmpl;
+
+            var listProj = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
+            var dicProj = new Dictionary<string, string>();
+            foreach (var item in listProj)
+            {
+                dicProj.Add(item.ProjectId, item.ProjectName);
+            }
+            ViewBag.Projects = dicProj;
             return View(asistance);
         }
 
