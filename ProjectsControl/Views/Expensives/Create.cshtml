@@ -1,0 +1,74 @@
+﻿@model ProjectsControl.Models.Expensive
+
+@{
+    ViewData["Title"] = "Crear Gasto de Proyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Expensive</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Id Referencia Gasto</label>
+                <input asp-for="ExpensiveId" class="form-control"value="@Guid.NewGuid().ToString()" readonly  />
+                <span asp-validation-for="ExpensiveId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Autor</label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastModification" class="control-label"></label>
+                <input asp-for="LastModification" class="form-control" />
+                <span asp-validation-for="LastModification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <select asp-for="Type" class="form-control">
+                    <option value="Kilometraje">"Kilometraje"</option>
+                    <option value="Materiales Varios">Materiales Varios</option>
+                    <option value="Materiales Mecsa">Materiales Mecsa</option>
+                    <option value="Viaticos">Viaticos</option>
+                    <option value="Gastos Administrativos">Gastos Administrativos</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Currency" class="control-label"></label>
+                <input asp-for="Currency" class="form-control" />
+                <span asp-validation-for="Currency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <input asp-for="Note" class="form-control" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Id de Referencia de Proyecto</label>
+                <input asp-for="ProjectId" class="form-control" value="@ViewBag.ProjectId" readonly/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

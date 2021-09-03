@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ProjectsControl.Models.ExtraHour>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de tiempos extras registrados </h1>
+
+<p>
+    <a asp-action="Create">Registrar Nuevo Tiempo Extra</a>
+</p>
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Inicio               
+            </th>
+            <th>
+                Fin               
+            </th>
+            <th>
+                Tipo de hora
+            </th>
+            <th>
+                Motivo
+            </th>
+            <th>
+                Notas
+            </th>
+            <th>
+                Pagado
+            </th>
+            <th>
+                Empleado
+            </th>
+            <th>
+                Día de Asistencia
+            </th>
+            <th>
+                Numero de Semana
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeginTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfHour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPaid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asistance.AsistanceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Week.NumberOfWeek)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ExtraHourId">Editar</a> 
+                <a asp-action="Details" asp-route-id="@item.ExtraHourId">Detalles</a> 
+                <a style="color:red" asp-action="Delete" asp-route-id="@item.ExtraHourId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

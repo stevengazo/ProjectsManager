@@ -1,0 +1,49 @@
+﻿@model ProjectsControl.Models.Notes
+
+@{
+    ViewData["Title"] = $"Detalles de {Model.Title}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Notes</h4>
+    <hr />
+    <dl >
+        <dt class = "col-sm-2">
+            Autor
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Author
+        </dd>
+        <dt class = "col-sm-2">
+            Fecha de Creación
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.DateOfCreation.ToShortDateString()
+        </dd>
+        <dt class = "col-sm-2">
+            Titulo
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Title
+        </dd>
+        <dt class = "col-sm-2">
+            Descripción
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NoteDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            Proyecto
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Project.NumberOfProject - @Model.Project.ProjectName
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.NotesId">Editar</a> |
+    <a asp-action="Index">Volver al index</a>
+</div>

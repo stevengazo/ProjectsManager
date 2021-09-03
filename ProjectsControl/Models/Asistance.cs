@@ -19,7 +19,9 @@ namespace ProjectsControl.Models
         public string ProjectId { get; set; }
         public Project Project { get; set; }
 
-            public ICollection<ExtraHour> ExtraHours { get; set; } 
+        public string WeekId { get; set; }
+        public Week Week { get; set; }
+        public ICollection<ExtraHour> ExtraHours { get; set; } 
     }
 }
 

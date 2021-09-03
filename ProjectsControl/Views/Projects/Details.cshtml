@@ -1,97 +1,352 @@
 ﻿@model ProjectsControl.Models.Project
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"Detalles {Model.ProjectName}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles del Proyecto</h1>
+<p>A continuación se muestra la información registada del proyecto @Model.ProjectName, para mayor información contacte a los encargados respectivos. </p>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ProjectId">Editar información</a> |
+</div>
+<hr class="bg-light" />
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <tbody>
+        <tr>
+            <th>Nombre de Tarea</th>
+            <td>@Html.DisplayFor(model => model.NumberOfTask)</td>
+        </tr>
+        <tr>
+            <th>Nombre del Proyecto</th>
+            <td>@Html.DisplayFor(model => model.ProjectName)</td>
+        </tr>
+        <tr>
+            <th>Id Orden de Compra</th>
+            <td>@Html.DisplayFor(model => model.OC)</td>
+        </tr>
+        <tr>
+            <th>Fecha de Compra</th>
+            <td>@Html.DisplayFor(model => model.OCDate)</td>
+        </tr>
+        <tr>
+            <th>Monto</th>
+            <td>@Html.DisplayFor(model => model.Amount)</td>
+        </tr>
+        <tr>
+            <th>Moneda</th>
+            <td>@Html.DisplayFor(model => model.Currency)</td>
+        </tr>
+        <tr>
+            <th>Encargado</th>
+            <td>@Html.DisplayFor(M => M.Manager)</td>
+        </tr>
+        <tr>
+            <th>Fecha de Inicio</th>
+            <td>@Html.DisplayFor(model => model.BeginDate)</td>
+        </tr>
+        <tr>
+            <th>Fecha Finalizacion</th>
+            <td>@Html.DisplayFor(model => model.EndDate)</td>
+        </tr>
+        <tr>
+            <th>Finalizado</th>
+            <td>@Html.DisplayFor(model => model.IsOver)</td>
+        </tr>
+        <tr>
+            <th>Tipo de Trabajo</th>
+            <td>@Html.DisplayFor(model => model.TypeOfJob)</td>
+        </tr>
+        <tr>
+            <th>Detalles</th>
+            <td>@Html.DisplayFor(model => model.Details)</td>
+        </tr>
+        <tr>
+            <th>Ubicacion</th>
+            <td>@Html.DisplayFor(model => model.Ubication)</td>
+        </tr>
+        <tr>
+            <th>Id de Cliente</th>
+            <td>@Html.DisplayFor(model => model.Customer.CustomerId)</td>
+        </tr>
+        <tr>
+            <th>Id de Vendedor</th>
+            <td>@Html.DisplayFor(model => model.Employee.EmployeeId)</td>
+        </tr>
+    </tbody>
+</table>
 
 <div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfTask)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfTask)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OfferId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OfferId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OC)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OC)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OCDate.ToShortDateString())
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OCDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BeginDate.ToShortDateString())
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BeginDate.ToShortDateString())
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsOver)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsOver)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TypeOfJob)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TypeOfJob)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Details)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Details)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ubication)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ubication)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.CustomerId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Saleman)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Saleman.SalemanId)
-        </dd>
-    </dl>
+    <h2>Gastos Registrados en el Proyecto</h2>
+    <p>A continuación se muestran los gastos registrados en el proyecto, clasificados por tipo.</p>
+    <div>
+            <a asp-controller="Expensives" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nuevo Gasto</a>
+
+    </div>
+    
+
+    <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 17px;text-align:center">
+        <thead>
+            <tr>
+                <th>Tipo de Gasto</th>
+                <th>Gasto Registrado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{  Dictionary<string, float> Exp = ViewBag.ExpensivesByType;
+                foreach (var item in Exp)
+                {
+                    <tr>
+                        <td>@item.Key</td>
+                        <td>@item.Value</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2>Facturas Registradas</h2>
+    <p> A continuación se muestras las facturas realizadas por Grupo Mecsa a el cliente @Model.Customer.Name, para mayor detalle favor consulte con el departamento financiero o con el encargado de la realización de la facturas registradas.</p>
+    <div>
+        <a asp-controller="Bills" asp-action="Create">Registrar Nueva Factura</a> |
+    </div>
+    <hr class="bg-light" />
+    <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 17px;text-align:center">
+        <thead>
+            <tr>
+                <th>
+                    Número de Factura
+                </th>
+                <th>
+                    Fecha de Creación
+                </th>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Monto
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.BillsOfProyect)
+            {
+                <tr>
+                    <td>
+                        @item.NumberOfBill
+                    </td>
+                    <td>
+                        @item.DateOfCreation
+                    </td>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.Amount
+                    </td>
+                    <td>
+                        <a asp-controller="Bills" asp-action="Edit" asp-route-id="@item.BillId">Edit</a> |
+                        <a asp-controller="Bills" asp-action="Details" asp-route-id="@item.BillId">Details</a> |
+                        <a class="text-danger" asp-controller="Bills" asp-action="Delete" asp-route-id="@item.BillId">Delete</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>Notas y Bitacorá del Proyecto</h3>
+    <p>A continuación las notas realizadas con respecto al proyecto e información referente a su ejecución. Algunas ideas de la información a registrar es:</p>
+    <ul>
+        <li> Incidentes del Proyecto.</li>
+        <li> Conflictos en el sitio.</li>
+        <li> Cambios en la ejecución del proyecto.</li>
+    </ul>
+    <div>
+        <a asp-controller="Notes" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nueva Nota</a>
+    </div>
+    <hr class="bg-light" />
+    <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+        <thead>
+            <tr>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Fecha Creación
+                </th>
+                <th>
+                    Titulo
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Notes)
+            {
+                <tr>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.DateOfCreation
+                    </td>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        <a asp-controller="Notes" asp-action="Details" asp-route-id="@item.NotesId">Ver</a> |
+                        <a class="text-danger" asp-controller="Notes" asp-action="Delete" asp-route-id="@item.NotesId">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ProjectId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <h3>Informes Registrados</h3>
+    <p>Informes existentes en la base de datos correspondientes al presente proyecto. A continuación se muestra la cantidad de informes registrados de este proyecto, así como el estato de cada uno. Para mayor información consulte al departamento de ingeniería o al encargado de la redacción del informe.</p>
+    <div>
+        <a asp-controller="Reports" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nuevo Informe</a> 
+    </div>
+    <hr class="bg-light" />
+    <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+        <thead>
+            <tr>
+                <th>
+                    Numero de Reporte
+                </th>
+                <th>
+                    Autor
+                </th>
+                <th>
+                    Inicio
+                </th>
+                <th>
+                    Fin
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Notas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 12px;">
+            @foreach (var item in ViewBag.Reports)
+            {
+                <tr>
+                    <td>
+                        @item.NumberOfReport
+                    </td>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.BeginDate
+                    </td>
+                    <td>
+                        @item.EndDate
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    <td>
+                        @item.Notes
+                    </td>
+                    <td>
+                        <a asp-controller="Reports" asp-action="Edit" asp-route-id="@item.ReportId">Editar</a> |
+                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@item.ReportId">Detalles</a> |
+                        <a class="text-danger" asp-controller="Reports" asp-action="Delete" asp-route-id="@item.ReportId">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+<div>
+    <h3>Asistencias Registradas del Proyecto</h3>
+    <p>Asistencias del proyecto registradas por empleado. Dichas asistencias identifican el personal encargado de la realización proyecto. Asimismo se muestra la siguiente informacíon:</p>
+    <ul>
+        <li>Cantidad Total de horas registradas por persona empleadas en el proyecto.</li>
+        <li>Cantidad total de dias registrados por persona empleados en el proyecto.</li>
+    </ul>
+    <div>
+        <a asp-controller="Asistances" asp-action="Create">Registrar Nueva asistencia</a>
+    </div>
+    <hr />
+    <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+        <thead>
+            <tr>
+                <th>
+                    Persona
+                </th>
+                <th>
+                    Horas
+                </th>
+                <th>
+                    Dias
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Hours)
+            {
+                @foreach (var i in ViewBag.DaysOfEmployees)
+                {
+                    @if (item.Key.Equals(i.Key))
+                    {
+                        <tr>
+                            <td>
+                                @item.Key
+                            </td>
+                            <td>
+                                @item.Value
+                            </td>
+                            <td>
+                                @i.Value
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>Horas Extras Registradas</h3>
+    <p>Cantidad de horas extras registradas por persona en el proyecto actual</p>
+    <hr class="bg-light" />
+    <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+        <thead>
+            <tr>
+                <th>Persona</th>
+                <th>Horas</th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 12px;">
+            @foreach (var item in ViewBag.Extras)
+            {
+                <tr>
+                    <td>
+                        @item.Key
+                    </td>
+                    <td>
+                        @(item.Value)
+                    </td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

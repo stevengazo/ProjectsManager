@@ -1,37 +1,72 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es-es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProjectsControl</title>
+    <title>@ViewData["Title"] - Gestión Proyectos Grupo Mecsa</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<body style="background-color: #c5c5c5; ">
+    <header >
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow" style="background: #070429;">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjectsControl</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+             
+                <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <a class="navbar text-light" asp-area="" asp-controller="Home" asp-action="Index">Control Proyectos</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Gestion Proyectos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Search">Buscar Proyectos</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Create">Crear Proyectos</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Bills" asp-action="Search">Buscar Facturas</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Bills" asp-action="Create">Crear Facturas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Reports" asp-action="Search">Busqueda Informes</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Reports" asp-action="Create">Crear Informes</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="WithoutReports">Proyectos Sin Informes</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Salemen" asp-action="Index">Saleman</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Personal y Asistencia
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="Search">Buscar Asistencia</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="Create">Registrar Asistencia</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Create">Registrar Extras</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Pendientes de Pago</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Historial</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Lista Semanas</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Create">Crear Semana</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Consultar Semanas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Actions" asp-action="Create">Crear Acción Personal</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Index">Lista de Empleados</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Create">Nuevo Empleado</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Clientes
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Search">Buscar Cliente</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Create">Crear Cliente</a>
+                            </div>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -39,7 +74,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container  ">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -47,7 +82,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - ProjectsControl - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Control de Proyectos - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

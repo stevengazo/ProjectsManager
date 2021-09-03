@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ProjectsControl.Models.Bill>
+
+@{
+    ViewData["Title"] = "Busqueda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de Facturación de proyectos</h1>
+
+<div>
+ <a asp-controller="Bills" asp-action="Index">Listar Facturas</a>
+</div>
+
+<form asp-controller="Bills" asp-action="Search" method="get">
+    <div class="form-group row">
+        <div class="col">
+            <input style="background-color: #f5f5f5;" type="text" name="IdToSearch" class="rounded form-control" placeholder="Id de Referencia" />
+        </div>
+        <div class="col">
+            <input style="background-color: #f5f5f5;" type="text" name="AuthorToSearch" class="rounded form-control" placeholder="Autor" />
+        </div>
+        <div class="col">
+            <select style="background-color: #f5f5f5;" name="ProjectIdToSearch" class=" rounded form-control">
+                <option value="">Proyecto</option>
+            </select>
+        </div>
+        <div class="col">
+            <input type="submit" value="Buscar" class="btn btn-light " />
+        </div>
+    </div>
+</form>
+    
+
+
+    
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfBill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfCreation)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfBill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BillId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BillId">Details</a> |
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.BillId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,52 @@
+﻿@model ProjectsControl.Models.Week
+@using System.Linq; 
+@{
+    ViewData["Title"] = $"Vista de Cronograma Semana{Model.NumberOfWeek} ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Cronograma de Asistencia- Semana @Model.NumberOfWeek</h1>
+<hr/>
+
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark text-center" >
+    <thead>
+        <tr>
+            <td>Día</td>
+            @for (int i = 0; i < ViewBag.QuantityOfDays; i++)
+            {
+                <td>@Model.BeginOfWeek.AddDays(i).ToShortDateString()</td>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Employee employee in ViewBag.Employees)
+	    {
+        <tr>
+            <th>@employee.Name</th>
+            @{
+                List<Asistance> LisOfAsis = ViewBag.Asistances;
+                var LisAsisEmpl = LisOfAsis.Where(A => A.EmployeeId.Equals(employee.EmployeeId)).OrderBy(A=>A.DateOfBegin.Date);
+            }
+            @for (int i = 0; i < ViewBag.QuantityOfDays; i++)
+            {
+                var actualDay = Model.BeginOfWeek.Date.AddDays(i);
+                var exist = LisAsisEmpl.Where(A => A.DateOfBegin.Date.Equals(actualDay.Date)).FirstOrDefault();                               
+                if ( exist!=null)
+                {
+                    <td>
+                        <a asp-controller="Projects" asp-action="DetailsSimple" asp-route-id="@exist.Project.ProjectId">@exist.Project.ProjectName</a><br />
+                        <a asp-controller="Asistances" asp-action="Details" asp-route-id="@exist.AsistanceId">Asistencia</a><br />
+                    </td>
+                }
+                else
+                {
+                    <td>                            
+                    </td>
+                }
+                
+            }
+        </tr>
+	    }
+    </tbody>
+</table>

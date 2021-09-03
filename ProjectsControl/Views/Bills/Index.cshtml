@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ProjectsControl.Models.Bill>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de Facturación de Proyectos</h1>
+
+<p>
+    <a asp-action="Create">Registrar nueva factura</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Numero de Factura
+            </th>
+            <th>
+                Fecha de Creación
+            </th>
+            <th>
+                Autor
+            </th>
+            <th>
+                Monto
+            </th>
+            <th>
+                Id de Proyecto
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfBill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BillId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.BillId">Detalles</a> |
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.BillId">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,69 @@
+﻿@model ProjectsControl.Models.Asistance
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Asistance</h4>
+<hr />
+<div >
+    <div >
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Id de Asistencia</label>
+                <input asp-for="AsistanceId" class="form-control" value="@Guid.NewGuid().ToString()"  readonly/>
+                <span asp-validation-for="AsistanceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha y hora Inicio</label>
+                <input asp-for="DateOfBegin" class="form-control" />
+                <span asp-validation-for="DateOfBegin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha y hora finalizacion</label>
+                <input asp-for="DateOfEnd" class="form-control" />
+                <span asp-validation-for="DateOfEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Empleado</label>
+                <select asp-for="EmployeeId" class ="form-control" >
+                    @foreach (var item in ViewBag.ListOfEmployes)
+	                {
+                        <option value="@item.Key">@item.Value</option> 
+	                }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Projecto</label>
+                <select asp-for="ProjectId" class="form-control">
+                    @foreach (var item in ViewBag.Projects)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Semana</label>
+                <select asp-for="WeekId" class ="form-control" asp-items="ViewBag.WeekId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

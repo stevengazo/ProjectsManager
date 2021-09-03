@@ -1,0 +1,125 @@
+﻿@model ProjectsControl.Models.Project
+
+@{
+    ViewData["Title"] = $"Detalles {Model.ProjectName}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalles Básicos del Proyecto</h1>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ProjectId">Editar información</a> |
+</div>
+<hr class="bg-light" />
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <tbody>
+        <tr>
+            <th>Id Interno de Referencia</th>
+            <td>@Html.DisplayFor(model => model.ProjectId)</td>
+        </tr>
+        <tr>
+            <td>Numero de Proyecto</td>
+            <td>@Html.DisplayFor(model => model.NumberOfProject)</td>
+        </tr>
+        <tr>
+            <td>Numero de Tarea en Bitrix</td>
+            <td>@Html.DisplayFor(model => model.NumberOfTask)</td>
+        </tr>
+        <tr>
+            <td>Nombre</td>
+            <td>@Html.DisplayFor(model => model.ProjectName)</td>
+        </tr>
+        <tr>
+            <td>Oferta</td>
+            <td>@Html.DisplayFor(model => model.OfferId)</td>
+        </tr>
+        <tr>
+            <td>Orden de Compra</td>
+            <td>@Html.DisplayFor(model => model.OC)</td>
+        </tr>
+        <tr>
+            <td>Fecha de Orden de Compra</td>
+            <td>@Html.DisplayFor(model => model.OCDate)</td>
+        </tr>
+        <tr>
+            <td>Fecha de Inicio de Proyecto</td>
+            <td>@Html.DisplayFor(model => model.BeginDate)</td>
+        </tr>
+        <tr>
+            <td>Fecha de Finalización del Proyecto</td>
+            <td>@Html.DisplayFor(model => model.EndDate)</td>
+        </tr>
+        <tr>
+            <td>Administrador del Proyecto</td>
+            <td>@Html.DisplayFor(model => model.Manager)</td>
+        </tr>
+        <tr>
+            <td>Técnico Encargado</td>
+            <td>@Html.DisplayFor(model => model.Technician)</td>
+        </tr>
+        <tr>
+            <td>Estado</td>
+            <td>@Html.DisplayFor(model => model.Estatus)</td>
+        </tr>
+        <tr>
+            <td>Validación</td>
+            @if (Model.IsOver)
+            {
+                <td><b>Proyecto Finalizado</b></td>
+            }
+            else
+            {
+                <td><b>Proyecto Activo</b></td>
+            }
+        </tr>
+        <tr>
+            <td>Monto del proyecto</td>
+            @if (Model.Currency.Equals("Dolar"))
+            {
+                <td>$ @Html.DisplayFor(model => model.Amount)</td>
+            }
+            else if (Model.Currency.Equals("Colón"))
+            {
+                <td>₡ @Html.DisplayFor(model => model.Amount)</td>
+            }
+            else
+            {
+                <td>€ @Html.DisplayFor(model => model.Amount)</td>
+            }
+        </tr>
+        <tr>
+            <td>Monto Pendiente de Cobro</td>
+            @if (Model.Currency.Equals("Dolar"))
+            {
+                <td>$ @Html.DisplayFor(model => model.PendingAmount)</td>
+            }
+            else if (Model.Currency.Equals("Colón"))
+            {
+                <td>₡ @Html.DisplayFor(model => model.PendingAmount)</td>
+            }
+            else
+            {
+                <td>€ @Html.DisplayFor(model => model.PendingAmount)</td>
+            }
+        </tr>
+        <tr>
+            <td>Tipo de Trabajo</td>
+            <td>@Html.DisplayFor(model => model.TypeOfJob)</td>
+        </tr>
+        <tr>
+            <td>Detalles</td>
+            <td>@Html.DisplayFor(model => model.Details)</td>
+        </tr>
+        <tr>
+            <td>Ubicación</td>
+            <td>@Html.DisplayFor(model => model.Ubication)</td>
+        </tr>
+        <tr>
+            <td>Vendedor</td>
+            <td>@Html.DisplayFor(model => model.Employee.EmployeeId)</td>
+        </tr>
+        <tr>
+            <td>Cliente</td>
+            <td>@Html.DisplayFor(model => model.Customer.Name)</td>
+        </tr>
+    </tbody>
+</table>

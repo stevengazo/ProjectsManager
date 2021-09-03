@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ProjectsControl.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de Empleados registrados</h1>
+
+<p>
+    <a asp-action="Create">Registrar nuevo empleado</a>
+</p>
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Nombre                
+            </th>
+            <th>
+                Fecha Contratación                
+            </th>
+            <th>
+                Cargo                
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateofHiring)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EmployeeId">Editar</a> 
+                <a asp-action="Details" asp-route-id="@item.EmployeeId">Detalles</a> 
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.EmployeeId">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

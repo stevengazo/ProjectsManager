@@ -22,6 +22,7 @@ namespace ProjectsControl.Models
         public string Notes { get; set; }
         [Required]
         public bool IsPaid { get; set; }
+        public string AceptedBy { get; set; }
 
         //Relation with Employee
         public string EmployeeId { get; set; }
@@ -30,5 +31,10 @@ namespace ProjectsControl.Models
         //Relation with Extra Hour
         public string AsistanceId { get; set; }
         public Asistance Asistance { get; set; }
+
+        public string WeekId { get; set; }
+
+        public Week Week {get;set;}
+
     }
 }

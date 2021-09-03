@@ -1,0 +1,92 @@
+﻿@model IEnumerable<ProjectsControl.Models.Project>
+@using ProjectsControl.Models
+
+@{
+    ViewData["Title"] = "Projectos Sin Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>
+    Lista de Proyectos Sin Informes
+</h2>
+<p>
+    A continuación se presenta la lista de proyectos que no poseen informes registrados en la base de datos. Información importante a considerar:
+    <ul>
+        <li class="item">Los Proyectos pueden registrar más de 1 informe.</li>
+        <li class="item">Pueden existir proyectos que no poseen informes (En este caso generar informe en blanco).</li>
+    </ul>
+</p>
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                N° Proyecto
+            </th>
+            <th>
+                Tarea
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Id Oferta
+            </th>
+            <th>
+                OC
+            </th>
+            <th>
+                Tipo Trabajo
+            </th>
+            <th>
+                Ubicacion
+            </th>
+            <th>
+                Cliente
+            </th>
+            <th>
+                Vendedor
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.NumberOfProject)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OC)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfJob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ubication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Name)
+                </td>
+                <td>
+                    <a asp-controller="Reports" asp-action="CreateByProject" asp-route-id="@item.ProjectId" >Registrar informe</a>                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

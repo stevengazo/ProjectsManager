@@ -1,0 +1,48 @@
+﻿@model ProjectsControl.Models.Bill
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Factura</h4>
+    <hr />
+    <dl >
+        <dt class = "col-sm-2">
+            Numero de Factura
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfBill)
+        </dd>
+        <dt class = "col-sm-2">
+            Fecha de Creación
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateOfCreation)
+        </dd>
+        <dt class = "col-sm-2">
+            Autor
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+        <dt class = "col-sm-2">
+            Monto
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt class = "col-sm-2">
+            Proyecto
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Project.ProjectName - @Model.Project.ProjectId
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.BillId">Editar</a> |    
+</div>

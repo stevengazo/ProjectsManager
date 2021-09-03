@@ -5,64 +5,80 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Lista de Proyectos Registrados</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Registrar nuevo proyecto</a>
 </p>
-<table class="table">
+
+<div>
+    <form asp-action="Index" class="form-group align-content-center " >
+        <select name="QuantityOfProjects" class="form-control-sm bg-transparent">
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        @for (int i = 0; i < 10; i++)
+        {
+            var number = i;
+            <input type="button" value="@number" class="btn"  />
+        }
+    </form>
+</div>
+
+<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NumberOfTask)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Tarea
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OfferId)
+                Nombre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OC)
+                Id Oferta
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OCDate)
+                OC
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BeginDate)
+                Fecha OC
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                Fecha Inicio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsOver)
+                Fecha Finalizacion
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TypeOfJob)
+                Tipo Trabajo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Details)
+                Ubicacion
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ubication)
+                Cliente
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Saleman)
+                Vendedor
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="font-size: 12px;">
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberOfTask)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.ProjectName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OfferId)
@@ -80,27 +96,21 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsOver)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.TypeOfJob)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Details)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ubication)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+                @Html.DisplayFor(modelItem => item.Customer.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Saleman.SalemanId)
+                
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
             </td>
         </tr>
 }

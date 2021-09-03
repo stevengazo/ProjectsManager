@@ -19,6 +19,57 @@ namespace ProjectsControl.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ProjectsControl.Models.Action", b =>
+                {
+                    b.Property<string>("ActionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(340)
+                        .HasColumnType("nvarchar(340)");
+
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeOfAction")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ActionId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Actions");
+
+                    b.HasData(
+                        new
+                        {
+                            ActionId = "bfca9246-fc14-44bf-9afd-a44a36ada2e7",
+                            Author = "Sample of author",
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "sample of description",
+                            EmployeeId = "8dc8e97b-8e1d-42d4-868f-587bcc21286b",
+                            IsActive = true,
+                            Title = "Sample of title",
+                            TypeOfAction = "sample of type"
+                        });
+                });
+
             modelBuilder.Entity("ProjectsControl.Models.Asistance", b =>
                 {
                     b.Property<string>("AsistanceId")
@@ -36,21 +87,75 @@ namespace ProjectsControl.Migrations
                     b.Property<string>("ProjectId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("WeekId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("AsistanceId");
 
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("WeekId");
+
                     b.ToTable("Asistances");
 
                     b.HasData(
                         new
                         {
-                            AsistanceId = "01761896-68e6-4e21-856d-7c98f782977b",
-                            DateOfBegin = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EmployeeId = "56d2c825-78ba-45fe-af15-036dc1f095fb"
+                            AsistanceId = "b05c63c9-5398-47d2-8a42-757e11cab4c9",
+                            DateOfBegin = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfEnd = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeId = "8dc8e97b-8e1d-42d4-868f-587bcc21286b",
+                            ProjectId = "ee6f52b0-d0dc-4f9d-aa5a-9dac25f97691",
+                            WeekId = "01-2010"
+                        });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Bill", b =>
+                {
+                    b.Property<string>("BillId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfBill")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("BillId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Bill");
+
+                    b.HasData(
+                        new
+                        {
+                            BillId = "38b1eba4-af22-45b5-add0-fc7d1371270a",
+                            Amount = 1f,
+                            Author = "Sample",
+                            Currency = "Dolar",
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Notes = "Sample of notes",
+                            NumberOfBill = 1,
+                            ProjectId = "ee6f52b0-d0dc-4f9d-aa5a-9dac25f97691"
                         });
                 });
 
@@ -59,12 +164,16 @@ namespace ProjectsControl.Migrations
                     b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("DNIOfCustomer")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("Sector")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
@@ -74,8 +183,9 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            CustomerId = "b2abc4a6-e855-4221-b355-532ac1aa3b7c",
-                            Name = "SalemanTesting",
+                            CustomerId = "dc6680bb-6b7d-446a-bcf4-18aa2fcda546",
+                            DNIOfCustomer = 110,
+                            Name = "Sample",
                             Sector = "Private"
                         });
                 });
@@ -85,8 +195,27 @@ namespace ProjectsControl.Migrations
                     b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfFired")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateofHiring")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployeeDNI")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MobileNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -94,7 +223,11 @@ namespace ProjectsControl.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Position")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Salary")
+                        .HasColumnType("real");
 
                     b.HasKey("EmployeeId");
 
@@ -103,10 +236,66 @@ namespace ProjectsControl.Migrations
                     b.HasData(
                         new
                         {
-                            EmployeeId = "56d2c825-78ba-45fe-af15-036dc1f095fb",
-                            DateofHiring = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Sample of Employee",
-                            Position = "Sample"
+                            EmployeeId = "8dc8e97b-8e1d-42d4-868f-587bcc21286b",
+                            DateOfBirth = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateOfFired = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateofHiring = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Email = "sample@grupomecsa.net",
+                            EmployeeDNI = 1171292,
+                            IsActive = true,
+                            MobileNumber = 888,
+                            Name = "Sample of name",
+                            Position = "d",
+                            Salary = 100f
+                        });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Expensive", b =>
+                {
+                    b.Property<string>("ExpensiveId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ExpensiveId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Expensives");
+
+                    b.HasData(
+                        new
+                        {
+                            ExpensiveId = "a77d17f9-957a-48a1-b931-d940b0028342",
+                            Amount = 1.12f,
+                            Author = "Sample Of authot",
+                            Currency = "Dolar",
+                            LastModification = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Note = "Sample",
+                            ProjectId = "ee6f52b0-d0dc-4f9d-aa5a-9dac25f97691",
+                            Type = "Km Cost"
                         });
                 });
 
@@ -114,6 +303,9 @@ namespace ProjectsControl.Migrations
                 {
                     b.Property<string>("ExtraHourId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AceptedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AsistanceId")
                         .HasColumnType("nvarchar(450)");
@@ -141,25 +333,167 @@ namespace ProjectsControl.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("WeekId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ExtraHourId");
 
                     b.HasIndex("AsistanceId");
 
                     b.HasIndex("EmployeeId");
 
+                    b.HasIndex("WeekId");
+
                     b.ToTable("ExtraHours");
 
                     b.HasData(
                         new
                         {
-                            ExtraHourId = "4f91bb7a-0730-41eb-8570-a490e801c594",
-                            AsistanceId = "01761896-68e6-4e21-856d-7c98f782977b",
-                            BeginTime = new DateTime(2021, 7, 19, 20, 27, 39, 470, DateTimeKind.Local).AddTicks(9955),
-                            EmployeeId = "56d2c825-78ba-45fe-af15-036dc1f095fb",
-                            EndTime = new DateTime(2021, 7, 19, 20, 27, 39, 472, DateTimeKind.Local).AddTicks(5243),
-                            IsPaid = true,
-                            Reason = "SAMPLE",
-                            TypeOfHour = "double"
+                            ExtraHourId = "d2c31ff1-7021-44f1-8395-0d36cf592a64",
+                            AceptedBy = "Nyree",
+                            AsistanceId = "b05c63c9-5398-47d2-8a42-757e11cab4c9",
+                            BeginTime = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EmployeeId = "8dc8e97b-8e1d-42d4-868f-587bcc21286b",
+                            EndTime = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            IsPaid = false,
+                            Notes = "as",
+                            Reason = "ad",
+                            TypeOfHour = "double",
+                            WeekId = "01-2010"
+                        });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Notes", b =>
+                {
+                    b.Property<string>("NotesId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NoteDescription")
+                        .IsRequired()
+                        .HasMaxLength(340)
+                        .HasColumnType("nvarchar(340)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.HasKey("NotesId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Notes");
+
+                    b.HasData(
+                        new
+                        {
+                            NotesId = "cd15a479-d861-4fcf-96be-9f2112384acb",
+                            Author = "Sample",
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            NoteDescription = "Description of the action",
+                            ProjectId = "ee6f52b0-d0dc-4f9d-aa5a-9dac25f97691",
+                            Title = "Sample"
+                        });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Of_Quo", b =>
+                {
+                    b.Property<string>("Of_QuoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsModicable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OfferId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("QuotationId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Of_QuoId");
+
+                    b.HasIndex("OfferId");
+
+                    b.HasIndex("QuotationId");
+
+                    b.ToTable("Of_Quos");
+
+                    b.HasData(
+                        new
+                        {
+                            Of_QuoId = "6d1b00a0-de52-4557-96bb-c28d94916e1e",
+                            IsModicable = false,
+                            OfferId = "836f138a-68e7-4dfe-b10d-caccbc87c35b",
+                            QuotationId = "001-2010"
+                        });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Offer", b =>
+                {
+                    b.Property<string>("OfferId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastEdition")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NumberOfOffer")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SaleManName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OfferId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Offers");
+
+                    b.HasData(
+                        new
+                        {
+                            OfferId = "836f138a-68e7-4dfe-b10d-caccbc87c35b",
+                            Author = "Sample of Author",
+                            CustomerId = "dc6680bb-6b7d-446a-bcf4-18aa2fcda546",
+                            DateOfCreation = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "sample of description",
+                            LastEdition = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            NumberOfOffer = 1,
+                            SaleManName = "Sample of name",
+                            Title = "Title Sample",
+                            Type = "installation"
                         });
                 });
 
@@ -168,8 +502,14 @@ namespace ProjectsControl.Migrations
                     b.Property<string>("ProjectId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
+
                     b.Property<DateTime>("BeginDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)");
@@ -178,16 +518,23 @@ namespace ProjectsControl.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Estatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsOver")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                    b.Property<string>("Manager")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfProject")
+                        .HasColumnType("int");
 
                     b.Property<int>("NumberOfTask")
                         .HasColumnType("int");
@@ -199,64 +546,214 @@ namespace ProjectsControl.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OfferId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SalemanId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("TypeOfJob")
+                    b.Property<double>("PendingAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProjectName")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Technician")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeOfJob")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ubication")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProjectId");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("SalemanId");
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OfferId");
 
                     b.ToTable("Projects");
 
                     b.HasData(
                         new
                         {
-                            ProjectId = "4a8e7daf-8b09-44e0-a4b6-111a5b618258",
-                            BeginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = "b2abc4a6-e855-4221-b355-532ac1aa3b7c",
-                            Details = "Details sample",
-                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProjectId = "ee6f52b0-d0dc-4f9d-aa5a-9dac25f97691",
+                            Amount = 100f,
+                            BeginDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Currency = "Dolar",
+                            CustomerId = "dc6680bb-6b7d-446a-bcf4-18aa2fcda546",
+                            Details = "Sample of details",
+                            EmployeeId = "8dc8e97b-8e1d-42d4-868f-587bcc21286b",
+                            EndDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Estatus = "In progress",
                             IsOver = false,
-                            Name = "Project Sample",
-                            NumberOfTask = 1234,
-                            OC = "1234Sample",
-                            OCDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OfferId = "1234Sample",
-                            SalemanId = "b3175ee2-85de-4e92-9554-50bb8c5de282",
-                            TypeOfJob = "installation"
+                            Manager = "Sample of Name",
+                            NumberOfProject = 1,
+                            NumberOfTask = 1,
+                            OC = "Oc Id Sample",
+                            OCDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            OfferId = "836f138a-68e7-4dfe-b10d-caccbc87c35b",
+                            PendingAmount = 0.0,
+                            ProjectName = "Sample Of Project",
+                            Technician = "Sample",
+                            TypeOfJob = "Sample of Job",
+                            Ubication = "San JoseCosta Rica"
                         });
                 });
 
-            modelBuilder.Entity("ProjectsControl.Models.Saleman", b =>
+            modelBuilder.Entity("ProjectsControl.Models.Quotation", b =>
                 {
-                    b.Property<string>("SalemanId")
+                    b.Property<string>("QuotationId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SalemanId");
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
 
-                    b.ToTable("Salemans");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("KMAmount")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("LastModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("MaterialAmount")
+                        .HasColumnType("real");
+
+                    b.Property<float>("MecsaAmountMaterial")
+                        .HasColumnType("real");
+
+                    b.Property<int>("QuantityOfDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityOfEmployees")
+                        .HasColumnType("int");
+
+                    b.Property<float>("TotalAmount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("UnexpectedAmount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("UserModification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("ViaticsAmount")
+                        .HasColumnType("real");
+
+                    b.HasKey("QuotationId");
+
+                    b.ToTable("Quotations");
 
                     b.HasData(
                         new
                         {
-                            SalemanId = "b3175ee2-85de-4e92-9554-50bb8c5de282",
-                            Name = "CustomerTesting"
+                            QuotationId = "001-2010",
+                            DateCreation = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sample Of Description",
+                            KMAmount = 0f,
+                            LastModification = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MaterialAmount = 0f,
+                            MecsaAmountMaterial = 0f,
+                            QuantityOfDays = 0,
+                            QuantityOfEmployees = 0,
+                            TotalAmount = 0f,
+                            Type = "Sample",
+                            UnexpectedAmount = 0f,
+                            ViaticsAmount = 0f
                         });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Report", b =>
+                {
+                    b.Property<string>("ReportId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("BeginDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfReport")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ReportId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Report");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportId = "2a3e31cd-af9f-4543-b5e0-196a5200578d",
+                            Author = "Sample of author",
+                            BeginDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndDate = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Notes = "sample of notes",
+                            NumberOfReport = 1,
+                            ProjectId = "ee6f52b0-d0dc-4f9d-aa5a-9dac25f97691",
+                            Status = "sample of estatus"
+                        });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Week", b =>
+                {
+                    b.Property<string>("WeekId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("BeginOfWeek")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndOfWeek")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NumberOfWeek")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WeekId");
+
+                    b.ToTable("Week");
+
+                    b.HasData(
+                        new
+                        {
+                            WeekId = "01-2010",
+                            BeginOfWeek = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            EndOfWeek = new DateTime(2021, 8, 23, 0, 0, 0, 0, DateTimeKind.Local)
+                        });
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Action", b =>
+                {
+                    b.HasOne("ProjectsControl.Models.Employee", "Employee")
+                        .WithMany("Actions")
+                        .HasForeignKey("EmployeeId");
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("ProjectsControl.Models.Asistance", b =>
@@ -269,7 +766,31 @@ namespace ProjectsControl.Migrations
                         .WithMany("Asistances")
                         .HasForeignKey("ProjectId");
 
+                    b.HasOne("ProjectsControl.Models.Week", "Week")
+                        .WithMany("Asistances")
+                        .HasForeignKey("WeekId");
+
                     b.Navigation("Employee");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Week");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Bill", b =>
+                {
+                    b.HasOne("ProjectsControl.Models.Project", "Project")
+                        .WithMany("Bills")
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Expensive", b =>
+                {
+                    b.HasOne("ProjectsControl.Models.Project", "Project")
+                        .WithMany("Expensives")
+                        .HasForeignKey("ProjectId");
 
                     b.Navigation("Project");
                 });
@@ -284,9 +805,48 @@ namespace ProjectsControl.Migrations
                         .WithMany("ExtraHours")
                         .HasForeignKey("EmployeeId");
 
+                    b.HasOne("ProjectsControl.Models.Week", "Week")
+                        .WithMany("ExtraHours")
+                        .HasForeignKey("WeekId");
+
                     b.Navigation("Asistance");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("Week");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Notes", b =>
+                {
+                    b.HasOne("ProjectsControl.Models.Project", "Project")
+                        .WithMany("Notes")
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Of_Quo", b =>
+                {
+                    b.HasOne("ProjectsControl.Models.Offer", "Offer")
+                        .WithMany("Of_Quos")
+                        .HasForeignKey("OfferId");
+
+                    b.HasOne("ProjectsControl.Models.Quotation", "Quotation")
+                        .WithMany("Of_Quos")
+                        .HasForeignKey("QuotationId");
+
+                    b.Navigation("Offer");
+
+                    b.Navigation("Quotation");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Offer", b =>
+                {
+                    b.HasOne("ProjectsControl.Models.Customer", "Customer")
+                        .WithMany("Offers")
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("ProjectsControl.Models.Project", b =>
@@ -295,13 +855,28 @@ namespace ProjectsControl.Migrations
                         .WithMany("Projects")
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("ProjectsControl.Models.Saleman", "Saleman")
+                    b.HasOne("ProjectsControl.Models.Employee", "Employee")
                         .WithMany("Projects")
-                        .HasForeignKey("SalemanId");
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("ProjectsControl.Models.Offer", "Offer")
+                        .WithMany("Projects")
+                        .HasForeignKey("OfferId");
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Saleman");
+                    b.Navigation("Employee");
+
+                    b.Navigation("Offer");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Report", b =>
+                {
+                    b.HasOne("ProjectsControl.Models.Project", "Project")
+                        .WithMany("Reports")
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("ProjectsControl.Models.Asistance", b =>
@@ -311,24 +886,52 @@ namespace ProjectsControl.Migrations
 
             modelBuilder.Entity("ProjectsControl.Models.Customer", b =>
                 {
+                    b.Navigation("Offers");
+
                     b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("ProjectsControl.Models.Employee", b =>
                 {
+                    b.Navigation("Actions");
+
                     b.Navigation("Asistances");
 
                     b.Navigation("ExtraHours");
+
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Offer", b =>
+                {
+                    b.Navigation("Of_Quos");
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("ProjectsControl.Models.Project", b =>
                 {
                     b.Navigation("Asistances");
+
+                    b.Navigation("Bills");
+
+                    b.Navigation("Expensives");
+
+                    b.Navigation("Notes");
+
+                    b.Navigation("Reports");
                 });
 
-            modelBuilder.Entity("ProjectsControl.Models.Saleman", b =>
+            modelBuilder.Entity("ProjectsControl.Models.Quotation", b =>
                 {
-                    b.Navigation("Projects");
+                    b.Navigation("Of_Quos");
+                });
+
+            modelBuilder.Entity("ProjectsControl.Models.Week", b =>
+                {
+                    b.Navigation("Asistances");
+
+                    b.Navigation("ExtraHours");
                 });
 #pragma warning restore 612, 618
         }
