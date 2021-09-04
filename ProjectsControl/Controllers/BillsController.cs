@@ -48,6 +48,7 @@ namespace ProjectsControl.Controllers
         public IActionResult Create()
         {            
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
+            ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver == false).OrderBy(P=>P.NumberOfProject);
             return View();
         }
 

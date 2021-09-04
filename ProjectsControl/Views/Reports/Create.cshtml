@@ -59,7 +59,7 @@
                 <select asp-for="ProjectId" class="form-control">
                     @foreach (Project i in ViewBag.ActivesProjects)
 	                {
-	                    <option value="@i.ProjectId">@i.ProjectName - @i.NumberOfProject</option>	 
+	                    <option value="@i.ProjectId">N° @i.NumberOfProject - @i.ProjectName</option>	 
 	                }
                 </select>
             </div>
