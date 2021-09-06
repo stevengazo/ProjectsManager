@@ -39,6 +39,7 @@ namespace ProjectsControl
 
             string connString = ConfigurationExtensions.GetConnectionString(this.Configuration, "DBProjectsConnection");
             services.AddDbContext<DBProjectContext>(option=>option.UseSqlServer(connString));
+            services.AddMvc(options => options.EnableEndpointRouting = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,8 +77,9 @@ namespace ProjectsControl
                 endpoints.MapAreaControllerRoute(
                   name: "Administration",
                   areaName: "Admin",
-                  pattern: "Admin/{controller=Manage}/{action=Index}/{id?}"
-                );
+                  pattern: "Admin/{controller=Manage}/{action=Index}/{id?}"                  
+                );;
+                endpoints.MapRazorPages();
             });
         }
     }
