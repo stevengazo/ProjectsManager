@@ -28,6 +28,8 @@ Este sistema se encarga de la gestión interna de:
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
