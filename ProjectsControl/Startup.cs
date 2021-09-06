@@ -29,6 +29,8 @@ namespace ProjectsControl
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options => options.EnableEndpointRouting = true);
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -36,10 +38,12 @@ namespace ProjectsControl
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-
+            services.AddRazorPages();
             string connString = ConfigurationExtensions.GetConnectionString(this.Configuration, "DBProjectsConnection");
             services.AddDbContext<DBProjectContext>(option=>option.UseSqlServer(connString));
-            services.AddMvc(options => options.EnableEndpointRouting = true);
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,18 +71,10 @@ namespace ProjectsControl
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(name:"Admin",areaName:"Admin",pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");                          
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapAreaControllerRoute(
-                  name: "Administration",
-                  areaName: "Admin",
-                  pattern: "Admin/{controller=Manage}/{action=Index}/{id?}"                  
-                );;
                 endpoints.MapRazorPages();
             });
         }
