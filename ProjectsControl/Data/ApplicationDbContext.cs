@@ -14,16 +14,22 @@ namespace ProjectsControl.Data
         {
         
         }
-        /*protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-
-            IdentityUser iUser = new IdentityUser()
+            var AdministratorRole = new IdentityRole()
             {
-                Id = Guid.NewGuid().ToString(),
-                UserName = "sample@grupomecsa.net",
-                
+                Name = "Administrador",
+                NormalizedName = "Administrador".ToUpper()
             };
-        }*/
+            var EditorRole = new IdentityRole()
+            {
+                Name = "Editor",
+                NormalizedName = "Editor".ToUpper()
+            };
+
+
+            base.OnModelCreating(builder);
+            builder.Entity<IdentityRole>().HasData(EditorRole);
+        }
     }
 }

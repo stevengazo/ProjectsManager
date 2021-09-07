@@ -21,8 +21,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
         public ManageController(ApplicationDbContext context)
         {
             _ContextIdentity = context;
-        }
-
+        }        
         public IActionResult CreateUser()
         {
             return View();
