@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<IdentityRole>
+
+@{
+    ViewData["Title"] = "Lista de Roles ";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<h1 class="h1">
+    Lista de Roles
+</h1>
+
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Id del Role</th>
+            <th>Nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (IdentityRole item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -23,9 +23,19 @@ namespace ProjectsControl.Areas.Admin.Controllers
             _ContextIdentity = context;
         }
 
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult ListOfRoles()
+        {
+            var query = (from rol in _ContextIdentity.Roles select rol).OrderBy(R => R.Id).ToList();
+            return View(query);
         }
         
         public IActionResult ListOfUsers()

@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="background-color: #c5c5c5; ">
+<body >
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow" style="background: #070429;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow">
             <div class="container">
 
                 <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,53 +22,17 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <a class="navbar text-light" asp-area="" asp-controller="Home" asp-action="Index">Control Proyectos</a>
+                            <a class="navbar text-dark" asp-area="" asp-controller="Home" asp-action="Index">Control Proyectos</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Gestion Proyectos
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Usuarios y Roles
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Search">Buscar Proyectos</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Create">Crear Proyectos</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Bills" asp-action="Search">Buscar Facturas</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Bills" asp-action="Create">Crear Facturas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Reports" asp-action="Search">Busqueda Informes</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Reports" asp-action="Create">Crear Informes</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="WithoutReports">Proyectos Sin Informes</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Personal y Asistencia
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="Search">Buscar Asistencia</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="Create">Registrar Asistencia</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Create">Registrar Extras</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Pendientes de Pago</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Historial</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Lista Semanas</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Create">Crear Semana</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Consultar Semanas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Actions" asp-action="Create">Crear Acción Personal</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Index">Lista de Empleados</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Create">Nuevo Empleado</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Clientes
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Search">Buscar Cliente</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Create">Crear Cliente</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Manage" asp-action="Index"> Index</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Manage" asp-action="ListOfUsers"> Lista de Usuarios</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Manage" asp-action="ListOfRoles"> Lista de Roles</a>                                
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Manage" asp-action="CreateUser"> Registrar Usuario</a>
                             </div>
                         </li>
                     </ul>
@@ -81,10 +45,10 @@
         <main role="main" class="pb-3">
             <ul class="nav nav-pills nav-fill">
                 <li class="nav-item ">
-                    <a class="nav-link active" asp-area="Admin"  asp-controller="Manage" asp-action="Index"> Index</a>
+                    
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link active" asp-area="Admin" asp-controller="Manage" asp-action="ListOfUsers"> Lista de Usuarios</a>
+                    
                 </li>
             </ul>
             @RenderBody()

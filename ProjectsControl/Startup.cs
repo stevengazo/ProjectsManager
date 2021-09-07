@@ -75,7 +75,6 @@ namespace ProjectsControl
                  en este caso se debe de colocar primero las rutas de mis areas */
 
                 endpoints.MapAreaControllerRoute(
-
                     name: "Admin_Route",
                     areaName: "Admin",
                     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
