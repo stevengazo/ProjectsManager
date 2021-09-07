@@ -5,10 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProjectsControl.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 namespace ProjectsControl.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Authorize]
+    [Area(areaName: "Admin")]
     public class ManageController : Controller
     {
         private ApplicationDbContext _ContextIdentity;
@@ -22,11 +27,11 @@ namespace ProjectsControl.Areas.Admin.Controllers
         {
             return View();
         }
-
+        
         public IActionResult ListOfUsers()
         {           
-            var query = (from a in _ContextIdentity.Users select a).OrderBy(U => U.Id).ToList();
-            return View(query.ToList());
+            var query =  (from a in _ContextIdentity.Users select a).OrderBy(U => U.Id);
+            return  View(query.ToList());
         }
     }
 }

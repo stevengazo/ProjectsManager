@@ -1,5 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+
 <!DOCTYPE html>
 <html lang="es-es">
 <head>
@@ -57,7 +58,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-area="" asp-controller="Actions" asp-action="Create">Crear Acción Personal</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" ="" asp-controller="Employees" asp-action="Index">Lista de Empleados</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Index">Lista de Empleados</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Employees" asp-action="Create">Nuevo Empleado</a>
                             </div>
                         </li>
@@ -80,7 +81,7 @@
         <main role="main" class="pb-3">
             <ul class="nav nav-pills nav-fill">
                 <li class="nav-item ">
-                    <a class="nav-link active" asp-area="Admin" asp-controller="Manage" asp-action="Index"> Index</a>
+                    <a class="nav-link active" asp-area="Admin"  asp-controller="Manage" asp-action="Index"> Index</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link active" asp-area="Admin" asp-controller="Manage" asp-action="ListOfUsers"> Lista de Usuarios</a>
