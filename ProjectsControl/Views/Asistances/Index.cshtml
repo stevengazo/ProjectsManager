@@ -52,9 +52,13 @@
                 @Html.DisplayFor(modelItem => item.Week.NumberOfWeek)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AsistanceId">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.AsistanceId">Details</a> 
-                <a  style="color:red" asp-action="Delete" asp-route-id="@item.AsistanceId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.AsistanceId" class="btn btn-primary">Editar</a> 
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.AsistanceId" class="btn btn-info" >Detalles</a> 
+            </td>
+            <td>                
+                <a asp-action="Delete" asp-route-id="@item.AsistanceId" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
 }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ProjectsControl.Models.Employee>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Empleados ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -38,9 +38,13 @@
                 @Html.DisplayFor(modelItem => item.Position)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EmployeeId">Editar</a> 
-                <a asp-action="Details" asp-route-id="@item.EmployeeId">Detalles</a> 
-                <a class="text-danger" asp-action="Delete" asp-route-id="@item.EmployeeId">Borrar</a>
+                <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-primary">Editar</a> 
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-info">Detalles</a> 
+            </td>
+            <td>                               
+                <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="btn btn-danger">Borrar</a>
             </td>
         </tr>
 }

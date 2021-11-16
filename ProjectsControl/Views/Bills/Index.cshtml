@@ -50,9 +50,13 @@
                 @Html.DisplayFor(modelItem => item.Project.ProjectId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BillId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.BillId">Detalles</a> |
-                <a class="text-danger" asp-action="Delete" asp-route-id="@item.BillId">Borrar</a>
+                <a asp-action="Edit" asp-route-id="@item.BillId" class="btn btn-primary">Editar</a> 
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.BillId" class="btn btn-info">Detalles</a> 
+            </td>
+            <td>               
+                <a asp-action="Delete" asp-route-id="@item.BillId" class="btn btn-danger">Borrar</a>
             </td>
         </tr>
 }

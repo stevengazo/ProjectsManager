@@ -75,9 +75,13 @@
                     @Html.DisplayFor(modelItem => item.Sector)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.CustomerId">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.CustomerId">Detalles</a> |
-                    <a style="color:red" asp-action="Delete" asp-route-id="@item.CustomerId">Eliminar</a>
+                    <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-primary">Editar</a> 
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.CustomerId"  class="btn btn-info">Detalles</a> 
+                </td>
+                <td>
+                    <a  asp-action="Delete" asp-route-id="@item.CustomerId" class="btn btn-danger">Eliminar</a>
                 </td>
             </tr>
         }

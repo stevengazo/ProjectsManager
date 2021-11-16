@@ -1,52 +1,52 @@
 ﻿@model ProjectsControl.Models.Bill
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Borrar Factura";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>Borrar Factura</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Esta seguro que desea eliminar esta factura?</h3>
 <div>
-    <h4>Bill</h4>
+    <h4>Datos de Factura</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfBill)
+            Numero
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NumberOfBill)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfCreation)
+            Fecha Creación
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateOfCreation)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
+            Autor
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Author)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Amount)
+            Monto
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Amount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
+            Proyecto
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.ProjectId)
+            N° @Model.Project.NumberOfProject - @Model.Project.ProjectName
         </dd class>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="BillId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
     </form>
 </div>

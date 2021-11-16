@@ -1,15 +1,15 @@
 ﻿@model ProjectsControl.Models.Customer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"Detalles de Cliente {Model.Name}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Detalles del cliente</h1>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CustomerId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.CustomerId" class="btn btn-primary">Editar</a> |  
+    <a asp-action="Index" class="btn btn-secondary"> Volver Atrás</a>
 </div>
 <div>    
     <hr />
@@ -21,7 +21,7 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            Secot
+            Sector
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Sector)
@@ -108,9 +108,13 @@
                     @item.Ubication
                 </td>
                 <td>
-                    <a asp-controller="Projects" asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
-                    <a asp-controller="Projects" asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
-                    <a asp-controller="Projects" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+                    <a asp-controller="Projects" asp-action="Edit" asp-route-id="@item.ProjectId" class="btn btn-primary">Editar</a>
+                </td>
+                <td>
+                    <a asp-controller="Projects" asp-action="Details" asp-route-id="@item.ProjectId" class="btn btn-info">Detalles</a>
+                </td>
+                <td>                    
+                    <a asp-controller="Projects" asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-danger">Eliminar</a>
                 </td>
             </tr>
         }
