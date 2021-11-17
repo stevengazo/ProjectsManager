@@ -24,6 +24,7 @@ namespace ProjectsControl
                 context.Database.EnsureCreated();
             }catch(Exception ex)
             {
+                Console.WriteLine($"Error {ex.Message}");
                 var logger = services.GetRequiredService<ILogger<Program>>();
                 logger.LogError("An error occurred creating the database");
             }

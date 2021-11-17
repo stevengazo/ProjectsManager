@@ -56,7 +56,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OfferId,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
+        public async Task<IActionResult> Create([Bind("NumberOfOffer,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("OfferId,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
+        public async Task<IActionResult> Edit(string id, [Bind("NumberOfOffer,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
         {
             if (id != offer.OfferId)
             {

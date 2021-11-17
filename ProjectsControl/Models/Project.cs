@@ -89,6 +89,8 @@ namespace ProjectsControl.Models
         [Required(ErrorMessage ="Ubicacion de la ejecución del proyecto requerida")]
         public string Ubication { get; set; }
 
+        public string NumberOfOffer { get; set; }
+
         #region Foreign Keys
         /*---------------*/
         public ICollection<Asistance> Asistances { get; set; }
@@ -116,8 +118,7 @@ namespace ProjectsControl.Models
 
         // RELATION WITH OFFER
 
-        public Offer Offer { get; set; }
-        public string OfferId { get; set; }
+
         #endregion
     }
 }

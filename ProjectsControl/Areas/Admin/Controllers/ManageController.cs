@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectsControl.Data;
-using System.Linq;
 
 namespace ProjectsControl.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class ManageController : Controller
     {
-        private ApplicationDbContext _ContextIdentity;
+        private readonly ApplicationDbContext _ContextIdentity;
 
         public ManageController(ApplicationDbContext context)
         {

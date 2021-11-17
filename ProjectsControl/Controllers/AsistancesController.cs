@@ -112,7 +112,7 @@ namespace ProjectsControl.Controllers
                 dicProj.Add(item.ProjectId, item.ProjectName);
             }
             ViewBag.Projects = dicProj;
-            return View(asistance);
+            return  View(asistance);
         }
 
         // GET: Asistances/Edit/5

@@ -12,7 +12,7 @@ namespace ProjectsControl.Models
     public class DBProjectContext : DbContext
     {
         internal string MyConnection { get; set; }
-        internal IConfiguration configuration { get; set; }
+        internal IConfiguration Configuration { get; set; }
 
         public DbSet<Action> Actions { get; set; }
         public DbSet<Asistance> Asistances { get; set; }
@@ -46,8 +46,8 @@ namespace ProjectsControl.Models
         private void GetConnectionString(string connectionString = "DBProjectsConnection")
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").AddEnvironmentVariables();
-            configuration = builder.Build();
-            connectionString = configuration.GetConnectionString(connectionString);
+            Configuration = builder.Build();
+            MyConnection = Configuration.GetConnectionString(connectionString);
         }
     
 
@@ -55,23 +55,25 @@ namespace ProjectsControl.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            Week oweek = new Week() { WeekId = "01-2010",
+            Week oweek = new() { WeekId = "01-2010",
                 BeginOfWeek = DateTime.Today,
                 EndOfWeek = DateTime.Today,
             };
-            Quotation oquotation = new Quotation { 
+            Quotation oquotation = new()
+            { 
                 QuotationId="001-2010",
                 Type="Sample",
                 Description="Sample Of Description",                
             };
-            Customer ocustomer = new Customer
+            Customer ocustomer = new()
             {
                 CustomerId = Guid.NewGuid().ToString(),
                 DNIOfCustomer = 0110,
                 Name = "Sample",
                 Sector="Private"
             };
-            Offer oOffer = new Offer {
+            Offer oOffer = new()
+            {
                 OfferId = Guid.NewGuid().ToString(),
                 NumberOfOffer = 1,
                 Title = "Title Sample",
@@ -83,14 +85,14 @@ namespace ProjectsControl.Models
                 LastEdition = DateTime.Today,
                 CustomerId = ocustomer.CustomerId,        
             };
-            Of_Quo oOf_Quo = new Of_Quo()
+            Of_Quo oOf_Quo = new()
             {
                 Of_QuoId = Guid.NewGuid().ToString(),
                 OfferId = oOffer.OfferId,
                 QuotationId = oquotation.QuotationId,
 
             };
-            Employee Oemployee = new Employee()
+            Employee Oemployee = new()
             {
                 EmployeeId = Guid.NewGuid().ToString(),
                 EmployeeDNI = 1171292,
@@ -104,7 +106,7 @@ namespace ProjectsControl.Models
                 Email = "sample@grupomecsa.net",
                 Salary = 100
             };
-            Project oProject = new Project()
+            Project oProject = new()
             {
                 ProjectId = Guid.NewGuid().ToString(),
                 NumberOfProject = 1,
@@ -116,19 +118,20 @@ namespace ProjectsControl.Models
                 EndDate = DateTime.Today,
                 Manager = "Sample of Name",
                 Technician = "Sample",
-                Estatus="In progress",
+                Estatus = "In progress",
                 IsOver = false,
-                Amount= 100f,
-                Currency= "Dolar",
-                PendingAmount= 0,
-                TypeOfJob="Sample of Job",
-                Details="Sample of details",
-                Ubication= "San JoseCosta Rica", 
+                Amount = 100f,
+                Currency = "Dolar",
+                PendingAmount = 0,
+                TypeOfJob = "Sample of Job",
+                Details = "Sample of details",
+                Ubication = "San JoseCosta Rica",
+                NumberOfOffer = "PS1",
                 CustomerId= ocustomer.CustomerId,
-                OfferId= oOffer.OfferId,
                 EmployeeId= Oemployee.EmployeeId
             };
-            Bill obills = new Bill {
+            Bill obills = new()
+            {
                 BillId = Guid.NewGuid().ToString(),
                 NumberOfBill = 1,
                 DateOfCreation= DateTime.Today,
@@ -138,7 +141,7 @@ namespace ProjectsControl.Models
                 Notes="Sample of notes",
                 ProjectId= oProject.ProjectId
             };
-            Expensive oexpensive = new Expensive() {
+            Expensive oexpensive = new() {
                 ExpensiveId = Guid.NewGuid().ToString(),
                 Author= "Sample Of authot",
                 LastModification= DateTime.Today,
@@ -148,7 +151,7 @@ namespace ProjectsControl.Models
                 Note="Sample",
                 ProjectId= oProject.ProjectId
             };
-            Notes oNotes = new Notes {
+            Notes oNotes = new(){
                 NotesId = Guid.NewGuid().ToString(),
                 Author= "Sample",
                 DateOfCreation= DateTime.Today,
@@ -156,7 +159,7 @@ namespace ProjectsControl.Models
                 NoteDescription= "Description of the action",
                 ProjectId= oProject.ProjectId,
             };
-            Report oReport = new Report() {
+            Report oReport = new() {
                 ReportId = Guid.NewGuid().ToString(),
                 NumberOfReport = 1,
                 Author = "Sample of author",
@@ -166,7 +169,7 @@ namespace ProjectsControl.Models
                 Notes = "sample of notes",
                 ProjectId= oProject.ProjectId
             };
-            Action oaction = new Action {
+            Action oaction = new() {
                 ActionId = Guid.NewGuid().ToString(),
                 Title = "Sample of title",
                 DateOfCreation= DateTime.Today,
@@ -176,7 +179,7 @@ namespace ProjectsControl.Models
                 IsActive = true,
                 EmployeeId= Oemployee.EmployeeId
             };
-            Asistance oAsistance = new Asistance() { 
+            Asistance oAsistance = new() { 
                 AsistanceId= Guid.NewGuid().ToString(),
                 DateOfBegin= DateTime.Today,
                 DateOfEnd = DateTime.Today,
@@ -184,7 +187,7 @@ namespace ProjectsControl.Models
                 WeekId = oweek.WeekId,
                 ProjectId= oProject.ProjectId
             };
-            ExtraHour oextra = new ExtraHour() {
+            ExtraHour oextra = new() {
                 ExtraHourId = Guid.NewGuid().ToString(),
                 BeginTime = DateTime.Today,
                 EndTime = DateTime.Today,

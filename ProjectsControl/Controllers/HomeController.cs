@@ -7,18 +7,17 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjectsControl.Models;
+
 namespace ProjectsControl.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        private readonly DBProjectContext _context;
+        private  DBProjectContext _context;
 
         public HomeController(DBProjectContext context)
         {
-            _context = context;
+            this._context = context;
         }
       /*  public HomeController(ILogger<HomeController> logger)
         {

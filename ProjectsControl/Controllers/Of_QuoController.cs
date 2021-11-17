@@ -48,7 +48,7 @@ namespace ProjectsControl.Controllers
         // GET: Of_Quo/Create
         public IActionResult Create()
         {
-            ViewData["OfferId"] = new SelectList(_context.Offers, "OfferId", "OfferId");
+            ViewData["NumberOfOffer"] = new SelectList(_context.Offers, "NumberOfOffer", "NumberOfOffer");
             ViewData["QuotationId"] = new SelectList(_context.Quotations, "QuotationId", "QuotationId");
             return View();
         }
@@ -58,7 +58,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Of_QuoId,IsModicable,OfferId,QuotationId")] Of_Quo of_Quo)
+        public async Task<IActionResult> Create([Bind("Of_QuoId,IsModicable,NumberOfOffer,QuotationId")] Of_Quo of_Quo)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OfferId"] = new SelectList(_context.Offers, "OfferId", "OfferId", of_Quo.OfferId);
+            ViewData["NumberOfOffer"] = new SelectList(_context.Offers, "NumberOfOffer", "NumberOfOffer", of_Quo.OfferId);
             ViewData["QuotationId"] = new SelectList(_context.Quotations, "QuotationId", "QuotationId", of_Quo.QuotationId);
             return View(of_Quo);
         }
@@ -84,7 +84,7 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-            ViewData["OfferId"] = new SelectList(_context.Offers, "OfferId", "OfferId", of_Quo.OfferId);
+            ViewData["NumberOfOffer"] = new SelectList(_context.Offers, "NumberOfOffer", "NumberOfOffer", of_Quo.OfferId);
             ViewData["QuotationId"] = new SelectList(_context.Quotations, "QuotationId", "QuotationId", of_Quo.QuotationId);
             return View(of_Quo);
         }
@@ -94,7 +94,7 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Of_QuoId,IsModicable,OfferId,QuotationId")] Of_Quo of_Quo)
+        public async Task<IActionResult> Edit(string id, [Bind("Of_QuoId,IsModicable,NumberOfOffer,QuotationId")] Of_Quo of_Quo)
         {
             if (id != of_Quo.Of_QuoId)
             {
@@ -121,7 +121,7 @@ namespace ProjectsControl.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OfferId"] = new SelectList(_context.Offers, "OfferId", "OfferId", of_Quo.OfferId);
+            ViewData["NumberOfOffer"] = new SelectList(_context.Offers, "NumberOfOffer", "NumberOfOffer", of_Quo.OfferId);
             ViewData["QuotationId"] = new SelectList(_context.Quotations, "QuotationId", "QuotationId", of_Quo.QuotationId);
             return View(of_Quo);
         }

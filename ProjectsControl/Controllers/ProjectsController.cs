@@ -70,7 +70,7 @@ namespace ProjectsControl.Controllers
         /// <returns></returns>
         private Dictionary<string, float> GetExpensivesByProject(string IdOfProject = "")
         {
-            Dictionary<string, float> ExpensivesByType = new Dictionary<string, float>();
+            Dictionary<string, float> ExpensivesByType = new();
             var ListOfExpensives = (from exp in _context.Expensives select exp)
                                                 .Where(E => E.ProjectId == IdOfProject)
                                                 .ToList();
@@ -87,7 +87,7 @@ namespace ProjectsControl.Controllers
         }
         private Dictionary<string, float>  GetHoursByEmployee (string IdofProject = "")
         {
-            Dictionary<string, float> Hours = new Dictionary<string, float>();
+            Dictionary<string, float> Hours = new();
             var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdofProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
             foreach (var employee in employees)
@@ -98,7 +98,7 @@ namespace ProjectsControl.Controllers
                     if (employee.Equals(asistence.Employee.Name))
                     {
                         TimeSpan time = asistence.DateOfEnd - asistence.DateOfBegin;
-                        sum = sum + time.Hours;
+                        sum += time.Hours;
                     }
                 }
                 Hours.Add(employee, sum);
@@ -107,7 +107,7 @@ namespace ProjectsControl.Controllers
         }
         public Dictionary<string, int> GetDaysByEmployee(string IdOfProject = "")
         {
-            Dictionary<string, int> Days = new Dictionary<string, int>();
+            Dictionary<string, int> Days = new();
             var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();            
             var asistancesDays =  (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
@@ -118,7 +118,7 @@ namespace ProjectsControl.Controllers
                 {
                     if (item.Equals(aD.Employee.Name))
                     {
-                        sumDay = sumDay + 1;
+                        sumDay +=  1;
                     }
                 }
                 Days.Add(item, sumDay);
@@ -131,11 +131,11 @@ namespace ProjectsControl.Controllers
         {
             var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
-            Dictionary<string, float> Extras = new Dictionary<string, float>();
+            Dictionary<string, float> Extras = new();
             var extrasAux =  _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
                                                                         from ExtraHours 
                                                                         left join (	SELECT * FROM Asistances
-                                                                        WHERE Asistances.ProjectId = '{IdOfProject.ToString()}') AS tmp
+                                                                        WHERE Asistances.ProjectId = '{IdOfProject}') AS tmp
                                                                         on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToList();
             foreach (var item in employees)
             {
@@ -335,7 +335,7 @@ namespace ProjectsControl.Controllers
                                           string StatusToSearch = null,
                                           string TypeToSearch=null)
         {
-            List<Project> LisProjects = new List<Project>();
+            List<Project> LisProjects = new();
             
 
             if (SearchYear ==0  || MonthToSearch == 0 )
@@ -349,7 +349,7 @@ namespace ProjectsControl.Controllers
                 }
                 else if(SearchYear != 0 && MonthToSearch == 0)
                 {
-                    var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects null, {SearchYear.ToString()}, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
+                    var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects null, {SearchYear}, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
 
                     LisProjects = consult.ToList();
                 }
@@ -362,11 +362,11 @@ namespace ProjectsControl.Controllers
             }
             else
             {
-                var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects {MonthToSearch.ToString()}, {SearchYear.ToString()}, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
+                var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects {MonthToSearch}, {SearchYear}, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
 
                 LisProjects = consult.ToList();
             }
-            List<Project> LisPro = new List<Project>();
+            List<Project> LisPro = new();
             foreach (var item in LisProjects)
             {
                 item.Customer = (from i in _context.Customers select i).Where(C => C.CustomerId == item.CustomerId).FirstOrDefault();
