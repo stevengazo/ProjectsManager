@@ -1,60 +1,60 @@
 ﻿@model ProjectsControl.Models.ExtraHour
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles de Tiempo extra</h1>
 
 <div>
-    <h4>ExtraHour</h4>
+    <h4>Tiempo Extra</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BeginTime)
+            Inicio
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BeginTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndTime)
+            Finalización
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EndTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TypeOfHour)
+            Tipo de tiempo extra
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TypeOfHour)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reason)
+            Motivo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Reason)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Notes)
+            Notas
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Notes)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPaid)
+            ¿Esta pagado?
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IsPaid)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Employee)
+            Empleado
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Employee.EmployeeId)
+            @Html.DisplayFor(model => model.Employee.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Asistance)
+            Registro de Asistencia
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Asistance.AsistanceId)
@@ -68,6 +68,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ExtraHourId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ExtraHourId" class="btn btn-primary">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
 </div>

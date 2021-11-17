@@ -1,67 +1,67 @@
 ﻿@model ProjectsControl.Models.ExtraHour
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = $"Borrar Tiempo Extra";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>Borrar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Está seguro que desea elminar este registro?</h3>
 <div>
-    <h4>ExtraHour</h4>
+    <h4>Tiempo extra</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BeginTime)
+            Inicio
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BeginTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndTime)
+            Finalización
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EndTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TypeOfHour)
+            Tipo de tiempo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TypeOfHour)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reason)
+            Motivo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Reason)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Notes)
+            Notas
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Notes)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPaid)
+            ¿Está pagado?
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IsPaid)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Employee)
+            Empleado
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Employee.EmployeeId)
+            @Html.DisplayFor(model => model.Employee.Name)
         </dd class>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Asistance)
+            Fecha de Asistencia
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Asistance.AsistanceId)
+            @Html.DisplayFor(model => model.Asistance.DateOfBegin)
         </dd class>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Week)
+            Semana
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Week.WeekId)
@@ -70,7 +70,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ExtraHourId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Volver Atras</a>
     </form>
 </div>

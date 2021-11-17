@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ProjectsControl.Models.ExtraHour>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Tiempos extra";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -74,9 +74,13 @@
                 @Html.DisplayFor(modelItem => item.Week.NumberOfWeek)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ExtraHourId">Editar</a> 
-                <a asp-action="Details" asp-route-id="@item.ExtraHourId">Detalles</a> 
-                <a style="color:red" asp-action="Delete" asp-route-id="@item.ExtraHourId">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@item.ExtraHourId"  class="btn btn-primary">Editar</a> 
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ExtraHourId"  class="btn btn-info">Detalles</a> 
+            </td>
+            <td>                
+                <a asp-action="Delete" asp-route-id="@item.ExtraHourId" class="btn btn-danger">Eliminar</a>
             </td>
         </tr>
 }
