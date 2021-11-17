@@ -9,138 +9,160 @@
 
 <h4>Registro de Nuevo Proyecto</h4>
 <hr />
-<div >
-    <div >
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div>
-                <label class="control-label">Id de Referencia</label>
-                <input asp-for="ProjectId" class="form-control" value="@Guid.NewGuid().ToString()" readonly/>
-                <span asp-validation-for="ProjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Numero de Proyecto</label>
-                <input asp-for="NumberOfProject" class="form-control" value="@ViewData["NumberOfProject"]" readonly/>
-                <span asp-validation-for="ProjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Numero de Tarea en Bitrix</label>
-                <input asp-for="NumberOfTask" class="form-control" />
-                <span asp-validation-for="NumberOfTask" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Nombre del Proyecto</label>
-                <input asp-for="ProjectName" class="form-control" />
-                <span asp-validation-for="ProjectName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Orden de Compra</label>
-                <input asp-for="OC" class="form-control" />
-                <span asp-validation-for="OC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Orden de Compra</label>
-                <input asp-for="OCDate" class="form-control" />
-                <span asp-validation-for="OCDate" class="text-danger"></span>
-            </div>
-            <div>
-                <label class="control-label">Monto Sin IVA</label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Moneda</label>
-                <select asp-for="Currency" class="form-control">
-                    <option value="">Seleccione...</option>
-                    <option value="Dolar">Dolar</option>
-                    <option value="Colón">Colón</option>
-                    <option value="Euro">Euro</option>
-                </select>
-                <span asp-validation-for="Currency" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Ing. Encargado</label>
-                <input asp-for="Manager" class="form-control" />
-                <span asp-validation-for="Manager" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Estado</label>
-                <select asp-for="Estatus" class="form-control">
-                    <option value="">Seleccione...</option>
-                    <option value="Finalizado">Finalizado</option>
-                    <option value="Pendiente de coordinar">Pendiente de coordinar</option>
-                    <option value="En ejecución">En ejecución</option>
-                    <option value="Atrasado por el cliente">Atrasado por el cliente</option>
-                </select>
-                <span asp-validation-for="OCDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Inicio</label>
-                <input asp-for="BeginDate" class="form-control" />
-                <span asp-validation-for="BeginDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Finalización o Fecha Estimada</label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsOver" /> @Html.DisplayNameFor(model => model.IsOver)
-                </label>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Tipo de Trabajo</label>                
-                <select asp-for="TypeOfJob" class="form-control" >
-                    <option value="">Seleccione...</option>
-                    <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
-                    <option value="Instalación Ionizante">Instalación Ionizante</option>
-                    <option value="Instalación Supresores">Instalación Supresores</option>
-                    <option value="Instalación Torre">Instalación Torre</option>
-                    <option value="Mantenimiento RAYOS-NO">Mantenimiento RAYOS-NO</option>
-                    <option value="Mantenimiento Ionizante">Mantenimiento Ionizante</option>
-                    <option value="Mantenimiento Torre">Mantenimiento Torre</option>
-                    <option value="Estudio SPAT">Estudio SPAT</option>
-                    <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
-                    <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
-                    <option value="Otros">Otros</option>
-                </select>
-                <span asp-validation-for="TypeOfJob" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Details" class="control-label"></label>
-                <input asp-for="Details" class="form-control" />
-                <span asp-validation-for="Details" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ubication" class="control-label"></label>
-                <input asp-for="Ubication" class="form-control" />
-                <span asp-validation-for="Ubication" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>                
-                <select asp-for="CustomerId" class="form-control">
-                    @foreach (   Customer customer in ViewBag.Customers)
-	                {
+
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Id de Referencia</label>
+                        <input asp-for="ProjectId" class="form-control" value="@Guid.NewGuid().ToString()" readonly/>
+                        <span asp-validation-for="ProjectId" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Numero de Proyecto</label>
+                        <input asp-for="NumberOfProject" class="form-control" value="@ViewData["NumberOfProject"]" readonly/>
+                        <span asp-validation-for="ProjectId" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Numero de Tarea en Bitrix</label>
+                        <input asp-for="NumberOfTask" class="form-control" />
+                        <span asp-validation-for="NumberOfTask" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Nombre del Proyecto</label>
+                        <input asp-for="ProjectName" class="form-control" />
+                        <span asp-validation-for="ProjectName" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Orden de Compra</label>
+                        <input asp-for="OC" class="form-control" />
+                        <span asp-validation-for="OC" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Fecha de Orden de Compra</label>
+                        <input asp-for="OCDate" class="form-control" />
+                        <span asp-validation-for="OCDate" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Monto Sin IVA</label>
+                        <input asp-for="Amount" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Moneda</label>
+                        <select asp-for="Currency" class="form-control">
+                        <option value="">Seleccione...</option>
+                        <option value="Dolar">Dolar</option>
+                        <option value="Colón">Colón</option>
+                        <option value="Euro">Euro</option>
+                        </select>
+                        <span asp-validation-for="Currency" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Ing. Encargado</label>
+                        <input asp-for="Manager" class="form-control" />
+                        <span asp-validation-for="Manager" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Estado</label>
+                        <select asp-for="Estatus" class="form-control">
+                        <option value="">Seleccione...</option>
+                        <option value="Finalizado">Finalizado</option>
+                        <option value="Pendiente de coordinar">Pendiente de coordinar</option>
+                        <option value="En ejecución">En ejecución</option>
+                        <option value="Atrasado por el cliente">Atrasado por el cliente</option>
+                        </select>
+                        <span asp-validation-for="OCDate" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="control-label">Fecha de Inicio</label>
+                        <input asp-for="BeginDate" class="form-control" />
+                        <span asp-validation-for="BeginDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Fecha de Finalización o Fecha Estimada</label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsOver" /> @Html.DisplayNameFor(model => model.IsOver)
+                        </label>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label">Tipo de Trabajo</label>                
+                        <select asp-for="TypeOfJob" class="form-control" >
+                        <option value="">Seleccione...</option>
+                        <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
+                        <option value="Instalación Ionizante">Instalación Ionizante</option>
+                        <option value="Instalación Supresores">Instalación Supresores</option>
+                        <option value="Instalación Torre">Instalación Torre</option>
+                        <option value="Mantenimiento RAYOS-NO">Mantenimiento RAYOS-NO</option>
+                        <option value="Mantenimiento Ionizante">Mantenimiento Ionizante</option>
+                        <option value="Mantenimiento Torre">Mantenimiento Torre</option>
+                        <option value="Estudio SPAT">Estudio SPAT</option>
+                        <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
+                        <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
+                        <option value="Otros">Otros</option>
+                        </select>
+                        <span asp-validation-for="TypeOfJob" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label asp-for="Details" class="control-label"></label>
+                        <input asp-for="Details" class="form-control" />
+                        <span asp-validation-for="Details" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="Ubication" class="control-label"></label>
+                        <input asp-for="Ubication" class="form-control" />
+                        <span asp-validation-for="Ubication" class="text-danger"></span>
+                    </div>
+                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label asp-for="CustomerId" class="control-label"></label>                
+                        <select asp-for="CustomerId" class="form-control">
+                        @foreach (   Customer customer in ViewBag.Customers)
+                        {
                         <option value="@customer.CustomerId">@customer.Name</option>		 
-	                }
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label">Vendedor</label>
-                <select asp-for="EmployeeId" class="form-control">
-                    @foreach ( Employee item in ViewBag.Employees)
-	                {
-	                    <option value="@item.EmployeeId">@item.Name</option>	 
-	                }
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                        }
+                        </select> 
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="EmployeeId" class="control-label">Vendedor</label>
+                        <select asp-for="EmployeeId" class="form-control">
+                        @foreach ( Employee item in ViewBag.Employees)
+                        {
+                        <option value="@item.EmployeeId">@item.Name</option>	 
+                        }
+                        </select>
+                    </div>
+                 </div>               
+
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </form>
+        </div>
     </div>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

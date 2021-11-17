@@ -5,95 +5,109 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Crear cotización</h1>
 
-<h4>Quotation</h4>
+<h4>Cotización</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="QuotationId" class="control-label"></label>
-                <input asp-for="QuotationId" class="form-control"  value="@Guid.NewGuid().ToString()" readonly />
-                <span asp-validation-for="QuotationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaterialAmount" class="control-label"></label>
-                <input asp-for="MaterialAmount" class="form-control" />
-                <span asp-validation-for="MaterialAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MecsaAmountMaterial" class="control-label"></label>
-                <input asp-for="MecsaAmountMaterial" class="form-control" />
-                <span asp-validation-for="MecsaAmountMaterial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViaticsAmount" class="control-label"></label>
-                <input asp-for="ViaticsAmount" class="form-control" />
-                <span asp-validation-for="ViaticsAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnexpectedAmount" class="control-label"></label>
-                <input asp-for="UnexpectedAmount" class="form-control" />
-                <span asp-validation-for="UnexpectedAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KMAmount" class="control-label"></label>
-                <input asp-for="KMAmount" class="form-control" />
-                <span asp-validation-for="KMAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label"></label>
-                <input asp-for="TotalAmount" class="form-control" />
-                <span asp-validation-for="TotalAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="QuantityOfDays" class="control-label"></label>
-                <input asp-for="QuantityOfDays" class="form-control" />
-                <span asp-validation-for="QuantityOfDays" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="QuantityOfEmployees" class="control-label"></label>
-                <input asp-for="QuantityOfEmployees" class="form-control" />
-                <span asp-validation-for="QuantityOfEmployees" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserModification" class="control-label"></label>
-                <input asp-for="UserModification" class="form-control" />
-                <span asp-validation-for="UserModification" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateCreation" class="control-label"></label>
-                <input asp-for="DateCreation" class="form-control" />
-                <span asp-validation-for="DateCreation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastModification" class="control-label"></label>
-                <input asp-for="LastModification" class="form-control" />
-                <span asp-validation-for="LastModification" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<p>Los precios registrados en los siguientes cuandros deben corresponder a precios en <b>dolares</b>.</p>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <form asp-action="Create">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                           <label>Id de Cotización</label>
+                            <input asp-for="QuotationId" class="form-control"  value="@Guid.NewGuid().ToString()" readonly />
+                            <span asp-validation-for="QuotationId" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                           <label>Tipo de Cotización</label>
+                            <input asp-for="Type" class="form-control" />
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <div class="col-sm-6">
+                             <label>Descripción</label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                            <label>Precio de Material Vario</label>
+                            <input asp-for="MaterialAmount" class="form-control" />
+                            <span asp-validation-for="MaterialAmount" class="text-danger"></span>
+                    </div>
+                 </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                            <label>Precio Material Mecsa</label>
+                            <input asp-for="MecsaAmountMaterial" class="form-control" />
+                            <span asp-validation-for="MecsaAmountMaterial" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                            <label>Precio Viaticos</label>
+                            <input asp-for="ViaticsAmount" class="form-control" />
+                            <span asp-validation-for="ViaticsAmount" class="text-danger"></span>
+                    </div>
+                 </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                            <label>Precio Imprevistos </label>
+                            <input asp-for="UnexpectedAmount" class="form-control" />
+                            <span asp-validation-for="UnexpectedAmount" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                           <label>Monto Por Kilometraje</label>
+                           <input asp-for="KMAmount" class="form-control" />
+                           <span asp-validation-for="KMAmount" class="text-danger"></span>
+                    </div>
+                 </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                           <label>Monto Total</label>
+                            <input asp-for="TotalAmount" class="form-control" />
+                            <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                         <label>Cantidad de Días de Trabajo</label>
+                        <input asp-for="QuantityOfDays" class="form-control" />
+                        <span asp-validation-for="QuantityOfDays" class="text-danger"></span>
+                    </div>
+                 </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>Cantidad de Empleados </label>
+                        <input asp-for="QuantityOfEmployees" class="form-control" />
+                        <span asp-validation-for="QuantityOfEmployees" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Autor</label>
+                        <input asp-for="Author" class="form-control" />
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>Fecha de Creación</label>
+                        <input asp-for="DateCreation" class="form-control" />
+                        <span asp-validation-for="DateCreation" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Última Modificación</label>
+                        <input asp-for="LastModification" class="form-control" />
+                        <span asp-validation-for="LastModification" class="text-danger"></span>
+                    </div>
+                 </div>
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </form>
+        </div>
     </div>
 </div>
+
+
+
+
 
 <div>
     <a asp-action="Index">Back to List</a>
