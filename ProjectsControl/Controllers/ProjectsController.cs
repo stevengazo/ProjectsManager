@@ -23,12 +23,43 @@ namespace ProjectsControl.Controllers
             _context = context;
         }
 
+        [HttpGet]
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-            var dBProjectContext = _context.Projects.Include(p => p.Customer).Include(p => p.Employee);
-            return View(await dBProjectContext.ToListAsync());
+            int NumberOfProjectsByPage = 15;
+            int NumberPage = 1;
+
+            float tmp = _context.Projects.Count() / NumberOfProjectsByPage;
+            ViewBag.TotalQuantityOfProjects = Math.Ceiling( tmp );
+            ViewBag.QofProjectsByPage = NumberOfProjectsByPage;
+
+            List<Project> projects = GetProjectsByPage(NumberOfProjectsByPage, NumberPage);
+                      
+            return View(projects);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string QuantityOfProjectsView, string PageNumber)
+        {
+            ViewBag.TotalQuantityOfProjects = _context.Projects.Count();
+            int.TryParse( QuantityOfProjectsView, out int QofProjects);
+            int.TryParse(PageNumber, out int PageNumberP);
+            ViewBag.QofProjectsByP = QofProjects;
+
+
+            float tmp = _context.Projects.Count() / QofProjects;
+            ViewBag.TotalQuantityOfProjects = Math.Ceiling(tmp);
+            ViewBag.QofProjectsByPage = PageNumberP;
+
+
+            List<Project> projects = GetProjectsByPage(QofProjects,PageNumberP);
+
+            return View(projects);
+        }
+
+
 
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(string id)
@@ -105,27 +136,6 @@ namespace ProjectsControl.Controllers
             }
             return Hours;
         }
-        public Dictionary<string, int> GetDaysByEmployee(string IdOfProject = "")
-        {
-            Dictionary<string, int> Days = new();
-            var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();            
-            var asistancesDays =  (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
-            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
-            foreach (var item in employees)
-            {
-                var sumDay = 0;
-                foreach (var aD in asistancesDays)
-                {
-                    if (item.Equals(aD.Employee.Name))
-                    {
-                        sumDay +=  1;
-                    }
-                }
-                Days.Add(item, sumDay);
-            }
-            return Days;
-        }
-
 
         public Dictionary<string, float> GetExtrasByEmployee(string IdOfProject="")
         {
@@ -193,6 +203,8 @@ namespace ProjectsControl.Controllers
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
             return View(project);
         }
+       
+        
         public async Task<IActionResult> DetailsSimple(string id)
         {
             Project objProject = (from pj in _context.Projects select pj).Where(P=>P.ProjectId == id).Include(P => P.Employee).Include(P => P.Customer).FirstOrDefault();
@@ -314,6 +326,29 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public Dictionary<string, int> GetDaysByEmployee(string IdOfProject = "")
+        {
+            Dictionary<string, int> Days = new();
+            var aux = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
+            var asistancesDays = (from asistance in _context.Asistances select asistance).Where(D => D.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
+            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
+            foreach (var item in employees)
+            {
+                var sumDay = 0;
+                foreach (var aD in asistancesDays)
+                {
+                    if (item.Equals(aD.Employee.Name))
+                    {
+                        sumDay += 1;
+                    }
+                }
+                Days.Add(item, sumDay);
+            }
+            return Days;
+        }
+
+
+
         private bool ProjectExists(string id)
         {
             return _context.Projects.Any(e => e.ProjectId == id);
@@ -382,6 +417,29 @@ namespace ProjectsControl.Controllers
                 return (new List<Project>());
             }
         }
+
+        private List<Project> GetProjectsByPage( int QuantityOfProjects = 10, int PageToView = 1)
+        {
+            try
+            {
+                using (var db = _context)
+                {
+                    var query = db.Projects.FromSqlInterpolated($"EXECUTE GetProjectsByPage @_PageNumber ={PageToView.ToString()} , @_QuantityOfDevices = {QuantityOfProjects.ToString()}").ToList();
+                    foreach (var item in query)
+                    {
+                        item.Customer = (from i in db.Customers select i).Where(C => C.CustomerId == item.CustomerId).FirstOrDefault();
+                    }
+                    return query;
+                }
+            }
+            catch (Exception f)
+            {
+                Console.WriteLine($"Error: {f.Message}");
+                return null;               
+            }
+        }
+
+
         private int GetLastNumberOfReport()
             {
                 var aux = (from Rp in _context.Report select Rp.NumberOfReport).Max();

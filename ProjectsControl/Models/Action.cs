@@ -12,7 +12,7 @@ namespace ProjectsControl.Models
         /// Primary for internal use 
         /// </summary>
         [Key]
-        [Required]
+        [Required]        
         public string ActionId { get; set; }
         /// <summary>
         /// Title of the Action

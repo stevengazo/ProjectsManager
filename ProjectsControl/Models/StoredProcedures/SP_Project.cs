@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,13 +8,49 @@ namespace ProjectsControl.Models.StoredProcedures
 {
     public static class SP_Project
     {
-		/// <summary>
-		/// Return the code for the stored procedure to search in the table projects
-		/// </summary>
-		/// <returns>Sql Query</returns>
-        public static string GetSPSearchProjects()
+		
+		public static void BuildStoredProcedures(MigrationBuilder migrationBuilder)
         {
-            return @"-- =============================================
+			string SP2 = @"SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Steven Gazo
+-- Create date: 22 November 2021
+-- Description:	Pagination of the Projects in the database. Also, the projects are order by the numberProject
+-- =============================================
+CREATE PROCEDURE GetProjectsByPage
+	-- Add the parameters for the stored procedure here
+	@_PageNumber int = 1 ,
+	@_QuantityOfDevices int = 10
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here   
+    if(@_PageNumber = 1)
+    BEGIN
+        SELECT * 
+        FROM Projects
+        ORDER BY NumberOfProject DESC
+        OFFSET 0 ROWS 
+        FETCH NEXT @_QuantityOfDevices ROWS ONLY;
+    END
+    else
+    BEGIN
+        SELECT * 
+        FROM Projects
+        ORDER BY NumberOfProject Desc
+        OFFSET @_QuantityOfDevices * (@_PageNumber - 1) ROWS 
+        FETCH NEXT @_QuantityOfDevices ROWS ONLY;
+    END
+END
+GO
+";
+			string SP1 = @"-- =============================================
 -- Author:		Steven Gazo
 -- Create date: 23/8/21
 -- Description:	Search a projects by the specific information
@@ -130,6 +167,9 @@ BEGIN
 END
 
 					";
-        }
+			migrationBuilder.Sql(SP1);
+			migrationBuilder.Sql(SP2);	
+		}
+
     }
 }

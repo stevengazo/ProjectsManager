@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using ProjectsControl.Models.StoredProcedures;
 
 namespace ProjectsControl.Data.Migrations
 {
@@ -191,6 +192,8 @@ namespace ProjectsControl.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

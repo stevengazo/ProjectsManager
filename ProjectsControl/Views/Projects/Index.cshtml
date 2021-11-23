@@ -1,8 +1,17 @@
 ﻿@model IEnumerable<ProjectsControl.Models.Project>
 
+
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index - Proyectos";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var TQofProjects = ViewBag.TotalQuantityOfProjects;
+    var QofProjectsByP = ViewBag.QofProjectsByPage;
+
+    var NumberOfButtons = Math.Floor( TQofProjects / QofProjectsByP);
 }
 
 <h1>Lista de Proyectos Registrados</h1>
@@ -11,108 +20,108 @@
     <a asp-action="Create">Registrar nuevo proyecto</a>
 </p>
 
-<div>
-    <form asp-action="Index" class="form-group align-content-center " >
-        <select name="QuantityOfProjects" class="form-control-sm bg-transparent">
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select>
-        @for (int i = 0; i < 10; i++)
-        {
-            var number = i;
-            <input type="button" value="@number" class="btn"  />
-        }
-    </form>
-</div>
 
-<table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
-    <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Tarea
-            </th>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Id Oferta
-            </th>
-            <th>
-                OC
-            </th>
-            <th>
-                Fecha OC
-            </th>
-            <th>
-                Fecha Inicio
-            </th>
-            <th>
-                Fecha Finalizacion
-            </th>
-            <th>
-                Tipo Trabajo
-            </th>
-            <th>
-                Ubicacion
-            </th>
-            <th>
-                Cliente
-            </th>
-            <th>
-                Vendedor
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody style="font-size: 12px;">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfTask)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfOffer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OCDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeginDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfJob)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ubication)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Name)
-            </td>
-            <td>
-                
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
-                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
-                <a class="text-danger" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="">
+    <div class="d-flex justify-content-around">
+        <div>
+            <form asp-action="Index" class="form-group align-content-center " method="post" >                 
+                <select name="QuantityOfProjectsView" class="form-control-sm bg-transparent"  >
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                </select>
+                @for (int i = 0; i < 10; i++)
+                {
+                    var number = i;
+                    <input type="submit"  name="PageNumber" value="@number" class="btn"  />
+                }
+            </form>
+        </div>        
+    </div>
+    <div>
+        <table class="table table-hover table-striped table-responsive-sm table-bordered thead-dark" style="font-size: 13px;text-align:center">
+            <thead>
+                <tr>
+                    <th>
+                       N°
+                    </th>
+                    <th>
+                        Tarea
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Id Oferta
+                    </th>
+                    <th>
+                        OC
+                    </th>
+                    <th>
+                        Fecha OC
+                    </th>
+                    <th>
+                        Fecha Inicio
+                    </th>
+                    <th>
+                        Fecha Finalizacion
+                    </th>
+                    <th>
+                        Tipo Trabajo
+                    </th>
+                    <th>
+                        Ubicacion
+                    </th>
+                    <th>
+                        Cliente
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="font-size: 12px;">
+                @foreach (var item in Model) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberOfProject)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberOfTask)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberOfOffer)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OC)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OCDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BeginDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TypeOfJob)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ubication)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Customer.Name)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
+                                <a class="text-danger" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
