@@ -18,6 +18,22 @@ namespace ProjectsControl.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> DailyCreate()
+        {
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
+            ViewBag.ListOfEmployees = _context.Employees.ToList();
+
+            var listProj = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
+            var dicProj = new Dictionary<string, string>();
+            foreach (var item in listProj)
+            {
+                dicProj.Add(item.ProjectId, item.ProjectName);
+            }
+            ViewBag.Projects = dicProj;
+
+            return View();
+        }
+
         // GET: Asistances
         public async Task<IActionResult> Index()
         {

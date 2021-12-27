@@ -424,17 +424,19 @@ namespace ProjectsControl.Controllers
             {
                 using (var db = _context)
                 {
+                    var customers = db.Customers.ToList();
                     var query = db.Projects.FromSqlInterpolated($"EXECUTE GetProjectsByPage @_PageNumber ={PageToView.ToString()} , @_QuantityOfDevices = {QuantityOfProjects.ToString()}").ToList();
-                    foreach (var item in query)
-                    {
-                        item.Customer = (from i in db.Customers select i).Where(C => C.CustomerId == item.CustomerId).FirstOrDefault();
-                    }
+                    query.ForEach(
+                        delegate (Project D)
+                        {
+                            D.Customer = customers.FirstOrDefault(C => C.CustomerId == D.CustomerId);
+                        });
                     return query;
                 }
             }
             catch (Exception f)
             {
-                Console.WriteLine($"Error: {f.Message}");
+                Console.WriteLine($"Error: {f.Message}");                
                 return null;               
             }
         }

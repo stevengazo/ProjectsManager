@@ -1,0 +1,76 @@
+﻿@{
+    var tmp = ViewBag.ListOfEmployees;
+    List<Asistance> newAsistances = new List<Asistance>();
+
+    foreach (var Employee in tmp)
+    {
+        var tmpId = Guid.NewGuid().ToString();
+        tmpId = tmpId.Take(10).ToString();
+        var tmpDateBegin = DateTime.Today.AddHours(7);
+        var tmpDateEnd = DateTime.Today.AddHours(17);
+        Asistance tmpAux = new Asistance()
+                {
+                    AsistanceId = tmpId,
+                    EmployeeId = Employee.EmployeeId,
+                    Employee= Employee,
+                    DateOfBegin= tmpDateBegin,
+                    DateOfEnd= tmpDateEnd
+                    };
+        newAsistances.Add(tmpAux);
+    }
+
+}
+
+
+
+<div>
+    <div clas="">
+        <h2>Lista de Asistencia Diaria</h2>
+        <p>Lista de asistencia del personal. Esta lista permite el registro de todo el personal autorizado para la realización de proyectos (ayudantes y técnicos), según el proyecto en el cual se encuentren laborando</p>
+    </div>
+
+    <div>        
+        <table class="table table-hover ">
+            <thead>
+                <tr>
+                    <td>Empleado</td>
+                    <td>Proyecto</td>
+                    <td>Entrada</td>
+                    <td>Salida</td>
+                    <td>N° Semana</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Asistance item in @newAsistances)
+               {
+                <tr>
+                    <td>@item.Employee.Name</td>
+                    <td>
+                        <select asp-for="@item.ProjectId" class="form-control">
+                        @foreach (var i2tem in ViewBag.Projects)
+                        {
+                        <option value="@i2tem.Key">@i2tem.Value</option>
+
+                        }
+                        </select>
+                    </td>
+                    <td>
+                        <input asp-for="@item.DateOfBegin" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="@item.DateOfEnd" class="form-control" />
+                    </td>
+                    <td>
+                        <select asp-for="@item.WeekId" class ="form-control" asp-items="ViewBag.WeekId"></select>
+                    </td>
+                </tr>           
+               }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <input type = "button" value="Guardar" class="btn-primary" />
+        <input type = "button" value="Cancelar" class="btn-secondary" />
+    </div>
+</div>
+
