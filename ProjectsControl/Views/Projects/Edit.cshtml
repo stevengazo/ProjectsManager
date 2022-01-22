@@ -49,10 +49,10 @@
                 </label>
 
             </div>
-            <div class="form-group">
-                <label class="control-label">Tipo de Trabajo</label>
-                <select asp-for="TypeOfJob" class="form-control">
-                    <option value="">Seleccione...</option>
+            <div class="col-sm-6">
+                <label class="control-label">Tipo de Trabajo</label>                
+                <input type="text" list="list-type-jobs" asp-for="TypeOfJob" class="form-control" />
+                <datalist id="list-type-jobs">
                     <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
                     <option value="Instalación Ionizante">Instalación Ionizante</option>
                     <option value="Instalación Supresores">Instalación Supresores</option>
@@ -64,7 +64,7 @@
                     <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
                     <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
                     <option value="Otros">Otros</option>
-                </select>
+                </datalist>                                              
                 <span asp-validation-for="TypeOfJob" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -18,6 +18,13 @@ namespace ProjectsControl.Controllers
             _context = context;
         }
 
+        [HttpPost]
+        public async Task<ActionResult> DailyCreate( IEnumerable<Asistance> asistance )
+        {
+            List<Asistance> sample1 = new List<Asistance>();
+            return View(sample1);
+        }
+        [HttpGet]
         public async Task<IActionResult> DailyCreate()
         {
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");

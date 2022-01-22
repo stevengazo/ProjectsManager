@@ -116,7 +116,6 @@ namespace ProjectsControl.Models
         public Customer Customer { get; set; }
         public string CustomerId { get; set; }
 
-        // RELATION WITH OFFER
 
 
         #endregion

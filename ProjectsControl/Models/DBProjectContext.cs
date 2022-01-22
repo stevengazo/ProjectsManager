@@ -22,10 +22,8 @@ namespace ProjectsControl.Models
         public DbSet<Expensive> Expensives { get; set; }
         public DbSet<ExtraHour> ExtraHours { get; set; }
         public DbSet<Notes> Notes { get; set; }
-        public DbSet<Of_Quo> Of_Quos { get; set; }
         public DbSet<Offer> Offers { get; set; }
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<Quotation> Quotations { get; set; }
+        public DbSet<Project> Projects { get; set; }        
         public DbSet<Report> Reports { get; set; }
         public DbSet<Week> Weeks { get; set; }
 
@@ -59,12 +57,6 @@ namespace ProjectsControl.Models
                 BeginOfWeek = DateTime.Today,
                 EndOfWeek = DateTime.Today,
             };
-            Quotation oquotation = new()
-            { 
-                QuotationId="001-2010",
-                Type="Sample",
-                Description="Sample Of Description",                
-            };
             Customer ocustomer = new()
             {
                 CustomerId = Guid.NewGuid().ToString(),
@@ -84,13 +76,6 @@ namespace ProjectsControl.Models
                 DateOfCreation = DateTime.Today,
                 LastEdition = DateTime.Today,
                 CustomerId = ocustomer.CustomerId,        
-            };
-            Of_Quo oOf_Quo = new()
-            {
-                Of_QuoId = Guid.NewGuid().ToString(),
-                OfferId = oOffer.OfferId,
-                QuotationId = oquotation.QuotationId,
-
             };
             Employee Oemployee = new()
             {
@@ -206,9 +191,7 @@ namespace ProjectsControl.Models
             modelBuilder.Entity<Employee>().HasData(Oemployee);
             modelBuilder.Entity<Week>().HasData(oweek);
             modelBuilder.Entity<Customer>().HasData(ocustomer);
-            modelBuilder.Entity<Quotation>().HasData(oquotation);
-            modelBuilder.Entity<Offer>().HasData(oOffer);
-            modelBuilder.Entity<Of_Quo>().HasData(oOf_Quo);
+            modelBuilder.Entity<Offer>().HasData(oOffer);            
             modelBuilder.Entity<Project>().HasData(oProject);
             modelBuilder.Entity<Notes>().HasData(oNotes);
             modelBuilder.Entity<Report>().HasData(oReport);

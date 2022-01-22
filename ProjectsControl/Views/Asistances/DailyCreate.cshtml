@@ -21,6 +21,20 @@
 
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+        function sendData(){
+            console.log("senddata...");
+        let listOfRecords= [];
+        $(`#TableAsistances`).find(`tr:gt(0)`).each(function(){
+            var name = $(this).find(`td:eq(0)`).text();
+            console.log(name);
+        });
+      
+    }
+
+</script>
+
 
 
 <div>
@@ -30,7 +44,7 @@
     </div>
 
     <div>        
-        <table class="table table-hover ">
+        <table class="table table-hover " id="TableAsistances">
             <thead>
                 <tr>
                     <td>Empleado</td>
@@ -71,6 +85,8 @@
     <div>
         <input type = "button" value="Guardar" class="btn-primary" />
         <input type = "button" value="Cancelar" class="btn-secondary" />
+        <button onclick="sendData()"> sample</button>
     </div>
+    
 </div>
 
