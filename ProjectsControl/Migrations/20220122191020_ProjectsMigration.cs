@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using ProjectsControl.Models.StoredProcedures;
 
 #nullable disable
 
@@ -9,6 +10,7 @@ namespace ProjectsControl.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            SP_Project.BuildStoredProcedures(migrationBuilder);
             migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
@@ -433,6 +435,8 @@ namespace ProjectsControl.Migrations
                 name: "IX_Report_ProjectId",
                 table: "Report",
                 column: "ProjectId");
+            
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

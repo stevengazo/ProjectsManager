@@ -167,6 +167,7 @@ BEGIN
 END
 
 					";
+
 			migrationBuilder.Sql(SP1);
 			migrationBuilder.Sql(SP2);	
 		}

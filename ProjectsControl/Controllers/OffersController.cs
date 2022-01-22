@@ -47,7 +47,8 @@ namespace ProjectsControl.Controllers
         // GET: Offers/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
+            var tmplist = _context.Customers.ToList();
+            ViewData["CustomerId"] = tmplist;
             return View();
         }
 
@@ -64,7 +65,8 @@ namespace ProjectsControl.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", offer.CustomerId);
+            var tmplist = _context.Customers.ToList();
+            ViewData["CustomerId"] = tmplist;
             return View(offer);
         }
 
@@ -81,7 +83,8 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", offer.CustomerId);
+            var tmplist = _context.Customers.ToList();
+            ViewData["CustomerId"] = tmplist;
             return View(offer);
         }
 
@@ -117,7 +120,8 @@ namespace ProjectsControl.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", offer.CustomerId);
+            var tmplist = _context.Customers.ToList();
+            ViewData["CustomerId"] = tmplist;
             return View(offer);
         }
 

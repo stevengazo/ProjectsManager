@@ -55,13 +55,14 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" class="form-control">
+                <label class="control-label">Proyecto</label>
+                <input type="text" list="list-projects" asp-for="ProjectId" class="form-control" /> 
+                <datalist id="list-projects">
                     @foreach (Project i in ViewBag.ActivesProjects)
 	                {
-	                    <option value="@i.ProjectId">N° @i.NumberOfProject - @i.ProjectName</option>	 
+	                    <option value="@i.ProjectId">N-@i.NumberOfProject - @i.ProjectName</option>	 
 	                }
-                </select>
+                </datalist>
             </div>
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />

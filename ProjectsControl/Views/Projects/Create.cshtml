@@ -101,7 +101,7 @@
                  </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label class="form-check-label">
+                        <label class="control-label">Esta Terminado</label> 
                         <input class="form-check-input" asp-for="IsOver" /> @Html.DisplayNameFor(model => model.IsOver)
                         </label>
                     </div>
@@ -126,25 +126,26 @@
                  </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label asp-for="Details" class="control-label"></label>
+                        <label class="control-label">Detalles</label> 
                         <input asp-for="Details" class="form-control" />
                         <span asp-validation-for="Details" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
-                        <label asp-for="Ubication" class="control-label"></label>
+                        <label class="control-label">Ubicación</label> 
                         <input asp-for="Ubication" class="form-control" />
                         <span asp-validation-for="Ubication" class="text-danger"></span>
                     </div>
                  </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label asp-for="CustomerId" class="control-label"></label>                
-                        <select asp-for="CustomerId" class="form-control">
-                        @foreach (   Customer customer in ViewBag.Customers)
-                        {
-                        <option value="@customer.CustomerId">@customer.Name</option>		 
-                        }
-                        </select> 
+                        <label class="control-label">Cliente</label>                
+                        <input type="text" list="list-customers" asp-for="CustomerId" class="form-control" /> 
+                        <datalist id="list-customers">
+                            @foreach (   Customer customer in ViewBag.Customers)
+                            {
+                            <option value="@customer.CustomerId">@customer.Name</option>		 
+                            }                        
+                        </datalist>
                     </div>
                     <div class="col-sm-6">
                         <label asp-for="EmployeeId" class="control-label">Vendedor</label>

@@ -14,50 +14,57 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="OfferId" />
-            <div class="form-group">
-                <label asp-for="NumberOfOffer" class="control-label"></label>
+<div class="form-group">
+                <label class="control-label">Número de Oferta</label>
                 <input asp-for="NumberOfOffer" class="form-control" />
                 <span asp-validation-for="NumberOfOffer" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label class="control-label">Titulo</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
+                <label class="control-label">Tipo</label>
                 <input asp-for="Type" class="form-control" />
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label class="control-label">Descripción</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" value="@User.Identity.Name" readonly />
+                <label class="control-label">Autor</label>
+                <input asp-for="Author" class="form-control"  value="@User.Identity.Name" readonly />
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SaleManName" class="control-label"></label>
+                <label class="control-label">Vendedor</label>
                 <input asp-for="SaleManName" class="form-control" />
                 <span asp-validation-for="SaleManName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateOfCreation" class="control-label"></label>
+                <label class="control-label">Fecha de creación</label>
                 <input asp-for="DateOfCreation" class="form-control" />
                 <span asp-validation-for="DateOfCreation" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Ultima Edición</label>
                 <label asp-for="LastEdition" class="control-label"></label>
-                <input asp-for="LastEdition" class="form-control"  value="@DateTime.Now"/>
+                <input type="datetime" class="form-control" value="@DateTime.Today.ToShortDateString()" readonly />
+                
                 <span asp-validation-for="LastEdition" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <label class="control-label">Cliente</label>
+                <input type="text" list="list-customers" asp-for="CustomerId" class ="form-control" />
+                <datalist id="list-customers">
+                    @foreach (Customer item in @ViewBag.CustomerId)
+                   {
+                       <option value="@item.CustomerId">@item.Name</option>
+                   }
+                </datalist>
             </div>
             <div class="form-group">
                 <input type="submit" value="Actualizar" class="btn btn-primary" />
