@@ -19,12 +19,13 @@ namespace ProjectsControl.Controllers
         }
 
 
+
         /// <summary>
         /// Received the list of daily asistances in the DB
         /// </summary>
         /// <param name="asistances">List of asistances </param>
         /// <returns>Same view</returns>
-        [HttpPost]
+        [HttpPost] 
         public async Task<ActionResult> DailyCreate(List<Asistance> asistances )
         {
             try
@@ -34,7 +35,6 @@ namespace ProjectsControl.Controllers
                     foreach (Asistance asistance in asistances)
                     {
                         asistance.AsistanceId = Guid.NewGuid().ToString();
-
                     }
                     using (var context = _context)
                     {
@@ -47,7 +47,7 @@ namespace ProjectsControl.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "No hay asistencias registradas";
+                    ViewBag.ErrorMessage = "No hay asistencias registradas";    
                     ViewBag.ErrorMessage.Style = "btn-danger";
                     List<Asistance> sample1 = new List<Asistance>();
                     return View(sample1);
