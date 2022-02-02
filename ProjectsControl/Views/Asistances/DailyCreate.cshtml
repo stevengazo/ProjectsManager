@@ -1,16 +1,41 @@
 ﻿@model List<Asistance>;
 
-@{
-    
+
+
+<script>
+ 
+   function deleteRow(btn){
+       console.log(btn);
+       let row = btn.parentNode.parentNode;
+       row.parentNode.removeChild(row);
+       orderTable(row);
+   }
+   
+
+
+
+const orderTable = (rowDeleted)=>{
+    let tableAsistances = document.getElementById("table-asistances").children;  
+    /// Change any row
+    for (let index = 0; index < tableAsistances.length; index++) {        
+        // set the values 
+        var ProjectId = document.getElementsByName("["+index+"].ProjectId");           
+        console.log( ProjectId.Attributes);
+        var EmployeesId = document.getElementsByName("["+index+"].EmployeeId");        
+        var DateOfBegin = document.getElementsByName("["+index+"].DateOfBegin");        
+        console.log( ProjectId.getAttribute("Id"));
+    }
 }
+</script>
+
 
 
 <div class="flex-row align-content-center">
-    <label>@ViewBag.ErrorMessage</label>
+    <label >@ViewBag.ErrorMessage</label>
 </div>
 
 <form method="post">
-    <table class="table">
+    <table class="table" id="table-asistances">
         <thead>
             <tr>
                 <td>
@@ -28,6 +53,11 @@
                 <td>
                     N°Semana
                 </td>
+                <td>
+                    Ausente
+                </td>
+                <td>                    
+                </td>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +69,7 @@
                         <!--Name-->
                     <label>
                             @Model[i].Employee.Name
-                            <div class="disabled">
+                            <div style="display:none">
                                 <input asp-for="@Model[i].EmployeeId" value="@Model[i].EmployeeId" readonly>
                             </div>
 
@@ -47,25 +77,39 @@
                     </td>
                     <td>
                         <!--Project-->
-                    <select asp-for="@Model[i].ProjectId" class="form-control-sm">
+                    <input list="active-projects" asp-for="@Model[i].ProjectId" class="form-control-sm">
+                    <datalist id="active-projects">
                             @foreach (var item in ViewBag.Projects)
                             {
                                 <option value="@item.Key">@item.Value</option>
                             }
-                        </select>
+                    </datalist>
                 </td>
                 <td>
                     <!--DateOfBegin-->
-                    <input asp-for="@Model[i].DateOfBegin" class="form-control" />
+                    <input asp-for="@Model[i].DateOfBegin" class="form-control-sm" />
                     
                 </td>
                 <td>
                     <!--DateOfEnd-->
-                    <input asp-for="@Model[i].DateOfEnd" class="form-control" />
+                    <input asp-for="@Model[i].DateOfEnd" class="form-control-sm" />
                 </td>
                 <td>
                     <!--Number Of Week-->
                      <select asp-for="@Model[i].WeekId" class ="form-control" asp-items="ViewBag.WeekId"></select>
+                </td>
+                <td>
+                    <!--is absent-->
+                     <div class="flex-column align-content-center">
+                         <label>
+                             ¿Ausente?
+                         </label>
+                         <input id="checkbox-@i" type="checkbox">
+                     </div>
+                </td>
+                <td>
+                    <!--Delete Row-->
+                    <div id="DeleteRow- @i"  class=" btn btn-outline-danger" onclick="deleteRow(this)" >Borrar</div>
                 </td>
             </tr>
            }

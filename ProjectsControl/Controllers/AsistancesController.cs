@@ -28,20 +28,31 @@ namespace ProjectsControl.Controllers
         public async Task<ActionResult> DailyCreate(List<Asistance> asistances )
         {
             try
-            {;
-                foreach(Asistance asistance in asistances)
+            {
+                if(asistances.Count !=0)
                 {
-                    asistance.AsistanceId = Guid.NewGuid().ToString();                    
+                    foreach (Asistance asistance in asistances)
+                    {
+                        asistance.AsistanceId = Guid.NewGuid().ToString();
 
+                    }
+                    using (var context = _context)
+                    {
+                        await context.Asistances.AddRangeAsync(asistances);
+                        await context.SaveChangesAsync();
+                    }
+                    ViewBag.ErrorMessage = "Asistencias Agregadas";
+                    List<Asistance> sample1 = new List<Asistance>();
+                    return View(sample1);
                 }
-                using(var context = _context)
+                else
                 {
-                    await context.Asistances.AddRangeAsync(asistances);
-                    await context.SaveChangesAsync();
+                    ViewBag.ErrorMessage = "No hay asistencias registradas";
+                    ViewBag.ErrorMessage.Style = "btn-danger";
+                    List<Asistance> sample1 = new List<Asistance>();
+                    return View(sample1);
                 }
-                ViewBag.ErrorMessage = "Asistencias Agregadas";
-                List<Asistance> sample1 = new List<Asistance>();
-                return View(sample1);
+                
             }
             catch (Exception ex)
             {
