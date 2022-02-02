@@ -73,7 +73,7 @@ namespace ProjectsControl.Controllers
             //  List of Weeks registered in the DB
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             //  List of employees in the DB
-            var employees  = (from employee in _context.Employees select employee).ToList();
+            var employees  = (from employee in _context.Employees select employee).Where(E=> E.Position.Equals("Ayudante") || E.Position.Equals("tecnico")).ToList();
             //  Lista de proyectos 
             ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToDictionary( P=>P.ProjectId, P=>P.ProjectName );
             //  Lista de asistencia del empleado y preparación básica
@@ -158,6 +158,9 @@ namespace ProjectsControl.Controllers
 
         public async Task<IActionResult> Search()
         {
+            ViewBag.Employees = _context.Employees.ToList();
+            ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver == false).ToList();
+            ViewBag.Weeks = _context.Week.ToList();            
             return View(new List<Asistance>());
         }
 

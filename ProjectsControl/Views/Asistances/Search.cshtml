@@ -5,7 +5,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<script>
+    let inpEmployee = document.getElementsByName("NameToSearch");
+    let inpProject = document.getElementsByName("ProjectToSearch");
+    let inputWeek = document.getElementsByName("WeekToSearch");
+    let inpDate = document.getElementsByName("DateToSearch");
+
+
+    /// no funciona
+function clean(){
+        alert("sample");
+        inpEmployee.options=0;
+        console.log(inpEmployee);
+        $("input[type=date]").val("")
+        alert("limpado");
+    }
+</script>
+
 <h1>Buscar Asistencias</h1>
+
+
+
 
 <p>
     <a asp-action="Create">Registrar asistencia</a>
@@ -14,22 +35,43 @@
 <form asp-controller="Asistances" asp-action="Search" method="get">
     <div class="form-group row">
         <div class="col">
-            <select style="background-color: #f5f5f5;" class="rounded form-control" name="NameToSearch">
-                <option value="">Empleado</option>
-            </select>
+            <select style="background-color: #f5f5f5;" class="rounded form-control" name="NameToSearch" >
+            <option value=""></option>
+                @foreach (Employee item in  ViewBag.Employees )
+               {
+                   <option value="@item.EmployeeId">@item.Name</option>
+               }
+           </select>
         </div>
         <div class="col">
             <select style="background-color: #f5f5f5;" class="rounded form-control" name="ProjectToSearch">
-                <option value="">Proyecto</option>
+              <option value=""></option>
+                @foreach (Project item in ViewBag.Projects)
+               {
+                   <option value="@item.ProjectId">@item.NumberOfProject - @item.ProjectName</option>
+               }
             </select>
         </div>
         <div class="col">
             <select style="background-color: #f5f5f5;" class="rounded form-control" name="WeekToSearch">
-                <option value="">Semana</option>
+                <option value=""></option>
+                @foreach (Week item in ViewBag.Weeks)
+               {
+                   <option value="@item.WeekId">@item.WeekId</option>
+               }
             </select>
         </div>
         <div class="col">
+            <input type="date" style="background-color: #f5f5f5;" class="rounded form-control" name="DateToSearch" placeholder="Fecha" />
+        </div>
+        <div class="col">
             <input type="submit" value="Buscar" class="btn btn-light " />
+        </div>
+        <div class="col">
+            <input type="button" value="Generar" class="btn btn-light " />
+        </div>
+        <div class="col">
+            <div type="button" class="btn btn-light" onclick="clean()"  >Limpiar</div>
         </div>
     </div>
 </form>

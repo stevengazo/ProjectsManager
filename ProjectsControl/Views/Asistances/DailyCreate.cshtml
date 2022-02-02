@@ -11,6 +11,9 @@
        orderTable();
 }
    
+$(document).ready(function() {
+  $("#table-asistances").validate();
+});
 
 
  function orderTable (){
@@ -79,7 +82,7 @@
 
 
 <form method="post">
-    <table class="table" id="table-asistances" onchange="orderTable()">
+    <table class="table" id="table-asistances"  onchange="orderTable()">
         <thead>
             <tr>
                 <td>
@@ -121,7 +124,7 @@
                     </td>
                     <td>
                         <!--Project-->
-                    <input list="active-projects" asp-for="@Model[i].ProjectId" class="form-control-sm">
+                    <input list="active-projects" asp-for="@Model[i].ProjectId" class="form-control-sm" minlength="3"  required>
                     <datalist id="active-projects">
                             @foreach (var item in ViewBag.Projects)
                             {
