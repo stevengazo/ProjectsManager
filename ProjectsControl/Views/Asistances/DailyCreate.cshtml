@@ -1,92 +1,77 @@
-﻿@{
-    var tmp = ViewBag.ListOfEmployees;
-    List<Asistance> newAsistances = new List<Asistance>();
+﻿@model List<Asistance>;
 
-    foreach (var Employee in tmp)
-    {
-        var tmpId = Guid.NewGuid().ToString();
-        tmpId = tmpId.Take(10).ToString();
-        var tmpDateBegin = DateTime.Today.AddHours(7);
-        var tmpDateEnd = DateTime.Today.AddHours(17);
-        Asistance tmpAux = new Asistance()
-                {
-                    AsistanceId = tmpId,
-                    EmployeeId = Employee.EmployeeId,
-                    Employee= Employee,
-                    DateOfBegin= tmpDateBegin,
-                    DateOfEnd= tmpDateEnd
-                    };
-        newAsistances.Add(tmpAux);
-    }
-
+@{
+    
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-        function sendData(){
-            console.log("senddata...");
-        let listOfRecords= [];
-        $(`#TableAsistances`).find(`tr:gt(0)`).each(function(){
-            var name = $(this).find(`td:eq(0)`).text();
-            console.log(name);
-        });
-      
-    }
 
-</script>
-
-
-
-<div>
-    <div clas="">
-        <h2>Lista de Asistencia Diaria</h2>
-        <p>Lista de asistencia del personal. Esta lista permite el registro de todo el personal autorizado para la realización de proyectos (ayudantes y técnicos), según el proyecto en el cual se encuentren laborando</p>
-    </div>
-
-    <div>        
-        <table class="table table-hover " id="TableAsistances">
-            <thead>
-                <tr>
-                    <td>Empleado</td>
-                    <td>Proyecto</td>
-                    <td>Entrada</td>
-                    <td>Salida</td>
-                    <td>N° Semana</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Asistance item in @newAsistances)
-               {
-                <tr>
-                    <td>@item.Employee.Name</td>
-                    <td>
-                        <select asp-for="@item.ProjectId" class="form-control">
-                        @foreach (var i2tem in ViewBag.Projects)
-                        {
-                        <option value="@i2tem.Key">@i2tem.Value</option>
-
-                        }
-                        </select>
-                    </td>
-                    <td>
-                        <input asp-for="@item.DateOfBegin" class="form-control" />
-                    </td>
-                    <td>
-                        <input asp-for="@item.DateOfEnd" class="form-control" />
-                    </td>
-                    <td>
-                        <select asp-for="@item.WeekId" class ="form-control" asp-items="ViewBag.WeekId"></select>
-                    </td>
-                </tr>           
-               }
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <input type = "button" value="Guardar" class="btn-primary" />
-        <input type = "button" value="Cancelar" class="btn-secondary" />
-        <button onclick="sendData()"> sample</button>
-    </div>
-    
+<div class="flex-row align-content-center">
+    <label>@ViewBag.ErrorMessage</label>
 </div>
 
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>
+                    Empleado
+                </td>
+                <td>
+                    Proyecto
+                </td>
+                <td>
+                    Entrada
+                </td>
+                <td>
+                    Salida
+                </td>
+                <td>
+                    N°Semana
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <!--Row-->
+                <tr>
+                    <td>
+                        <!--Name-->
+                    <label>
+                            @Model[i].Employee.Name
+                            <div class="disabled">
+                                <input asp-for="@Model[i].EmployeeId" value="@Model[i].EmployeeId" readonly>
+                            </div>
+
+                        </label>
+                    </td>
+                    <td>
+                        <!--Project-->
+                    <select asp-for="@Model[i].ProjectId" class="form-control-sm">
+                            @foreach (var item in ViewBag.Projects)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                </td>
+                <td>
+                    <!--DateOfBegin-->
+                    <input asp-for="@Model[i].DateOfBegin" class="form-control" />
+                    
+                </td>
+                <td>
+                    <!--DateOfEnd-->
+                    <input asp-for="@Model[i].DateOfEnd" class="form-control" />
+                </td>
+                <td>
+                    <!--Number Of Week-->
+                     <select asp-for="@Model[i].WeekId" class ="form-control" asp-items="ViewBag.WeekId"></select>
+                </td>
+            </tr>
+           }
+        </tbody>
+    </table>
+    <div class="flex-row align-content-center">
+        <input type="submit" value="Guardar" class="btn-primary"/>
+    </div>
+</form>

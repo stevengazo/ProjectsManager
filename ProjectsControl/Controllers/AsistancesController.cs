@@ -18,28 +18,75 @@ namespace ProjectsControl.Controllers
             _context = context;
         }
 
+
+        /// <summary>
+        /// Received the list of daily asistances in the DB
+        /// </summary>
+        /// <param name="asistances">List of asistances </param>
+        /// <returns>Same view</returns>
         [HttpPost]
-        public async Task<ActionResult> DailyCreate( IEnumerable<Asistance> asistance )
+        public async Task<ActionResult> DailyCreate(List<Asistance> asistances )
         {
-            List<Asistance> sample1 = new List<Asistance>();
-            return View(sample1);
+            try
+            {;
+                foreach(Asistance asistance in asistances)
+                {
+                    asistance.AsistanceId = Guid.NewGuid().ToString();                    
+
+                }
+                using(var context = _context)
+                {
+                    await context.Asistances.AddRangeAsync(asistances);
+                    await context.SaveChangesAsync();
+                }
+                ViewBag.ErrorMessage = "Asistencias Agregadas";
+                List<Asistance> sample1 = new List<Asistance>();
+                return View(sample1);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                List<Asistance> sample1 = new List<Asistance>();
+                return View(sample1);
+            }
+            
         }
+
+        /// <summary>
+        ///  Return the basic information for the Daily Asistences
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> DailyCreate()
-        {
+        {               
+            //  List of Weeks registered in the DB
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
-            ViewBag.ListOfEmployees = _context.Employees.ToList();
-
-            var listProj = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
-            var dicProj = new Dictionary<string, string>();
-            foreach (var item in listProj)
+            //  List of employees in the DB
+            var employees  = (from employee in _context.Employees select employee).ToList();
+            //  Lista de proyectos 
+            ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToDictionary( P=>P.ProjectId, P=>P.ProjectName );
+            //  Lista de asistencia del empleado y preparación básica
+            List<Asistance> assistancesByPerson = new List<Asistance>();
+            foreach (var employee in employees)
             {
-                dicProj.Add(item.ProjectId, item.ProjectName);
+                Asistance tmpAsistance = new Asistance()
+                {
+                    AsistanceId = Guid.NewGuid().ToString(),
+                    Employee = employee,
+                    EmployeeId = employee.EmployeeId,
+                    DateOfBegin = DateTime.Today.AddHours(7),
+                    DateOfEnd= DateTime.Today.AddHours(17)
+                    
+                };
+                assistancesByPerson.Add(tmpAsistance);
             }
-            ViewBag.Projects = dicProj;
-
-            return View();
+            ViewBag.ErrorMessage = "";
+            //  Retorno de la vista                    
+            return View(assistancesByPerson);
         }
+
+
+
 
         // GET: Asistances
         public async Task<IActionResult> Index()
