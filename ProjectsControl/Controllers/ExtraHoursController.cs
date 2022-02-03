@@ -109,7 +109,17 @@ namespace ProjectsControl.Controllers
         public async Task<IActionResult> addExtra(string id)
         {
             var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
-            return View(tmpResult);
+            ExtraHour extraObj = new ExtraHour() {
+                AsistanceId = Guid.NewGuid().ToString(),
+                Employee = tmpResult.Employee,
+                EmployeeId = tmpResult.EmployeeId,
+                Week = tmpResult.Week,
+                WeekId = tmpResult.WeekId,
+                BeginTime= tmpResult.DateOfBegin,
+                EndTime = tmpResult.DateOfEnd,
+                IsPaid = false
+            };
+            return View(extraObj);
         }
         // POST: ExtraHours/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.

@@ -1,4 +1,4 @@
-﻿@model Asistance;
+﻿@model ExtraHour
 
 @{
     ViewData["Title"] = "Crear Tiempo Extra";
@@ -10,4 +10,4 @@
 <h4>Tiempo extra</h4>
 
 @Model.Employee.Name
-@Model.Week.WeekId
+@Model.BeginTime.ToLongDateString()
