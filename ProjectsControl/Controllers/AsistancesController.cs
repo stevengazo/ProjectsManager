@@ -329,15 +329,39 @@ namespace ProjectsControl.Controllers
             var tmpResult = await SearchInDb(DateToSearch, NameToSearch, ProjectToSearch, WeekToSearch);
             if (tmpResult != null)
             {
+                if( NameToSearch == null && DateToSearch == null && ProjectToSearch == null && WeekToSearch == null) 
+                {
+                    ViewBag.ErrorMessage = "";
+                }
+                else
+                {
+                    if (tmpResult.Count == 0)
+                    {
+                        ViewBag.ErrorMessage = "No hay coincidencias";
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "";
+                    }
+                }
                 return View(tmpResult);
             }
             else
-            {
+            {                
                 return View(new List<Asistance>());
             }
             
         }
 
+
+        /// <summary>
+        /// This function is focus to consult the asistances in the database with a stored procedure
+        /// </summary>
+        /// <param name="DateToSearch"></param>
+        /// <param name="NameToSearch"></param>
+        /// <param name="ProjectToSearch"></param>
+        /// <param name="WeekToSearch"></param>
+        /// <returns></returns>
         public async Task<List<Asistance>> SearchInDb(string DateToSearch= null, string NameToSearch = null, string ProjectToSearch = null, string WeekToSearch = null)
         {
             try

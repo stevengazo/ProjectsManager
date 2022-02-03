@@ -105,12 +105,37 @@ namespace ProjectsControl.Controllers
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> addExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
+        {
+            try
+            {               
+                _context.ExtraHours.Add(extraHour);
+                _context.SaveChanges();                
+                ViewBag.Message = $"Hora extra registrada";
+                return RedirectToAction(nameof(Details));
+            }
+            catch(Exception ef)
+            {
+                ViewBag.Message = $"Error al ingresar la hora extra. {ef.Message}";
+                var tmpId = extraHour.AsistanceId;
+                var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId.Equals(tmpId));
+                ExtraHour tmpObj = extraHour;
+                tmpObj.Employee = _context.Employees.FirstOrDefault(E => E.EmployeeId == tmpObj.EmployeeId);
+                tmpObj.Asistance = _context.Asistances.FirstOrDefault(A => A.AsistanceId == tmpObj.AsistanceId);
+                tmpObj.Week = _context.Week.FirstOrDefault(W => W.WeekId == tmpObj.WeekId);
+                return View(tmpObj);
+            }                       
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> addExtra(string id)
         {
             var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
             ExtraHour extraObj = new ExtraHour() {
-                AsistanceId = Guid.NewGuid().ToString(),
+                AsistanceId = tmpResult.AsistanceId,
                 Employee = tmpResult.Employee,
                 EmployeeId = tmpResult.EmployeeId,
                 Week = tmpResult.Week,

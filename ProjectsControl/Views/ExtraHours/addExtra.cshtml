@@ -5,9 +5,82 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Crear tiempo extra</h1>
+
+<h4>Registro de Horas Extras - @Model.Employee.Name
+</h4>
+
 
 <h4>Tiempo extra</h4>
 
-@Model.Employee.Name
-@Model.BeginTime.ToLongDateString()
+
+<p>@ViewBag.Message</p>
+<hr />
+<div >
+    <div >
+        <form asp-action="addExtra">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Id de Referencia</label>
+                <input asp-for="ExtraHourId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
+                <span asp-validation-for="ExtraHourId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha y tiempo Inicio</label>
+                <input asp-for="BeginTime" class="form-control" />
+                <span asp-validation-for="BeginTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha y tiempo Finalización</label>
+                <input asp-for="EndTime" class="form-control" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tipo de hora</label>
+                <select asp-for="TypeOfHour" class="form-control">
+                    <option value="Tiempo y medio">Tiempo y medio</option>
+                    <option value="Tiempo normal">Tiempo Normal</option>
+                    <option value="Tiempo doble">Tiempo doble</option>
+                    <option value="No especicificado">No especificado</option>
+                </select>
+                <span asp-validation-for="TypeOfHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Motivo</label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Notas</label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPaid" /> @Html.DisplayNameFor(model => model.IsPaid)
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Empleado</label>
+                <label  class="form-control">@Model.Employee.Name</label>
+                <input asp-for="EmployeeId"  class="form-control"  readonly/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fecha de asistencia</label>
+                <label class="form-control">@Model.BeginTime.ToLongDateString()</label>
+                <input asp-for="AsistanceId" style="display:none" class="form-control" readonly/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Numero de Semana</label>
+                <input asp-for="WeekId"  class="form-control"  readonly/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
+</div>

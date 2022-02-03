@@ -35,7 +35,11 @@
                 if ( exist!=null)
                 {
                     <td>
-                        <a asp-controller="Projects" asp-action="DetailsSimple" asp-route-id="@exist.Project.ProjectId">@exist.Project.ProjectName</a><br />
+                            @if(exist.Project != null)
+                            {
+                                <a asp-controller="Projects" asp-action="DetailsSimple" asp-route-id="@exist.Project.ProjectId">@exist.Project.ProjectName</a><br />        
+                            }
+                        
                         <a asp-controller="Asistances" asp-action="Details" asp-route-id="@exist.AsistanceId">Asistencia</a><br />
                     </td>
                 }
