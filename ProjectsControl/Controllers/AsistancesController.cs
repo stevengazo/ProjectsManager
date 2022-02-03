@@ -100,13 +100,23 @@ namespace ProjectsControl.Controllers
 
 
         // GET: Asistances
+        /// <summary>
+        /// Main Page of the asistances
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Asistances.Include(a => a.Employee).Include(a => a.Project).Include(a => a.Week);
             return View(await dBProjectContext.ToListAsync());
         }
 
+
         // GET: Asistances/Details/5
+        /// <summary>
+        /// Search an especific registered of asistance in the DB
+        /// </summary>
+        /// <param name="id">Id to Search</param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -127,7 +137,9 @@ namespace ProjectsControl.Controllers
             return View(asistance);
         }
 
-        // GET: Asistances/Create
+
+
+        // GET: Asistances/Create        
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
@@ -156,13 +168,6 @@ namespace ProjectsControl.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Search()
-        {
-            ViewBag.Employees = _context.Employees.ToList();
-            ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver == false).ToList();
-            ViewBag.Weeks = _context.Week.ToList();            
-            return View(new List<Asistance>());
-        }
 
         // POST: Asistances/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -292,5 +297,83 @@ namespace ProjectsControl.Controllers
         {
             return _context.Asistances.Any(e => e.AsistanceId == id);
         }
+
+        /*
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.Employees = _context.Employees.ToList();
+            ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver == false).ToList();
+            ViewBag.Weeks = _context.Week.ToList();
+            return  View(new List<Asistance>());
+        }*/
+        [HttpGet]
+        public async Task<IActionResult> Search( string DateToSearch= null, string NameToSearch= null, string ProjectToSearch= null,string WeekToSearch= null )
+        {
+            if (NameToSearch != null)
+            {
+                NameToSearch = (NameToSearch.Equals("0") || NameToSearch == null) ? null : NameToSearch;
+            }
+            if(ProjectToSearch != null)
+            {
+                ProjectToSearch = (ProjectToSearch.Equals("0") || ProjectToSearch == null) ? null : ProjectToSearch;
+            }
+            if(WeekToSearch != null)
+            {
+                WeekToSearch = (WeekToSearch.Equals("0")) ? null : WeekToSearch;
+            }
+                       
+            ViewBag.Employees = _context.Employees.ToList();
+            ViewBag.Projects = (from proj in _context.Projects select proj).ToList();
+            ViewBag.Weeks = _context.Week.ToList();
+            var tmpResult = await SearchInDb(DateToSearch, NameToSearch, ProjectToSearch, WeekToSearch);
+            if (tmpResult != null)
+            {
+                return View(tmpResult);
+            }
+            else
+            {
+                return View(new List<Asistance>());
+            }
+            
+        }
+
+        public async Task<List<Asistance>> SearchInDb(string DateToSearch= null, string NameToSearch = null, string ProjectToSearch = null, string WeekToSearch = null)
+        {
+            try
+            {
+                /// Check if the parameters exists
+                bool bandName = (NameToSearch != null) ? true : false;
+                bool bandProject = (ProjectToSearch != null) ? true : false;
+                bool bandWeek = (WeekToSearch != null) ? true: false;
+                bool bandDate = (DateToSearch != null) ? true : false;
+                if( bandDate || bandName || bandProject || bandWeek)
+                {
+                   var result = _context.Asistances.FromSqlInterpolated($" EXECUTE SearchAsistances @_EmployeeId = {NameToSearch}, @_ProjectId = {ProjectToSearch}, @_DateToSearch ={DateToSearch}, @_WeekId = {WeekToSearch}") ;
+                    var employees = _context.Employees.ToList();
+                    var projects = _context.Projects.ToList();
+                    foreach(var item in result)
+                    {
+                        item.Employee = employees.FirstOrDefault(E=>E.EmployeeId == item.EmployeeId);
+                        item.Project = projects.FirstOrDefault(P => P.ProjectId == item.ProjectId);
+                    }
+                    return await result.ToListAsync();
+                }
+                else
+                {
+                    return null;
+                }
+                
+               
+            }
+            catch(Exception ed)
+            {
+                Console.WriteLine($"Message {ed.Message}");
+                Console.WriteLine($"Inner Exception {ed.InnerException.Message}");
+                return null;
+            }
+            return null;
+        }
+
     }
 }

@@ -254,6 +254,7 @@ namespace ProjectsControl.Controllers
                 return NotFound();
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
+            ViewBag.Customers = (from cust in _context.Customers select cust).ToDictionary(I => I.CustomerId, I => I.Name);
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
             return View(project);
         }
@@ -274,7 +275,8 @@ namespace ProjectsControl.Controllers
             {
                 try
                 {
-                    _context.Update(project);
+                    project.Employee = null;
+                    _context.Projects.Update(project);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
