@@ -105,7 +105,12 @@ namespace ProjectsControl.Controllers
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> addExtra(string id)
+        {
+            var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
+            return View(tmpResult);
+        }
         // POST: ExtraHours/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -180,5 +185,7 @@ namespace ProjectsControl.Controllers
         {
             return _context.ExtraHours.Any(e => e.ExtraHourId == id);
         }
+
+      
     }
 }

@@ -116,7 +116,7 @@
                         @Html.DisplayFor(modelItem => item.WeekId)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.AsistanceId" class="btn-sm btn-outline-success">Hora Extra</a>
+                        <a asp-controller="ExtraHours" asp-action="addExtra" asp-route-id="@item.AsistanceId"  class="btn-sm btn-outline-success">Hora Extra</a>
                         <a asp-action="Edit" asp-route-id="@item.AsistanceId" class="btn-sm btn-outline-success">Editar</a>
                         <a asp-action="Details" asp-route-id="@item.AsistanceId" class="btn-sm btn-outline-info">Detalles</a>
                         <a asp-action="Delete" asp-route-id="@item.AsistanceId" class="btn-sm  btn-outline-danger">Borrar</a>
