@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
 <h1>Detalles del Proyecto</h1>
 <p>A continuación se muestra la información registada del proyecto @Model.ProjectName, para mayor información contacte a los encargados respectivos. </p>
 <div>
@@ -279,11 +281,16 @@
         <li>Cantidad Total de horas registradas por persona empleadas en el proyecto.</li>
         <li>Cantidad total de dias registrados por persona empleados en el proyecto.</li>
     </ul>
-    <div>
-        <a asp-controller="Asistances" asp-action="Create">Registrar Nueva asistencia</a>
+    <div class="d-flex justify-content-around">
+        <a asp-controller="Asistances" asp-action="Create">Registrar Nueva asistencia</a>       
+        <!-- Default switch -->
+        <div class="custom-control custom-switch">
+          <input type="checkbox" onclick="onclicked(this)" class="custom-control-input" id="customSwitches">
+          <label id="lblToogleAsistances" class="custom-control-label" for="customSwitches"></label>
+        </div>  
     </div>
     <hr />
-    <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+    <table id="table-asistances-resume" class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
                 <th>
@@ -322,6 +329,36 @@
     </table>
 </div>
 
+
+
+<table id="table-asistances-details" class="table table-hover   table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Día de Inicio
+            </th>
+            <th>
+                Día Finalización
+            </th>
+            <th>
+                Empleado
+            </th>
+            <th>
+                Projecto
+            </th>
+            <th>
+                N° Semana
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>             
+    </tbody>
+</table>
+
+
 <div>
     <h3>Horas Extras Registradas</h3>
     <p>Cantidad de horas extras registradas por persona en el proyecto actual</p>
@@ -350,3 +387,35 @@
 </div>
 
 
+
+
+
+<script>  
+
+
+    // iNTERCHANGE OF TABLES WITH THE TOOGLE
+    let toogleAsistances = document.getElementById("customSwitches");
+    let tableresumen = document.getElementById("table-asistances-resume");
+    let tableDetails = document.getElementById("table-asistances-details");
+    tableDetails.style.display="none";
+    console.log(tableresumen);
+    console.log(tableDetails);
+    console.log(toogleAsistances);
+ 
+    let lbltoogle = document.getElementById("lblToogleAsistances");
+    lbltoogle.innerText="Vista Resumen";
+    const onclicked= (element)=>{
+        if(element.checked !== true){
+            lbltoogle.innerText= "Vista Detallada";
+            tableresumen.style.display="none";
+            tableDetails.style.display="";                       
+        }else{
+          lbltoogle.innerText= "Vista Resumen";
+            tableresumen.style.display="";
+            tableDetails.style.display="none";
+        }
+
+    };
+
+
+</script>
