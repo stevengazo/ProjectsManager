@@ -13,7 +13,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
 {
 
     [Area("Admin")] 
-    [Authorize(Roles ="lector")]
+    [Authorize(Roles ="Admin")]
     public class ManageController : Controller
     {
         private readonly ApplicationDbContext _ContextIdentity;
@@ -27,7 +27,6 @@ namespace ProjectsControl.Areas.Admin.Controllers
         {
             return View();
         }
-
 
         [HttpGet]
         public IActionResult ListOfUsers()

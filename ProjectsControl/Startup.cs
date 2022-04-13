@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProjectsControl.Data;
 using ProjectsControl.Models;
+using Microsoft.AspNetCore.Authorization.Policy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,15 +31,25 @@ namespace ProjectsControl
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("DefaultConnection")      
+                    )
+               );
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<IdentityUser>(
+                options => options.SignIn.RequireConfirmedAccount = true
+                ).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+         
+
             services.AddControllersWithViews();
 
+            /// DEPENDENCY INJECTION PROJECTS DATA BASE 
             string connString = ConfigurationExtensions.GetConnectionString(this.Configuration, "DBProjectsConnection");
-            services.AddDbContext<DBProjectContext>(option=>option.UseSqlServer(connString));
+            services.AddDbContext<DBProjectContext>(
+                    option=>option.UseSqlServer(connString)
+                );
             services.AddMvc(options => options.EnableEndpointRouting = true);
         }
 
@@ -60,7 +71,7 @@ namespace ProjectsControl
             app.UseStaticFiles();
 
             app.UseRouting();
-
+          
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -73,7 +84,6 @@ namespace ProjectsControl
                 ); ;
                 endpoints.MapRazorPages();
             });
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
