@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ProjectsControl.Controllers
 {
-    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly DBProjectContext _context;
@@ -214,7 +213,7 @@ namespace ProjectsControl.Controllers
 
         /// GET Projects/Search 
         [HttpGet]
-        [Authorize(Roles ="Admin,Editor")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Search(string SearchName=null, string NumberOfProjectToSearch=null,string TypeToSearch=null, int MonthToSearch=0, int SearchYear=0, string StatusToSearch= null)
         {
             ViewBag.YearOfProject = (from project in _context.Projects select project.OCDate.Year).Distinct().ToList();
@@ -367,6 +366,7 @@ namespace ProjectsControl.Controllers
         /// <param name="SearchYear"></param>        
         /// <param name="StatusToSearch"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin,admin,ADMIN,101")]
         private async Task<List<Project>> Consult(string SearchName = null,
                                           string NumberOfProject = null,
                                           int MonthToSearch = 0,

@@ -40,6 +40,11 @@
                 <td>
                     @item.PhoneNumber
                 </td>
+                <td>
+                    <a class="btn btn-outline-primary" asp-action="ViewUser" asp-route-id="@item.Id">
+                        Ver usuario
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
