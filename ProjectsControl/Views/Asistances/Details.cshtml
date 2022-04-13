@@ -7,43 +7,99 @@
 
 <h1>Detalles de la Asistencia</h1>
 
-<div>
-    <h4>Asistencia</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            Fecha de Inicio
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateOfBegin)
-        </dd>
-        <dt class = "col-sm-2">
-            Fecha de Finalización
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateOfEnd)
-        </dd>
-        <dt class = "col-sm-2">
-            Empleado
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Employee.EmployeeId)
-        </dd>
-        <dt class = "col-sm-2">
-            Proyecto
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.ProjectName)
-        </dd>
-        <dt class = "col-sm-2">
-            N° Semana
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Week.WeekId)
-        </dd>
-    </dl>
+<h4>Asistencia</h4>
+<hr />
+<div class="form-group row">    
+    <div class="col">        
+        <div>            
+            <dl class="row">
+                <dt class = "col-sm-2">
+                    Inicio
+                </dt>
+                <dd class = "col-sm-9">
+                    <label class="text-sm-left">
+                        @Html.DisplayFor(model => model.DateOfBegin)
+                    </label>
+                    
+                </dd>
+                <dt class = "col-sm-2">
+                    Finalización
+                </dt>
+                <dd class = "col-sm-9">
+                    <label class="text-sm-left">
+                        @Html.DisplayFor(model => model.DateOfEnd)
+                    </label>
+                </dd>
+                <dt class = "col-sm-2">
+                    Empleado
+                </dt>
+                <dd class = "col-sm-9">
+                    <label class="text-sm-left">
+                        @Html.DisplayFor(model => model.Employee.Name)
+                    </label>
+                </dd>
+                <dt class = "col-sm-2">
+                    Proyecto
+                </dt>
+                <dd class = "col-sm-9">
+                    <label class="text-sm-left">
+                        <a asp-controller="Projects" asp-action="Details"  asp-route-id="@Model.ProjectId">@Model.Project.ProjectName</a>
+                    </label>
+                </dd>
+                <dt class = "col-sm-2">
+                    N° Semana
+                </dt>
+                <dd class = "col-sm-9">
+                    <label class="text-sm-left">
+                        @Html.DisplayFor(model => model.Week.WeekId)
+                    </label>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="col">
+        <h5>Horas Extras Asociadas</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>
+                        Inicio
+                    </td>
+                    <td>
+                        Finalización
+                    </td>
+                    <td>
+                        Tipo
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ExtraHour item in ViewBag.Extras)
+               {
+                   <tr>
+                       <td>
+                           @item.BeginTime
+                       </td>
+                       <td>
+                           @item.EndTime
+                       </td>
+                       <td>
+                           @item.TypeOfHour
+                       </td>
+                       <td>
+                           <a asp-controller="ExtraHours" asp-action="Details" asp-route-id="@item.ExtraHourId">Ver</a> 
+                       </td>
+                   </tr>
+               }
+            </tbody>
+        </table>
+    </div>
+
 </div>
+
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.AsistanceId" class="btn btn-primary">Editar</a> |
     <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
+    <a asp-action="Delete" asp-route-id="@Model.AsistanceId" class="btn btn-secondary" class="btn btn-danger">Eliminar</a>
 </div>

@@ -7,9 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 namespace ProjectsControl.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
@@ -23,7 +24,7 @@ namespace ProjectsControl.Controllers
         {
             _logger = logger;
         }*/
-
+      [AllowAnonymous]
         public IActionResult Index()
         {
           /*  ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).Include(C=>C.Customer).Include(S=>S.Saleman);
@@ -35,12 +36,12 @@ namespace ProjectsControl.Controllers
           */
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
         }
-
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

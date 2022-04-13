@@ -344,9 +344,6 @@
                 Empleado
             </th>
             <th>
-                Projecto
-            </th>
-            <th>
                 N° Semana
             </th>
             <th>
@@ -354,7 +351,28 @@
             </th>
         </tr>
     </thead>
-    <tbody>             
+    <tbody>  
+        @foreach (Asistance item in ViewBag.AsistancesDetails)
+       {
+           <tr>
+               <td>
+                   @item.DateOfBegin
+               </td>
+               <td>
+                   @item.DateOfEnd
+               </td>
+               <td>
+                   @item.Employee.Name
+               </td>
+               <td>
+                   @item.Week.NumberOfWeek
+               </td>
+               <td>
+                   <a asp-controller="Asistances" asp-action="Details" asp-route-id="@item.AsistanceId">Ver</a>
+               </td>
+           </tr>
+
+       }
     </tbody>
 </table>
 

@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectsControl.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace ProjectsControl.Controllers
 {
+    [Authorize]
     public class ExtraHoursController : Controller
     {
         private readonly DBProjectContext _context;
@@ -110,14 +111,16 @@ namespace ProjectsControl.Controllers
         public async Task<IActionResult> addExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
         {
             try
-            {               
+            {
                 _context.ExtraHours.Add(extraHour);
-                _context.SaveChanges();                
+                _context.SaveChanges();
                 ViewBag.Message = $"Hora extra registrada";
-                return RedirectToAction(nameof(Details));
+                // redirect to action "details" with the parameter ID
+                return RedirectToAction("Details", routeValues: new { id = extraHour.ExtraHourId } );
             }
             catch(Exception ef)
             {
+                ViewBag.FlagExistHour = false;
                 ViewBag.Message = $"Error al ingresar la hora extra. {ef.Message}";
                 var tmpId = extraHour.AsistanceId;
                 var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId.Equals(tmpId));
@@ -133,6 +136,18 @@ namespace ProjectsControl.Controllers
         [HttpGet]
         public async Task<IActionResult> addExtra(string id)
         {
+            /// Check if exist any extra linked with the asistance
+
+            var tmpExtraHour = (from extH in _context.ExtraHours select extH).FirstOrDefault(E => E.AsistanceId == id);
+            if( tmpExtraHour!= null)
+            {
+                ViewBag.ExistHourId = tmpExtraHour.ExtraHourId;
+                ViewBag.FlagExistHour = true;
+            }
+            else
+            {
+                ViewBag.FlagExistHour = false;
+            }
             var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
             ExtraHour extraObj = new ExtraHour() {
                 AsistanceId = tmpResult.AsistanceId,

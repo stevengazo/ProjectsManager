@@ -2,20 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel;
 using ProjectsControl.Models;
+using ProjectsControl.Data;
+
 
 namespace ProjectsControl.Controllers
 {
+    [Authorize()]    
     public class AsistancesController : Controller
     {
         private readonly DBProjectContext _context;
+        private readonly ApplicationDbContext _applicationDb;
 
-        public AsistancesController(DBProjectContext context)
+        public AsistancesController(DBProjectContext context, ApplicationDbContext applicationDb)
         {
             _context = context;
+            _applicationDb = applicationDb;
+
         }
 
 
@@ -26,10 +34,11 @@ namespace ProjectsControl.Controllers
         /// <param name="asistances">List of asistances </param>
         /// <returns>Same view</returns>
         [HttpPost] 
+        [Authorize(Roles ="Admin,Editor")]
         public async Task<ActionResult> DailyCreate(List<Asistance> asistances )
         {
             try
-            {
+            {     
                 if(asistances.Count !=0)
                 {
                     foreach (Asistance asistance in asistances)
@@ -133,6 +142,7 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Extras = (from extH in _context.ExtraHours select extH).Where(E=>E.AsistanceId== asistance.AsistanceId).ToList();
 
             return View(asistance);
         }

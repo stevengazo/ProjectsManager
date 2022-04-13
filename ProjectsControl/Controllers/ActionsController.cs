@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectsControl.Models;
+using Microsoft.AspNetCore.Authorization;
 using Action = ProjectsControl.Models.Action;
 
 namespace ProjectsControl.Controllers
 {
+    [Authorize]
     public class ActionsController : Controller
     {
         private readonly DBProjectContext _context;

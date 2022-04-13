@@ -7,15 +7,19 @@
 
 <h1>Detalles de Tiempo extra</h1>
 
+
+    <h4>Tiempo Extra - @Model.Employee.Name</h4>
+    <hr />   
+  
+
+
 <div>
-    <h4>Tiempo Extra</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             Inicio
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BeginTime)
+            
         </dd>
         <dt class = "col-sm-2">
             Finalización
@@ -56,8 +60,8 @@
         <dt class = "col-sm-2">
             Registro de Asistencia
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Asistance.AsistanceId)
+        <dd class = "col-sm-10">            
+            <a asp-controller="Asistances" asp-action="Details" asp-route-id="@Model.AsistanceId" >Asistencia @Model.Asistance.DateOfBegin.Date</a> 
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Week)
@@ -68,6 +72,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ExtraHourId" class="btn btn-primary">Editar</a> |
+    <a asp-action="Edit" asp-route-id="@Model.ExtraHourId" class="btn btn-primary">Editar</a> 
     <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
+    <a asp-action="Delete" asp-route-id="@Model.ExtraHourId" class="btn btn-secondary" class="btn btn-danger">Eliminar</a>
 </div>

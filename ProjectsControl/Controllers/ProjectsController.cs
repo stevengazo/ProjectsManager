@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ProjectsControl.Controllers
 {
-
+    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly DBProjectContext _context;
@@ -82,7 +82,8 @@ namespace ProjectsControl.Controllers
             ViewBag.Notes = (from note in _context.Notes select note).Where(N => N.ProjectId == id).ToList();
             // Carga todos los reportes asociados al proyecto
             ViewBag.Reports = (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToList();
-
+            // cargar asistencias del proyecto
+            ViewBag.AsistancesDetails = (from asist in _context.Asistances select asist).Include(A=>A.Employee).Include(W=>W.Week).Where(A => A.ProjectId == id).OrderBy(E=>E.EmployeeId).ToList();
             //Contar cantidad de Horas en el trabajo por persona
             ViewBag.Hours = GetHoursByEmployee(id);
             // Cantidad de dias por persona            
@@ -128,7 +129,7 @@ namespace ProjectsControl.Controllers
                 {
                     if (employee.Equals(asistence.Employee.Name))
                     {
-                        TimeSpan time = asistence.DateOfEnd - asistence.DateOfBegin;
+                        TimeSpan time = asistence.DateOfEnd.TimeOfDay - asistence.DateOfBegin.TimeOfDay;
                         sum += time.Hours;
                     }
                 }
@@ -213,6 +214,7 @@ namespace ProjectsControl.Controllers
 
         /// GET Projects/Search 
         [HttpGet]
+        [Authorize(Roles ="Admin,Editor")]
         public async Task<IActionResult> Search(string SearchName=null, string NumberOfProjectToSearch=null,string TypeToSearch=null, int MonthToSearch=0, int SearchYear=0, string StatusToSearch= null)
         {
             ViewBag.YearOfProject = (from project in _context.Projects select project.OCDate.Year).Distinct().ToList();
