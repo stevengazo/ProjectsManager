@@ -19,7 +19,10 @@ namespace ProjectsControl.Controllers
             _context = context;
         }
 
+
+        #region Views Methods
         // GET: Bills
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Bill.Include(b => b.Project);
@@ -27,6 +30,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Bills/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -46,6 +50,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Bills/Create
+        [Authorize(Roles = "admin,editor")]
         public IActionResult Create()
         {            
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
@@ -56,6 +61,7 @@ namespace ProjectsControl.Controllers
         // POST: Bills/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BillId,NumberOfBill,DateOfCreation,Author,Amount,ProjectId")] Bill bill)
@@ -71,6 +77,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Bills/Edit/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -90,6 +97,7 @@ namespace ProjectsControl.Controllers
         // POST: Bills/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("BillId,NumberOfBill,DateOfCreation,Author,Amount,ProjectId")] Bill bill)
@@ -124,6 +132,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Bills/Delete/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -143,6 +152,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Bills/Delete/5
+        [Authorize(Roles = "admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -153,6 +163,7 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Search(string IdToSearch=null,string AuthorToSearch = null, string ProjectIdToSearch=null)
         {
@@ -174,11 +185,15 @@ namespace ProjectsControl.Controllers
             return View(new List<Bill>());
         }
 
+        #endregion
+
+        #region Internal Methods
+        [AllowAnonymous]
         private bool BillExists(string id)
         {
             return _context.Bill.Any(e => e.BillId == id);
         }
-
+        [AllowAnonymous]
         public List<Bill> Consult(string IdToSearch = null, string AuthorToSearch = null, string ProjectIdToSearch = null)
         {
             if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch != null))
@@ -220,5 +235,6 @@ namespace ProjectsControl.Controllers
                 return (new List<Bill>());
             }
         }
+        #endregion
     }
 }

@@ -20,6 +20,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Reports
+        [AllowAnonymous]        
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Report.Include(r => r.Project);
@@ -46,6 +47,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Reports/Create
+        [Authorize(Roles = "Admin,editor")]
         public IActionResult Create()
         {
             ViewBag.ActivesProjects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
@@ -55,7 +57,7 @@ namespace ProjectsControl.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin,editor")]
         [Route("Reports/CreateByProject/{id}")]
         public async Task<IActionResult> CreateByProject(string id)
         {
@@ -65,6 +67,7 @@ namespace ProjectsControl.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateByProject([Bind("ReportId,NumberOfReport,Author,BeginDate,EndDate,Status,Notes,ProjectId")] Report report)
@@ -83,6 +86,7 @@ namespace ProjectsControl.Controllers
         // POST: Reports/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReportId,NumberOfReport,Author,BeginDate,EndDate,Status,Notes,ProjectId")] Report report)
@@ -101,6 +105,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Reports/Edit/5
+        [Authorize(Roles = "Admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -120,6 +125,7 @@ namespace ProjectsControl.Controllers
         // POST: Reports/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ReportId,NumberOfReport,Author,BeginDate,EndDate,Status,Notes,ProjectId")] Report report)
@@ -154,6 +160,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Reports/Delete/5
+        [Authorize(Roles = "Admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -173,6 +180,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Reports/Delete/5
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -183,15 +191,16 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Search(string IdToSearch = null, string AuthorToSearch = null, string ProjectIdToSearch = null, string StatusToSearch=null)
+        [AllowAnonymous]
+        public async Task<IActionResult> Search(string IdToSearch = null, string AuthorToSearch = null, string ProjectIdToSearch = null, string StatusToSearch = null)
         {
             ViewBag.Authors = (from report in _context.Report select report.Author).Distinct().ToList();
             ViewBag.status = (from report in _context.Report select report.Status).Distinct().ToList();
             ViewBag.Projects = (from project in _context.Projects select project).Where(P => P.IsOver == false).ToList();
 
-            if ((IdToSearch != null)||(AuthorToSearch != null)||(ProjectIdToSearch != null) || (StatusToSearch != null))
+            if ((IdToSearch != null) || (AuthorToSearch != null) || (ProjectIdToSearch != null) || (StatusToSearch != null))
             {
-               var aux = Consult(IdToSearch,AuthorToSearch,ProjectIdToSearch, StatusToSearch);
+                var aux = Consult(IdToSearch, AuthorToSearch, ProjectIdToSearch, StatusToSearch);
                 if (aux.Count > 0)
                 {
                     ViewBag.Message = "";
@@ -205,7 +214,7 @@ namespace ProjectsControl.Controllers
             }
             return View(new List<Report>());
         }
-
+        [AllowAnonymous]
         private bool ReportExists(string id)
         {
             return _context.Report.Any(e => e.ReportId == id);
@@ -218,10 +227,11 @@ namespace ProjectsControl.Controllers
         /// <param name="AuthorToSearch"></param>
         /// <param name="ProjectIdToSearch"></param>
         /// <returns>List of Reports</returns>
-        private List<Report> Consult(string IdToSearch= null, string AuthorToSearch =null,string ProjectIdToSearch=null, string StatusToSearch = null)
+        
+        private List<Report> Consult(string IdToSearch = null, string AuthorToSearch = null, string ProjectIdToSearch = null, string StatusToSearch = null)
         {
             var listaR = new List<Report>();
-            if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch !=null)&&(StatusToSearch!=null))
+            if ((IdToSearch != null) && (AuthorToSearch != null) && (ProjectIdToSearch != null) && (StatusToSearch != null))
             {
                 listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
                                                                 WHERE	(ReportId LIKE CONCAT('%',{IdToSearch},'%'))
@@ -277,7 +287,7 @@ namespace ProjectsControl.Controllers
                                                                 WHERE	(Author LIKE CONCAT('%',{AuthorToSearch},'%'))
                                                                 AND		(Status LIKE CONCAT('%',{StatusToSearch},'%'))").ToList();
             }
-            else if ((IdToSearch == null) && (AuthorToSearch != null) && (ProjectIdToSearch !=null)  && (StatusToSearch == null))
+            else if ((IdToSearch == null) && (AuthorToSearch != null) && (ProjectIdToSearch != null) && (StatusToSearch == null))
             {
                 listaR = _context.Report.FromSqlInterpolated($@"SELECT * FROM Report
                                                                 WHERE	(Author LIKE CONCAT('%',{AuthorToSearch},'%'))
@@ -310,9 +320,10 @@ namespace ProjectsControl.Controllers
         /// Get the last number of report and sum 1
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         private int GetLastNumberOfReport()
         {
-            return (from pj in _context.Report select pj.NumberOfReport).Max()+1;
+            return (from pj in _context.Report select pj.NumberOfReport).Max() + 1;
         }
     }
 }

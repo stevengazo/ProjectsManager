@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectsControl.Models;
 using Microsoft.AspNetCore.Authorization;
 namespace ProjectsControl.Controllers
-{ 
+{
     [Authorize]
     public class CustomersController : Controller
     {
@@ -32,7 +32,7 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-            ViewBag.ProjectsOfCustomer = _context.Projects.Where(P => P.CustomerId == id).OrderByDescending(P=>P.OCDate).ToList();
+            ViewBag.ProjectsOfCustomer = _context.Projects.Where(P => P.CustomerId == id).OrderByDescending(P => P.OCDate).ToList();
             var customer = await _context.Customers
                 .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null)
@@ -43,7 +43,9 @@ namespace ProjectsControl.Controllers
             return View(customer);
         }
 
+
         // GET: Customers/Create
+        [Authorize(Roles = "admin,editor")]
         public IActionResult Create()
         {
             return View();
@@ -52,6 +54,7 @@ namespace ProjectsControl.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerId,Name,Sector")] Customer customer)
@@ -66,6 +69,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Customers/Edit/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -84,6 +88,7 @@ namespace ProjectsControl.Controllers
         // POST: Customers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("CustomerId,ProjectName,Sector")] Customer customer)
@@ -117,6 +122,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Customers/Delete/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -135,6 +141,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Customers/Delete/5
+        [Authorize(Roles = "admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -145,13 +152,14 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Search(string IdToSearch= null,string NameToSearch= null, string TypeToSearch = null)
+        public async Task<IActionResult> Search(string IdToSearch = null, string NameToSearch = null, string TypeToSearch = null)
         {
             ViewBag.TypesOfCustomers = (from cust in _context.Customers select cust.Sector).Distinct().ToList();
-            if((IdToSearch != null) ||(NameToSearch!=null) || (TypeToSearch!= null))
+            if ((IdToSearch != null) || (NameToSearch != null) || (TypeToSearch != null))
             {
-                var query = Consult(IdToSearch,NameToSearch,TypeToSearch);
+                var query = Consult(IdToSearch, NameToSearch, TypeToSearch);
                 if (query.Count > 0)
                 {
                     ViewBag.Message = "";
@@ -166,6 +174,10 @@ namespace ProjectsControl.Controllers
             return View(new List<Customer>());
         }
 
+
+
+        #region Internal Methods
+        [AllowAnonymous]
         private bool CustomerExists(string id)
         {
             return _context.Customers.Any(e => e.CustomerId == id);
@@ -179,12 +191,13 @@ namespace ProjectsControl.Controllers
         /// <param name="NameToSearch">Customer's name</param>
         /// <param name="TypeToSearch">Type of customer</param>
         /// <returns>List of customers</returns>
+        [AllowAnonymous]
         private List<Customer> Consult(string IdToSearch = null, string NameToSearch = null, string TypeToSearch = null)
         {
             var query = new List<Customer>();
             if ((IdToSearch != null) && (NameToSearch != null) && (TypeToSearch != null))
             {
-                query=( _context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
+                query = (_context.Customers.FromSqlInterpolated($@"SELECT * FROM Customers
                                                                 WHERE	(CustomerId LIKE CONCAT('%',{IdToSearch},'%'))
                                                                 AND		(Name LIKE CONCAT('%',{NameToSearch},'%'))
                                                                 AND		(Sector LIKE CONCAT('%',{TypeToSearch},'%'))")).ToList();
@@ -217,10 +230,11 @@ namespace ProjectsControl.Controllers
                                                                 WHERE	(Name LIKE CONCAT('%',{NameToSearch},'%'))")).ToList();
             }
             else
-            {              
+            {
             }
             return query;
         }
 
+        #endregion
     }
 }

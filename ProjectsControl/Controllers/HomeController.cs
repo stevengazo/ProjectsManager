@@ -14,26 +14,19 @@ namespace ProjectsControl.Controllers
     public class HomeController : Controller
     {
 
-        private  DBProjectContext _context;
+        private DBProjectContext _context;
 
-        public HomeController(DBProjectContext context)
+        public HomeController()
         {
-            this._context = context;
+
         }
-      /*  public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }*/
-      [AllowAnonymous]
+        /*  public HomeController(ILogger<HomeController> logger)
+          {
+              _logger = logger;
+          }*/
+        [AllowAnonymous]
         public IActionResult Index()
         {
-          /*  ViewBag.Projects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).Include(C=>C.Customer).Include(S=>S.Saleman);
-            ViewBag.NewBills = _context.Bill.FromSqlInterpolated($@"
-                                                                SELECT TOP 10 * FROM Bill
-                                                                Order by DateOfCreation DESC
-                                                                ").ToList();
-            ViewBag.NewExtras = (from extra in _context.ExtraHours select extra).Where(P => P.IsPaid != true).Include(W => W.Week).Include(E => E.Employee).ToList();
-          */
             return View();
         }
         [AllowAnonymous]

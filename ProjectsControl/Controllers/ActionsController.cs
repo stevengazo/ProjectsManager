@@ -20,8 +20,9 @@ namespace ProjectsControl.Controllers
         {
             _context = context;
         }
-
+        #region View Methods
         // GET: Actions
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Actions.Include(a => a.Employee);
@@ -29,6 +30,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Actions/Details/5
+        [Authorize(Roles ="admin,editor,lector")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -48,6 +50,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Actions/Create
+        [Authorize(Roles = "admin,editor")]
         public IActionResult Create()
         {
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.IsActive == true).ToList();
@@ -60,7 +63,8 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ActionId,Title,DateOfCreation,Author,TypeOfAction,Description,IsActive,EmployeeId")]Action oaction)
+        [Authorize(Roles = "admin,editor")]
+        public async Task<IActionResult> Create([Bind("ActionId,Title,DateOfCreation,Author,TypeOfAction,Description,IsActive,EmployeeId")] Action oaction)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +78,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Actions/Edit/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -93,6 +98,7 @@ namespace ProjectsControl.Controllers
         // POST: Actions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ActionId,Title,DateOfCreation,Author,TypeOfAction,Description,IsActive,EmployeeId")] Action oaction)
@@ -127,6 +133,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Actions/Delete/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -146,6 +153,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Actions/Delete/5
+        [Authorize(Roles = "admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -156,9 +164,18 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        #endregion
+
+        #region Internal Methods
+
         private bool ActionExists(string id)
         {
             return _context.Actions.Any(e => e.ActionId == id);
         }
+
+        #endregion
+
+
     }
 }

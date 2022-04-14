@@ -20,13 +20,14 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Notes
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Notes.Include(n => n.Project);
             return View(await dBProjectContext.ToListAsync());
         }
 
-        // GET: Notes/Details/5
+        // GET: Notes/Details/5        
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -61,6 +62,7 @@ namespace ProjectsControl.Controllers
         // POST: Notes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateByProject(string id, [Bind("NotesId,Author,DateOfCreation,Title,NoteDescription,ProjectId")] Notes notes)
@@ -77,6 +79,7 @@ namespace ProjectsControl.Controllers
         // POST: Notes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NotesId,Author,DateOfCreation,Title,NoteDescription,ProjectId")] Notes notes)
@@ -92,6 +95,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Notes/Edit/5
+        [Authorize(Roles = "Admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -111,6 +115,7 @@ namespace ProjectsControl.Controllers
         // POST: Notes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("NotesId,Author,DateOfCreation,Title,NoteDescription,ProjectId")] Notes notes)
@@ -145,6 +150,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Notes/Delete/5
+        [Authorize(Roles = "Admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -164,6 +170,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Notes/Delete/5
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -173,7 +180,7 @@ namespace ProjectsControl.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [AllowAnonymous]
         private bool NotesExists(string id)
         {
             return _context.Notes.Any(e => e.NotesId == id);

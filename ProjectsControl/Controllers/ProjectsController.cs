@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ProjectsControl.Controllers
 {
-    [Authorize(Roles ="lector")]
+    [Authorize(Roles = "lector,editor,admin")]
     public class ProjectsController : Controller
     {
         private readonly DBProjectContext _context;
@@ -22,7 +22,9 @@ namespace ProjectsControl.Controllers
         {
             _context = context;
         }
+        #region View Methods
 
+        [AllowAnonymous]
         [HttpGet]
         // GET: Projects
         public async Task<IActionResult> Index()
@@ -31,20 +33,19 @@ namespace ProjectsControl.Controllers
             int NumberPage = 1;
 
             float tmp = _context.Projects.Count() / NumberOfProjectsByPage;
-            ViewBag.TotalQuantityOfProjects = Math.Ceiling( tmp );
+            ViewBag.TotalQuantityOfProjects = Math.Ceiling(tmp);
             ViewBag.QofProjectsByPage = NumberOfProjectsByPage;
 
             List<Project> projects = GetProjectsByPage(NumberOfProjectsByPage, NumberPage);
-                      
+
             return View(projects);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Index(string QuantityOfProjectsView, string PageNumber)
         {
             ViewBag.TotalQuantityOfProjects = _context.Projects.Count();
-            int.TryParse( QuantityOfProjectsView, out int QofProjects);
+            int.TryParse(QuantityOfProjectsView, out int QofProjects);
             int.TryParse(PageNumber, out int PageNumberP);
             ViewBag.QofProjectsByP = QofProjects;
 
@@ -54,12 +55,10 @@ namespace ProjectsControl.Controllers
             ViewBag.QofProjectsByPage = PageNumberP;
 
 
-            List<Project> projects = GetProjectsByPage(QofProjects,PageNumberP);
+            List<Project> projects = GetProjectsByPage(QofProjects, PageNumberP);
 
             return View(projects);
         }
-
-
 
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(string id)
@@ -81,89 +80,21 @@ namespace ProjectsControl.Controllers
             // Carga todas la notas que tenga asociado el proyecto
             ViewBag.Notes = (from note in _context.Notes select note).Where(N => N.ProjectId == id).ToList();
             // Carga todos los reportes asociados al proyecto
-            ViewBag.Reports = (from reports in _context.Report select reports).Where(R=>R.ProjectId == id).ToList();
+            ViewBag.Reports = (from reports in _context.Report select reports).Where(R => R.ProjectId == id).ToList();
             // cargar asistencias del proyecto
-            ViewBag.AsistancesDetails = (from asist in _context.Asistances select asist).Include(A=>A.Employee).Include(W=>W.Week).Where(A => A.ProjectId == id).OrderBy(E=>E.EmployeeId).ToList();
+            ViewBag.AsistancesDetails = (from asist in _context.Asistances select asist).Include(A => A.Employee).Include(W => W.Week).Where(A => A.ProjectId == id).OrderBy(E => E.EmployeeId).ToList();
             //Contar cantidad de Horas en el trabajo por persona
             ViewBag.Hours = GetHoursByEmployee(id);
             // Cantidad de dias por persona            
             ViewBag.DaysOfEmployees = GetDaysByEmployee(id);
             // Contar Cantidad Extras
-            ViewBag.Extras =  GetExtrasByEmployee(id);
+            ViewBag.Extras = GetExtrasByEmployee(id);
             // Contar la cantidad de gastos registrados por categoria
             ViewBag.ExpensivesByType = GetExpensivesByProject(id);
             return View(project);
         }
 
-        /// <summary>
-        /// Search all the expensives by category and return a dictionary with the information
-        /// </summary>
-        /// <param name="IdOfProject">Project To Search</param>
-        /// <returns></returns>
-        private Dictionary<string, float> GetExpensivesByProject(string IdOfProject = "")
-        {
-            Dictionary<string, float> ExpensivesByType = new();
-            var ListOfExpensives = (from exp in _context.Expensives select exp)
-                                                .Where(E => E.ProjectId == IdOfProject)
-                                                .ToList();
-            string[] TypesOfExpensives = (from ob in ListOfExpensives select ob.Type)
-                                                .Distinct()
-                                                .ToArray();
-            foreach (var Etype in TypesOfExpensives)
-            {
-                float AmountAux=0.0f;
-                AmountAux = (from obj in ListOfExpensives select obj).Where(E => E.Type.Equals(Etype)).Sum(E=>E.Amount);
-                ExpensivesByType.Add(Etype, AmountAux);
-            }
-            return ExpensivesByType;
-        }
-        private Dictionary<string, float>  GetHoursByEmployee (string IdofProject = "")
-        {
-            Dictionary<string, float> Hours = new();
-            var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdofProject).Include(E => E.Employee).ToList();
-            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
-            foreach (var employee in employees)
-            {
-                var sum = 0;
-                foreach (var asistence in aux)
-                {
-                    if (employee.Equals(asistence.Employee.Name))
-                    {
-                        TimeSpan time = asistence.DateOfEnd.TimeOfDay - asistence.DateOfBegin.TimeOfDay;
-                        sum += time.Hours;
-                    }
-                }
-                Hours.Add(employee, sum);
-            }
-            return Hours;
-        }
-
-        public Dictionary<string, float> GetExtrasByEmployee(string IdOfProject="")
-        {
-            var aux =  (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
-            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
-            Dictionary<string, float> Extras = new();
-            var extrasAux =  _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
-                                                                        from ExtraHours 
-                                                                        left join (	SELECT * FROM Asistances
-                                                                        WHERE Asistances.ProjectId = '{IdOfProject}') AS tmp
-                                                                        on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToList();
-            foreach (var item in employees)
-            {
-                var sumExtra = 0.0f;
-                foreach (var e in extrasAux)
-                {
-                    if (item.Equals(e.Employee.Name))
-                    {
-                        TimeSpan etime = e.EndTime - e.BeginTime;
-                        sumExtra = sumExtra + etime.Hours;
-                    }
-                }
-                Extras.Add(item, sumExtra);
-            }
-            return Extras;
-        }
-
+        [Authorize(Roles = "lector,editor,admin")]
         public async Task<IActionResult> WithoutReports()
         {
             var AUX = _context.Projects.FromSqlInterpolated($@"
@@ -177,12 +108,13 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Projects/Create
+        [Authorize(Roles = "editor,Admin,Sales")]
         public IActionResult Create()
         {
-            var aux =(from proj in _context.Projects select proj.NumberOfProject).Max() + 1;
+            var aux = (from proj in _context.Projects select proj.NumberOfProject).Max() + 1;
             ViewData["NumberOfProject"] = aux;
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");            
-            ViewBag.Employees=(from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
+            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
             ViewBag.Customers = (from cust in _context.Customers select cust).OrderBy(C => C.Name);
             return View();
         }
@@ -190,6 +122,7 @@ namespace ProjectsControl.Controllers
         // POST: Projects/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "editor,Admin,sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProjectId,NumberOfProject,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,Manager,Amount,Currency,Estatus,currency,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
@@ -199,49 +132,52 @@ namespace ProjectsControl.Controllers
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("DetailsSimple", new { id = project.ProjectId });
-            }           
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);            
+            }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
             return View(project);
         }
-       
-        
+
+        [AllowAnonymous]
         public async Task<IActionResult> DetailsSimple(string id)
         {
-            Project objProject = (from pj in _context.Projects select pj).Where(P=>P.ProjectId == id).Include(P => P.Employee).Include(P => P.Customer).FirstOrDefault();
+            Project objProject = (from pj in _context.Projects select pj).Where(P => P.ProjectId == id).Include(P => P.Employee).Include(P => P.Customer).FirstOrDefault();
             return View(objProject);
         }
 
         /// GET Projects/Search 
-        [HttpGet]        
-        public async Task<IActionResult> Search(string SearchName=null, string NumberOfProjectToSearch=null,string TypeToSearch=null, int MonthToSearch=0, int SearchYear=0, string StatusToSearch= null)
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string SearchName = null, string NumberOfProjectToSearch = null, string TypeToSearch = null, int MonthToSearch = 0, int SearchYear = 0, string StatusToSearch = null)
         {
             ViewBag.YearOfProject = (from project in _context.Projects select project.OCDate.Year).Distinct().ToList();
             var consult = new List<Project>().ToList();
             ViewBag.Status = (from project in _context.Projects select project.Estatus).Distinct().ToList();
-            if( (SearchName != null)||(NumberOfProjectToSearch!= null)||(SearchYear!=0)||(MonthToSearch!=0)||(StatusToSearch!= null) || ( TypeToSearch!= null) )
+            if ((SearchName != null) || (NumberOfProjectToSearch != null) || (SearchYear != 0) || (MonthToSearch != 0) || (StatusToSearch != null) || (TypeToSearch != null))
             {
                 consult = await Consult(SearchName, NumberOfProjectToSearch, MonthToSearch, SearchYear, StatusToSearch, TypeToSearch);
-                if(consult.Count > 0)
+                if (consult.Count > 0)
                 {
                     ViewBag.Message = "";
                     return View(consult);
                 }
                 else
                 {
-                    ViewBag.Message = "No hay coincidencias"; 
+                    ViewBag.Message = "No hay coincidencias";
                     return View(new List<Project>());
 
                 }
             }
-            else 
+            else
             {
                 return View(new List<Project>());
             }
-            
+
 
         }
+
         // GET: Projects/Edit/5
+        [Authorize(Roles = "editor,Admin,Sales")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -263,6 +199,7 @@ namespace ProjectsControl.Controllers
         // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "editor,Admin,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
@@ -299,6 +236,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Projects/Delete/5
+        [Authorize(Roles = "editor,admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -319,6 +257,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Projects/Delete/5
+        [Authorize(Roles = "editor,admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -329,6 +268,7 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public Dictionary<string, int> GetDaysByEmployee(string IdOfProject = "")
         {
             Dictionary<string, int> Days = new();
@@ -350,12 +290,12 @@ namespace ProjectsControl.Controllers
             return Days;
         }
 
+        #endregion
 
 
-        private bool ProjectExists(string id)
-        {
-            return _context.Projects.Any(e => e.ProjectId == id);
-        }
+
+
+        #region Methods
 
         /// <summary>
         /// Consult in the database the information by the values
@@ -366,27 +306,27 @@ namespace ProjectsControl.Controllers
         /// <param name="SearchYear"></param>        
         /// <param name="StatusToSearch"></param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin,admin,ADMIN,101")]
+        [Authorize(Roles = "lector,editor,admin")]
         private async Task<List<Project>> Consult(string SearchName = null,
                                           string NumberOfProject = null,
                                           int MonthToSearch = 0,
                                           int SearchYear = 0,
                                           string StatusToSearch = null,
-                                          string TypeToSearch=null)
+                                          string TypeToSearch = null)
         {
             List<Project> LisProjects = new();
-            
 
-            if (SearchYear ==0  || MonthToSearch == 0 )
+
+            if (SearchYear == 0 || MonthToSearch == 0)
             {
-                if(SearchYear == 0 && MonthToSearch != 0)
+                if (SearchYear == 0 && MonthToSearch != 0)
                 {
                     var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects NULL, NULL, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
-                                                                            
+
                     LisProjects = consult.ToList();
 
                 }
-                else if(SearchYear != 0 && MonthToSearch == 0)
+                else if (SearchYear != 0 && MonthToSearch == 0)
                 {
                     var consult = _context.Projects.FromSqlInterpolated($@"EXEC	SearchProjects null, {SearchYear}, {SearchName}, {StatusToSearch},{TypeToSearch},{NumberOfProject};");
 
@@ -422,7 +362,13 @@ namespace ProjectsControl.Controllers
             }
         }
 
-        private List<Project> GetProjectsByPage( int QuantityOfProjects = 10, int PageToView = 1)
+        [AllowAnonymous]
+        private bool ProjectExists(string id)
+        {
+            return _context.Projects.Any(e => e.ProjectId == id);
+        }
+        [AllowAnonymous]
+        private List<Project> GetProjectsByPage(int QuantityOfProjects = 10, int PageToView = 1)
         {
             try
             {
@@ -440,16 +386,89 @@ namespace ProjectsControl.Controllers
             }
             catch (Exception f)
             {
-                Console.WriteLine($"Error: {f.Message}");                
-                return null;               
+                Console.WriteLine($"Error: {f.Message}");
+                return null;
             }
         }
 
-
+        [AllowAnonymous]
         private int GetLastNumberOfReport()
+        {
+            var aux = (from Rp in _context.Report select Rp.NumberOfReport).Max();
+            return aux;
+        }
+
+        /// <summary>
+        /// Search all the expensives by category and return a dictionary with the information
+        /// </summary>
+        /// <param name="IdOfProject">Project To Search</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        private Dictionary<string, float> GetExpensivesByProject(string IdOfProject = "")
+        {
+            Dictionary<string, float> ExpensivesByType = new();
+            var ListOfExpensives = (from exp in _context.Expensives select exp)
+                                                .Where(E => E.ProjectId == IdOfProject)
+                                                .ToList();
+            string[] TypesOfExpensives = (from ob in ListOfExpensives select ob.Type)
+                                                .Distinct()
+                                                .ToArray();
+            foreach (var Etype in TypesOfExpensives)
             {
-                var aux = (from Rp in _context.Report select Rp.NumberOfReport).Max();
-                return aux;
+                float AmountAux = 0.0f;
+                AmountAux = (from obj in ListOfExpensives select obj).Where(E => E.Type.Equals(Etype)).Sum(E => E.Amount);
+                ExpensivesByType.Add(Etype, AmountAux);
             }
+            return ExpensivesByType;
+        }
+        [AllowAnonymous]
+        private Dictionary<string, float> GetHoursByEmployee(string IdofProject = "")
+        {
+            Dictionary<string, float> Hours = new();
+            var aux = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdofProject).Include(E => E.Employee).ToList();
+            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
+            foreach (var employee in employees)
+            {
+                var sum = 0;
+                foreach (var asistence in aux)
+                {
+                    if (employee.Equals(asistence.Employee.Name))
+                    {
+                        TimeSpan time = asistence.DateOfEnd.TimeOfDay - asistence.DateOfBegin.TimeOfDay;
+                        sum += time.Hours;
+                    }
+                }
+                Hours.Add(employee, sum);
+            }
+            return Hours;
+        }
+        [AllowAnonymous]
+        public Dictionary<string, float> GetExtrasByEmployee(string IdOfProject = "")
+        {
+            var aux = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
+            var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
+            Dictionary<string, float> Extras = new();
+            var extrasAux = _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
+                                                                        from ExtraHours 
+                                                                        left join (	SELECT * FROM Asistances
+                                                                        WHERE Asistances.ProjectId = '{IdOfProject}') AS tmp
+                                                                        on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToList();
+            foreach (var item in employees)
+            {
+                var sumExtra = 0.0f;
+                foreach (var e in extrasAux)
+                {
+                    if (item.Equals(e.Employee.Name))
+                    {
+                        TimeSpan etime = e.EndTime - e.BeginTime;
+                        sumExtra = sumExtra + etime.Hours;
+                    }
+                }
+                Extras.Add(item, sumExtra);
+            }
+            return Extras;
+        }
+        #endregion
+
     }
 }

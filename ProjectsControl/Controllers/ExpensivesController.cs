@@ -20,6 +20,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Expensives.Include(e => e.Project);
@@ -27,6 +28,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives/Details/5
+        [Authorize(Roles = "admin,editor,lector")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -48,6 +50,7 @@ namespace ProjectsControl.Controllers
 
 
         // GET: Expensives/Create        
+        [Authorize(Roles = "admin,editor")]
         public IActionResult CreateByProject(string id)
         {
             ViewData["ProjectId"] = id;
@@ -58,6 +61,7 @@ namespace ProjectsControl.Controllers
         // POST: Expensives/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateByProject(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
@@ -72,9 +76,8 @@ namespace ProjectsControl.Controllers
             return View(expensive);
         }
 
-
-
         // GET: Expensives/Create        
+        [Authorize(Roles = "admin,editor")]
         public IActionResult Create(string id)
         {
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
@@ -84,9 +87,10 @@ namespace ProjectsControl.Controllers
         // POST: Expensives/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string id,[Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
+        public async Task<IActionResult> Create(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +103,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives/Edit/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -118,6 +123,7 @@ namespace ProjectsControl.Controllers
         // POST: Expensives/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
@@ -152,6 +158,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives/Delete/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -171,6 +178,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Expensives/Delete/5
+        [Authorize(Roles = "admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -181,9 +189,12 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        #region Internal Methods
+        [AllowAnonymous]
         private bool ExpensiveExists(string id)
         {
             return _context.Expensives.Any(e => e.ExpensiveId == id);
         }
+        #endregion
     }
 }

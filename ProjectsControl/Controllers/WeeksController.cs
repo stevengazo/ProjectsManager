@@ -25,7 +25,7 @@ namespace ProjectsControl.Controllers
             return View(await _context.Week.ToListAsync());
         }
 
-        // GET: Weeks/Details/5
+        // GET: Weeks/Details/5        
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -44,6 +44,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Weeks/Create
+        [Authorize(Roles = "Admin,editor")]
         public IActionResult Create()
         {
             GetCodeOfWeek(out string code, out int eweek, out int year);
@@ -55,6 +56,7 @@ namespace ProjectsControl.Controllers
         // POST: Weeks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WeekId,NumberOfWeek,BeginOfWeek,EndOfWeek")] Week week)
@@ -72,6 +74,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Weeks/Edit/5
+        [Authorize(Roles = "Admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -90,6 +93,7 @@ namespace ProjectsControl.Controllers
         // POST: Weeks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("WeekId,NumberOfWeek,BeginOfWeek,EndOfWeek")] Week week)
@@ -123,6 +127,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Weeks/Delete/5
+        [Authorize(Roles = "Admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -141,6 +146,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Weeks/Delete/5
+        [Authorize(Roles = "Admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -150,13 +156,13 @@ namespace ProjectsControl.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [AllowAnonymous]
         private bool WeekExists(string id)
         {
             return _context.Week.Any(e => e.WeekId == id);
         }
 
-
+        [AllowAnonymous]
         private void GetCodeOfWeek(out string Code, out int NWeek, out int NYear)
         {
             int aux = 0;
@@ -172,12 +178,12 @@ namespace ProjectsControl.Controllers
                 if (result > aux)
                 {
                     aux = result;
-                }      
+                }
             }
             int.TryParse(ActualYear, out int yresult);
             if (aux >= 50)
             {
-                aux = 1;                
+                aux = 1;
                 NYear = yresult + 1;
             }
             else
@@ -189,13 +195,12 @@ namespace ProjectsControl.Controllers
             NWeek = aux;
         }
 
-        
         public async Task<IActionResult> ScheduleDetails(string id)
         {
-            Week week =await (from oweek in _context.Week select oweek).Where(Week =>Week.WeekId == id).FirstOrDefaultAsync();
-            List<Asistance> asistances = await (from asis in _context.Asistances select asis).Where(A => A.WeekId == id).Include(A=>A.Employee).Include(P=>P.Project).ToListAsync();             
+            Week week = await (from oweek in _context.Week select oweek).Where(Week => Week.WeekId == id).FirstOrDefaultAsync();
+            List<Asistance> asistances = await (from asis in _context.Asistances select asis).Where(A => A.WeekId == id).Include(A => A.Employee).Include(P => P.Project).ToListAsync();
             TimeSpan aux = week.EndOfWeek - week.BeginOfWeek;
-            ViewBag.Employees= (from empl in asistances select empl.Employee).Distinct().ToList();
+            ViewBag.Employees = (from empl in asistances select empl.Employee).Distinct().ToList();
             ViewBag.QuantityOfDays = aux.Days;
             ViewBag.Asistances = asistances;
             return View(week);

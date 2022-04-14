@@ -13,7 +13,7 @@ using ProjectsControl.Data;
 
 namespace ProjectsControl.Controllers
 {
-    [Authorize()]    
+    [Authorize]        
     public class AsistancesController : Controller
     {
         private readonly DBProjectContext _context;
@@ -26,7 +26,7 @@ namespace ProjectsControl.Controllers
 
         }
 
-
+        #region Views Methods
 
         /// <summary>
         /// Received the list of daily asistances in the DB
@@ -76,6 +76,7 @@ namespace ProjectsControl.Controllers
         ///  Return the basic information for the Daily Asistences
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "admin,editor")]
         [HttpGet]
         public async Task<IActionResult> DailyCreate()
         {               
@@ -105,27 +106,24 @@ namespace ProjectsControl.Controllers
             return View(assistancesByPerson);
         }
 
-
-
-
         // GET: Asistances
         /// <summary>
         /// Main Page of the asistances
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Asistances.Include(a => a.Employee).Include(a => a.Project).Include(a => a.Week);
             return View(await dBProjectContext.ToListAsync());
         }
 
-
         // GET: Asistances/Details/5
         /// <summary>
         /// Search an especific registered of asistance in the DB
         /// </summary>
         /// <param name="id">Id to Search</param>
-        /// <returns></returns>
+        /// <returns></returns>        
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -147,9 +145,8 @@ namespace ProjectsControl.Controllers
             return View(asistance);
         }
 
-
-
         // GET: Asistances/Create        
+        [Authorize(Roles = "admin,editor")]
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
@@ -178,10 +175,10 @@ namespace ProjectsControl.Controllers
             return View();
         }
 
-
         // POST: Asistances/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
@@ -215,6 +212,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Asistances/Edit/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -236,6 +234,7 @@ namespace ProjectsControl.Controllers
         // POST: Asistances/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
@@ -272,6 +271,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Asistances/Delete/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -293,6 +293,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Asistances/Delete/5
+        [Authorize(Roles = "admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -301,11 +302,6 @@ namespace ProjectsControl.Controllers
             _context.Asistances.Remove(asistance);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool AsistanceExists(string id)
-        {
-            return _context.Asistances.Any(e => e.AsistanceId == id);
         }
 
         /*
@@ -317,6 +313,7 @@ namespace ProjectsControl.Controllers
             ViewBag.Weeks = _context.Week.ToList();
             return  View(new List<Asistance>());
         }*/
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Search( string DateToSearch= null, string NameToSearch= null, string ProjectToSearch= null,string WeekToSearch= null )
         {
@@ -363,6 +360,10 @@ namespace ProjectsControl.Controllers
             
         }
 
+        #endregion
+
+
+        #region Internal Methods
 
         /// <summary>
         /// This function is focus to consult the asistances in the database with a stored procedure
@@ -372,23 +373,24 @@ namespace ProjectsControl.Controllers
         /// <param name="ProjectToSearch"></param>
         /// <param name="WeekToSearch"></param>
         /// <returns></returns>
-        public async Task<List<Asistance>> SearchInDb(string DateToSearch= null, string NameToSearch = null, string ProjectToSearch = null, string WeekToSearch = null)
+        [AllowAnonymous]
+        public async Task<List<Asistance>> SearchInDb(string DateToSearch = null, string NameToSearch = null, string ProjectToSearch = null, string WeekToSearch = null)
         {
             try
             {
                 /// Check if the parameters exists
                 bool bandName = (NameToSearch != null) ? true : false;
                 bool bandProject = (ProjectToSearch != null) ? true : false;
-                bool bandWeek = (WeekToSearch != null) ? true: false;
+                bool bandWeek = (WeekToSearch != null) ? true : false;
                 bool bandDate = (DateToSearch != null) ? true : false;
-                if( bandDate || bandName || bandProject || bandWeek)
+                if (bandDate || bandName || bandProject || bandWeek)
                 {
-                   var result = _context.Asistances.FromSqlInterpolated($" EXECUTE SearchAsistances @_EmployeeId = {NameToSearch}, @_ProjectId = {ProjectToSearch}, @_DateToSearch ={DateToSearch}, @_WeekId = {WeekToSearch}") ;
+                    var result = _context.Asistances.FromSqlInterpolated($" EXECUTE SearchAsistances @_EmployeeId = {NameToSearch}, @_ProjectId = {ProjectToSearch}, @_DateToSearch ={DateToSearch}, @_WeekId = {WeekToSearch}");
                     var employees = _context.Employees.ToList();
                     var projects = _context.Projects.ToList();
-                    foreach(var item in result)
+                    foreach (var item in result)
                     {
-                        item.Employee = employees.FirstOrDefault(E=>E.EmployeeId == item.EmployeeId);
+                        item.Employee = employees.FirstOrDefault(E => E.EmployeeId == item.EmployeeId);
                         item.Project = projects.FirstOrDefault(P => P.ProjectId == item.ProjectId);
                     }
                     return await result.ToListAsync();
@@ -397,10 +399,10 @@ namespace ProjectsControl.Controllers
                 {
                     return null;
                 }
-                
-               
+
+
             }
-            catch(Exception ed)
+            catch (Exception ed)
             {
                 Console.WriteLine($"Message {ed.Message}");
                 Console.WriteLine($"Inner Exception {ed.InnerException.Message}");
@@ -408,6 +410,11 @@ namespace ProjectsControl.Controllers
             }
             return null;
         }
-
+        [AllowAnonymous]
+        private bool AsistanceExists(string id)
+        {
+            return _context.Asistances.Any(e => e.AsistanceId == id);
+        }
+        #endregion
     }
 }

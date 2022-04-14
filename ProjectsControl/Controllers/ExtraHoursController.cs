@@ -20,13 +20,14 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.ExtraHours.Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week);
             return View(await dBProjectContext.ToListAsync());
         }
 
-        // GET: ExtraHours/Details/5
+        // GET: ExtraHours/Details/5        
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -48,6 +49,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Create
+        [Authorize(Roles = "Admin,lector")]
         public IActionResult Create()
         {
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId");
@@ -66,6 +68,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,lector")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -82,13 +85,15 @@ namespace ProjectsControl.Controllers
             return View(extraHour);
         }
 
+        [Authorize(Roles = "Admin,lector")]
         public async Task<IActionResult> WithoutPaid()
         {
-            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E=>E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
+            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E => E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
             return View(aux);
         }
 
         // GET: ExtraHours/Edit/5
+        [Authorize(Roles = "Admin,lector")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -108,6 +113,7 @@ namespace ProjectsControl.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,lector")]
         public async Task<IActionResult> addExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
         {
             try
@@ -116,9 +122,9 @@ namespace ProjectsControl.Controllers
                 _context.SaveChanges();
                 ViewBag.Message = $"Hora extra registrada";
                 // redirect to action "details" with the parameter ID
-                return RedirectToAction("Details", routeValues: new { id = extraHour.ExtraHourId } );
+                return RedirectToAction("Details", routeValues: new { id = extraHour.ExtraHourId });
             }
-            catch(Exception ef)
+            catch (Exception ef)
             {
                 ViewBag.FlagExistHour = false;
                 ViewBag.Message = $"Error al ingresar la hora extra. {ef.Message}";
@@ -129,17 +135,17 @@ namespace ProjectsControl.Controllers
                 tmpObj.Asistance = _context.Asistances.FirstOrDefault(A => A.AsistanceId == tmpObj.AsistanceId);
                 tmpObj.Week = _context.Week.FirstOrDefault(W => W.WeekId == tmpObj.WeekId);
                 return View(tmpObj);
-            }                       
+            }
         }
 
-
+        [Authorize(Roles = "Admin,lector")
         [HttpGet]
         public async Task<IActionResult> addExtra(string id)
         {
             /// Check if exist any extra linked with the asistance
 
             var tmpExtraHour = (from extH in _context.ExtraHours select extH).FirstOrDefault(E => E.AsistanceId == id);
-            if( tmpExtraHour!= null)
+            if (tmpExtraHour != null)
             {
                 ViewBag.ExistHourId = tmpExtraHour.ExtraHourId;
                 ViewBag.FlagExistHour = true;
@@ -149,13 +155,14 @@ namespace ProjectsControl.Controllers
                 ViewBag.FlagExistHour = false;
             }
             var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
-            ExtraHour extraObj = new ExtraHour() {
+            ExtraHour extraObj = new ExtraHour()
+            {
                 AsistanceId = tmpResult.AsistanceId,
                 Employee = tmpResult.Employee,
                 EmployeeId = tmpResult.EmployeeId,
                 Week = tmpResult.Week,
                 WeekId = tmpResult.WeekId,
-                BeginTime= tmpResult.DateOfBegin,
+                BeginTime = tmpResult.DateOfBegin,
                 EndTime = tmpResult.DateOfEnd,
                 IsPaid = false
             };
@@ -164,6 +171,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,lector")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -200,6 +208,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Delete/5
+        [Authorize(Roles = "Admin,lector")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -221,6 +230,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: ExtraHours/Delete/5
+        [Authorize(Roles = "Admin,lector")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -231,11 +241,13 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [AllowAnonymous]
         private bool ExtraHourExists(string id)
         {
             return _context.ExtraHours.Any(e => e.ExtraHourId == id);
         }
 
-      
+
     }
 }

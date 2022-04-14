@@ -20,6 +20,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Offers
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var dBProjectContext = _context.Offers.Include(o => o.Customer);
@@ -46,6 +47,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Offers/Create
+        [Authorize(Roles = "Admin,editor,Sales")]
         public IActionResult Create()
         {
             var tmplist = _context.Customers.ToList();
@@ -56,6 +58,7 @@ namespace ProjectsControl.Controllers
         // POST: Offers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NumberOfOffer,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
@@ -72,6 +75,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Offers/Edit/5
+        [Authorize(Roles = "Admin,editor,Sales")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -92,6 +96,7 @@ namespace ProjectsControl.Controllers
         // POST: Offers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,editor,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("NumberOfOffer,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
@@ -127,6 +132,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Offers/Delete/5
+        [Authorize(Roles = "Admin,editor,Sales")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -146,6 +152,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Offers/Delete/5
+        [Authorize(Roles = "Admin,editor,Sales")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -155,7 +162,7 @@ namespace ProjectsControl.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [AllowAnonymous]
         private bool OfferExists(string id)
         {
             return _context.Offers.Any(e => e.OfferId == id);

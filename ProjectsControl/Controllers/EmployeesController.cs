@@ -20,7 +20,10 @@ namespace ProjectsControl.Controllers
             _context = context;
         }
 
+        #region View Methods
+
         // GET: Employees
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Employees.ToListAsync());
@@ -46,6 +49,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Employees/Create
+        [Authorize(Roles = "admin,editor")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace ProjectsControl.Controllers
         // POST: Employees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EmployeeId,EmployeeDNI,Name,Position,DateOfBirth,DateofHiring,DateOfFired,IsActive,MobileNumber,Email,Salay")] Employee employee)
@@ -68,6 +73,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Employees/Edit/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -86,6 +92,7 @@ namespace ProjectsControl.Controllers
         // POST: Employees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("EmployeeId,ProjectName,DateofHiring,Position")] Employee employee)
@@ -119,6 +126,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Employees/Delete/5
+        [Authorize(Roles = "admin,editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -137,6 +145,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Employees/Delete/5
+        [Authorize(Roles ="admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -146,10 +155,13 @@ namespace ProjectsControl.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        #endregion
+        #region Internal Methods
+        [AllowAnonymous]
         private bool EmployeeExists(string id)
         {
             return _context.Employees.Any(e => e.EmployeeId == id);
         }
+        #endregion
     }
 }
