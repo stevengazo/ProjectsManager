@@ -9,7 +9,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="background-color: #c5c5c5; ">
+
+<style>
+    aside{
+        color:red;
+    }
+
+</style>
+
+
+<body  class="mh-100" style="background-color: #c5c5c5; ">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow" style="background: #070429;">
             <div class="container">
@@ -77,34 +86,40 @@
         </nav>
     </header>
     <div class="container  ">
-        <main role="main" class="pb-3 d-xl-flex">
-            <aside class="col-3 align-content-lg-between"> 
-                <ul class="list">
-                    <li class="list-group-item disabled">
+        <div class="col-3">
+            <aside class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
                         Opciones
                     </li>
-                    <li class="list-group-item ">
-                        <a  asp-area="admin" asp-controller="Manage" asp-action="ListOfUsers">
+                    <li class="nav-item">
+                        <a asp-area="admin" asp-controller="Manage" asp-action="ListOfUsers">
                             Lista de Usuarios
                         </a>
                     </li>
-                    <li class="list-group-item ">
+                    <li class="nav-item">
                         <a>
                             Agregar Nuevo Usuario
                         </a>
                     </li>
-                    <li class="list-group-item ">
+                    <li class="nav-item">
                         <a>
                             Ver Roles Disponibles
                         </a>
                     </li>
                 </ul>
             </aside>
-            <section class="col">
-                @RenderBody()                 
-            </section>
-            
-        </main>
+        </div>
+        <div class="col">
+            <main role="main" class="">
+                <section class="col">
+                    @RenderBody()
+                </section>
+
+            </main>
+        </div>
+
+
     </div>
 
     <footer class="border-top footer text-muted">
