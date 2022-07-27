@@ -3,64 +3,64 @@
 
 
 <script>
- 
- function deleteRow(btn){
-       console.log(btn);
-       let row = btn.parentNode.parentNode;
-       row.parentNode.removeChild(row);
-       orderTable();
-}
-   
-$(document).ready(function() {
-  $("#table-asistances").validate();
-});
+
+    function deleteRow(btn) {
+        console.log(btn);
+        let row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        orderTable();
+    }
+
+    $(document).ready(function() {
+        $("#table-asistances").validate();
+    });
 
 
- function orderTable (){
-    let tableAsistances = document.getElementById("table-asistances").rows.length
-    console.log(tableAsistances);
-    /// Change any row
-    debugger;
-    for (let index = 0; index <= tableAsistances; index++) {   
+    function orderTable() {
+        let tableAsistances = document.getElementById("table-asistances").rows.length
+        console.log(tableAsistances);
+        /// Change any row
         debugger;
-        // set the values         
-        let row = document.getElementById("Row-"+index.toString());
-        // Actual position of the row
-        const voidPosition = index;
-        // Check if the row is null,  if not exist, search the next row existence and reposition that row       
-        if(row === null){
+        for (let index = 0; index <= tableAsistances; index++) {
             debugger;
-            /// If not exist, we need to check the the row and reubicate
-            for( var j = index; j<= tableAsistances; j++){
-                // search the row with the j counter
-                let newRow = document.getElementById("Row-"+j.toString());
-                if(newRow !==null){
-                    // change the name if the row
-                    $("#Row-"+(j.toString())).attr("id",("Row-"+voidPosition.toString()));
-                    // Change ProjectId
-                    $("#z"+ (j.toString()) + "__ProjectId").attr("id",("z"+ voidPosition.toString() + "__ProjectId" ));
-                    $("#z"+ (voidPosition.toString()) + "__ProjectId").attr("name", "["+ voidPosition.toString() + "].ProjectId");
-                    // Change Employee Id 
-                    $("#z"+ (j.toString()) + "__EmployeeId").attr("id",("z"+ voidPosition.toString() + "__EmployeeId" ));
-                    $("#z"+ (voidPosition.toString()) + "__EmployeeId").attr("name", "["+ voidPosition.toString() + "].EmployeeId");
-                    // Change Begin date
-                    $("#z"+ (j.toString()) + "__DateOfBegin").attr("id",("z"+ voidPosition.toString() + "__DateOfBegin" ));
-                    $("#z"+ (voidPosition.toString()) + "__DateOfBegin").attr("name", "["+ voidPosition.toString() + "].DateOfBegin");
-                    // Change End Date 
-                    $("#z"+ (j.toString()) + "__DateOfEnd").attr("id",("z"+ voidPosition.toString() + "__DateOfEnd" ));
-                    $("#z"+ (voidPosition.toString()) + "__DateOfEnd").attr("name", "["+ voidPosition.toString() + "].DateOfEnd");
-                    // Change Week Id
-                    $("#z"+ (j.toString()) + "__WeekId").attr("id",("z"+ voidPosition.toString() + "__WeekId" ));
-                    $("#z"+ (voidPosition.toString()) + "__WeekId").attr("name", "["+ voidPosition.toString() + "].WeekId"); 
-                    debugger;
-                    break;                    
-                }                
+            // set the values
+            let row = document.getElementById("Row-" + index.toString());
+            // Actual position of the row
+            const voidPosition = index;
+            // Check if the row is null,  if not exist, search the next row existence and reposition that row
+            if (row === null) {
+                debugger;
+                /// If not exist, we need to check the the row and reubicate
+                for (var j = index; j <= tableAsistances; j++) {
+                    // search the row with the j counter
+                    let newRow = document.getElementById("Row-" + j.toString());
+                    if (newRow !== null) {
+                        // change the name if the row
+                        $("#Row-" + (j.toString())).attr("id", ("Row-" + voidPosition.toString()));
+                        // Change ProjectId
+                        $("#z" + (j.toString()) + "__ProjectId").attr("id", ("z" + voidPosition.toString() + "__ProjectId"));
+                        $("#z" + (voidPosition.toString()) + "__ProjectId").attr("name", "[" + voidPosition.toString() + "].ProjectId");
+                        // Change Employee Id
+                        $("#z" + (j.toString()) + "__EmployeeId").attr("id", ("z" + voidPosition.toString() + "__EmployeeId"));
+                        $("#z" + (voidPosition.toString()) + "__EmployeeId").attr("name", "[" + voidPosition.toString() + "].EmployeeId");
+                        // Change Begin date
+                        $("#z" + (j.toString()) + "__DateOfBegin").attr("id", ("z" + voidPosition.toString() + "__DateOfBegin"));
+                        $("#z" + (voidPosition.toString()) + "__DateOfBegin").attr("name", "[" + voidPosition.toString() + "].DateOfBegin");
+                        // Change End Date
+                        $("#z" + (j.toString()) + "__DateOfEnd").attr("id", ("z" + voidPosition.toString() + "__DateOfEnd"));
+                        $("#z" + (voidPosition.toString()) + "__DateOfEnd").attr("name", "[" + voidPosition.toString() + "].DateOfEnd");
+                        // Change Week Id
+                        $("#z" + (j.toString()) + "__WeekId").attr("id", ("z" + voidPosition.toString() + "__WeekId"));
+                        $("#z" + (voidPosition.toString()) + "__WeekId").attr("name", "[" + voidPosition.toString() + "].WeekId");
+                        debugger;
+                        break;
+                    }
+                }
+                debugger;
             }
             debugger;
-        }  
-        debugger;
-    }    
-}
+        }
+    }
 </script>
 
 
@@ -76,13 +76,13 @@ $(document).ready(function() {
 
     </div>
     <div class="justify-content-center">
-        <label >@ViewBag.ErrorMessage</label>
+        <label>@ViewBag.ErrorMessage</label>
     </div>
 </div>
 
 
 <form method="post">
-    <table class="table" id="table-asistances"  onchange="orderTable()">
+    <table class="table" id="table-asistances" onchange="orderTable()">
         <thead>
             <tr>
                 <td>
@@ -103,7 +103,7 @@ $(document).ready(function() {
                 <td>
                     Ausente
                 </td>
-                <td>                    
+                <td>
                 </td>
             </tr>
         </thead>
@@ -114,7 +114,7 @@ $(document).ready(function() {
                 <tr id="Row-@i">
                     <td>
                         <!--Name-->
-                    <label>
+                        <label>
                             @Model[i].Employee.Name
                             <div style="display:none">
                                 <input asp-for="@Model[i].EmployeeId" value="@Model[i].EmployeeId" readonly>
@@ -124,42 +124,39 @@ $(document).ready(function() {
                     </td>
                     <td>
                         <!--Project-->
-                    <input list="active-projects" asp-for="@Model[i].ProjectId" class="form-control-sm" minlength="3"  required>
-                    <datalist id="active-projects">
+                        <input list="active-projects" asp-for="@Model[i].ProjectId" class="form-control-sm" minlength="3" required>
+                        <datalist id="active-projects">
                             @foreach (var item in ViewBag.Projects)
                             {
                                 <option value="@item.Key">@item.Value</option>
                             }
-                    </datalist>
-                </td>
-                <td>
-                    <!--DateOfBegin-->
-                    <input asp-for="@Model[i].DateOfBegin" class="form-control-sm" />
-                    
-                </td>
-                <td>
-                    <!--DateOfEnd-->
-                    <input asp-for="@Model[i].DateOfEnd" class="form-control-sm" />
-                </td>
-                <td>
-                    <!--Number Of Week-->
-                     <select asp-for="@Model[i].WeekId" class ="form-control" asp-items="ViewBag.WeekId"></select>
-                </td>
-                <td>
-                    <!--is absent-->
-                     <div class="flex-column align-content-center">
-                         <label>
-                             ¿Ausente?
-                         </label>
-                         <input id="checkbox-@i" type="checkbox">
-                     </div>
-                </td>
-                <td>
-                    <!--Delete Row-->
-                    <div id="Delete-@i"  class=" btn btn-outline-danger" onclick="deleteRow(this)" >Borrar</div>
-                </td>
-            </tr>
-           }
+                        </datalist>
+                    </td>
+                    <td>
+                        <!--DateOfBegin-->
+                        <input asp-for="@Model[i].DateOfBegin" class="form-control-sm" />
+
+                    </td>
+                    <td>
+                        <!--DateOfEnd-->
+                        <input asp-for="@Model[i].DateOfEnd" class="form-control-sm" />
+                    </td>
+                    <td>
+                        <!--Number Of Week-->
+                        <select asp-for="@Model[i].WeekId" class="form-control" asp-items="ViewBag.WeekId"></select>
+                    </td>
+                    <td>
+                        <!--is absent-->
+
+                        <input id="checkbox-@i" type="checkbox">
+
+                    </td>
+                    <td>
+                        <!--Delete Row-->
+                        <div id="Delete-@i" class=" btn btn-outline-danger" onclick="deleteRow(this)">Borrar</div>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <div class="flex-row align-content-center">

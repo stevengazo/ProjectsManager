@@ -34,7 +34,7 @@ namespace ProjectsControl.Controllers
         /// <param name="asistances">List of asistances </param>
         /// <returns>Same view</returns>
         [HttpPost] 
-        [Authorize(Roles ="Admin,Editor")]
+        [Authorize(Roles ="admin,editor")]
         public async Task<ActionResult> DailyCreate(List<Asistance> asistances )
         {
             try

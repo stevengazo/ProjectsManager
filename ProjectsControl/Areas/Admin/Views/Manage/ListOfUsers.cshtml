@@ -20,11 +20,11 @@
                 Correo Electronico
             </th>
             <th>
-                Id de Usuario
-            </th>
-            <th>
                 Numero de Telefono
             </th>
+            <ht>
+                Acciones
+            </ht>
         </tr>
     </thead>
     <tbody>
@@ -49,12 +49,12 @@
                 </td>
                 <td>
                     <a class="btn btn-warning btn-sm" asp-controller="Manage" asp-action="ChangePassword" asp-route-id="@item.Id">
-                        Cambiar Contraseña
+                        Contraseña
                     </a>
                 </td>
                 <td>
                     <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-id="@item.Id">
-                        Eliminar Usuario
+                        Eliminar
                     </a>
                 </td>
             </tr>

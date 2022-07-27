@@ -49,7 +49,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Create
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         public IActionResult Create()
         {
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId");
@@ -68,7 +68,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -93,7 +93,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Edit/5
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -113,7 +113,7 @@ namespace ProjectsControl.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         public async Task<IActionResult> addExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
         {
             try
@@ -138,7 +138,7 @@ namespace ProjectsControl.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         [HttpGet]
         public async Task<IActionResult> addExtra(string id)
         {
@@ -171,7 +171,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -208,7 +208,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Delete/5
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -230,7 +230,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: ExtraHours/Delete/5
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "editor,admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
