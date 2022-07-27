@@ -11,7 +11,8 @@
 </head>
 <body style="background-color: #c5c5c5; ">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow" style="background: #070429;">
+        <!-- Nav Bar  -->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow" style="background: #070429;">
             <div class="container">
 
                 <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -76,34 +77,30 @@
             </div>
         </nav>
     </header>
-    <div class="container  ">
-        <main role="main" class="pb-3 d-xl-flex">
-            <aside class="col-3 align-content-lg-between"> 
-                <ul class="list">
-                    <li class="list-group-item disabled">
-                        Opciones
-                    </li>
-                    <li class="list-group-item ">
-                        <a  asp-area="admin" asp-controller="Manage" asp-action="ListOfUsers">
+    <!-- Body -->
+    <div class="container h-100 w-100 mt-2 ">
+        <main role="main" class=" container d-flex h-100 w-100 flex-row justify-content-between">
+           <aside class="col">
+               <h3>
+                   Acciones
+               </h3>
+               <ul class="nav flex-column">
+                   <li class="nav-link active ">
+                         <a  asp-area="admin" asp-controller="Manage" asp-action="ListOfUsers">
                             Lista de Usuarios
                         </a>
-                    </li>
-                    <li class="list-group-item ">
-                        <a>
-                            Agregar Nuevo Usuario
+                   </li>
+                   <li class="nav-link active">
+                         <a  asp-area="identity" asp-area="Identity" asp-page="/Account/Register">
+                            Crear Usuario
                         </a>
-                    </li>
-                    <li class="list-group-item ">
-                        <a>
-                            Ver Roles Disponibles
-                        </a>
-                    </li>
-                </ul>
-            </aside>
-            <section class="col">
+                   </li>
+               </ul>
+           </aside>
+            <div class="vr"></div>
+            <section class="col-9">
                 @RenderBody()                 
-            </section>
-            
+            </section>          
         </main>
     </div>
 

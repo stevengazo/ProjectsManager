@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label class="control-label">Fecha de Orden de Compra</label>
-                        <input asp-for="OCDate" class="form-control" />
+                        <input type="date" asp-for="OCDate" class="form-control" />
                         <span asp-validation-for="OCDate" class="text-danger"></span>
                     </div>
                  </div>
@@ -90,7 +90,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Fecha de Inicio</label>
-                        <input asp-for="BeginDate" class="form-control" />
+                        <input type="date" asp-for="BeginDate" class="form-control" />
                         <span asp-validation-for="BeginDate" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
@@ -127,7 +127,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Detalles</label> 
-                        <input asp-for="Details" class="form-control" />
+                        <textarea asp-for="Details" class="form-control" > </textarea>
                         <span asp-validation-for="Details" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">

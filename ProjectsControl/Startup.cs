@@ -86,6 +86,15 @@ namespace ProjectsControl
             });
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                  name: "Administration",
+                  areaName: "Admin",
+                  pattern: "Admin/{controller=Manage}/{action=Index}/{id?}/{roleid?}"
+                ); ;
+                endpoints.MapRazorPages();
+            });
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
