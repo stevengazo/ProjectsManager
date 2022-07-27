@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IdentityUser;
+
+@{
+    ViewData["Title"] = "Borrar Usuario ";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<h2>
+    Eliminar usuario
+</h2>
+
+<p>
+    Deseas eliminar este usuario?
+</p>
+
+<table class="table table-sm">
+    <tbody>
+        <tr>
+            <td>
+                Usuario
+            </td>
+            <td>
+                @Model.UserName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Correo
+            </td>
+            <td>
+                @Model.Email
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="d-flex flex-row">
+    <button class="btn btn-sm btn-outline-danger" > <a asp-action="PostDeleteUser" asp-route-id="@Model.Id">
+    Eliminar Usuario   
+    </a>
+        
+    </button>
+    <button class="btn btn-sm btn-outline-info" > 
+        <a  asp-controller="Manage" asp-action="ListOfUsers">
+        Atras
+        </a>
+
+    </button>
+</div>

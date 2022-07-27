@@ -89,7 +89,7 @@ namespace ProjectsControl
                 endpoints.MapAreaControllerRoute(
                   name: "Administration",
                   areaName: "Admin",
-                  pattern: "Admin/{controller=Manage}/{action=Index}/{id?}/{roleid?}"
+                  pattern: "Admin/{controller=Manage}/{action=Index}/{id?}/{roleid?}/{Password1?}/{Password2?}"
                 ); ;
                 endpoints.MapRazorPages();
             });
