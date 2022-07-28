@@ -43,14 +43,19 @@ namespace ProjectsControl.Controllers
                 {
                     foreach (Asistance asistance in asistances)
                     {
+                        var tmpResult = getWeekByDate(asistance.DateOfBegin);
+                        if (tmpResult != null)
+                        {
+                            asistance.WeekId = tmpResult.WeekId;
+                        }
                         asistance.AsistanceId = Guid.NewGuid().ToString();
                     }
-                    using (var context = _context)
-                    {
-                        await context.Asistances.AddRangeAsync(asistances);
-                        await context.SaveChangesAsync();
-                    }
+                    _context.Asistances.AddRange(asistances);
+                    _context.SaveChanges();
+                   
                     ViewBag.ErrorMessage = "Asistencias Agregadas";
+                    ViewBag.WeeksList = _context.Weeks.FromSqlInterpolated(@$"select top 5 * from Week
+                                                                    ORDER BY WeekId DESC").ToList();
                     List<Asistance> sample1 = new List<Asistance>();
                     return View(sample1);
                 }
@@ -59,6 +64,8 @@ namespace ProjectsControl.Controllers
                     ViewBag.ErrorMessage = "No hay asistencias registradas";    
                     ViewBag.ErrorMessage.Style = "btn-danger";
                     List<Asistance> sample1 = new List<Asistance>();
+                    ViewBag.WeeksList = _context.Weeks.FromSqlInterpolated(@$"select top 5 * from Week
+                                                                    ORDER BY WeekId DESC").ToList();
                     return View(sample1);
                 }
                 
@@ -80,6 +87,7 @@ namespace ProjectsControl.Controllers
         [HttpGet]
         public async Task<IActionResult> DailyCreate()
         {               
+
             //  List of Weeks registered in the DB
             ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             //  List of employees in the DB
@@ -101,6 +109,8 @@ namespace ProjectsControl.Controllers
                 };
                 assistancesByPerson.Add(tmpAsistance);
             }
+            ViewBag.WeeksList = _context.Weeks.FromSqlInterpolated(@$"select top 5 * from Week
+                                                                    ORDER BY WeekId DESC").ToList();
             ViewBag.ErrorMessage = "";
             //  Retorno de la vista                    
             return View(assistancesByPerson);
@@ -183,6 +193,12 @@ namespace ProjectsControl.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
         {
+            var tmpResult = getWeekByDate(asistance.DateOfBegin);
+            if (tmpResult != null)
+            {
+                asistance.WeekId = tmpResult.WeekId;
+            }
+            
             if (ModelState.IsValid)
             {
                 _context.Add(asistance);
@@ -399,8 +415,6 @@ namespace ProjectsControl.Controllers
                 {
                     return null;
                 }
-
-
             }
             catch (Exception ed)
             {
@@ -408,13 +422,40 @@ namespace ProjectsControl.Controllers
                 Console.WriteLine($"Inner Exception {ed.InnerException.Message}");
                 return null;
             }
-            return null;
         }
+
+
         [AllowAnonymous]
         private bool AsistanceExists(string id)
         {
             return _context.Asistances.Any(e => e.AsistanceId == id);
         }
+
+
+        /// <summary>
+        /// Check if a specific Date exist in a row in the DB and return the element
+        /// </summary>
+        /// <param name="dateToConsult">Date to consult</param>
+        /// <returns>Week element</returns>
+        private Week getWeekByDate(DateTime dateToConsult)
+        {
+            var results = (
+                    from week in _context.Weeks
+                    where dateToConsult>= week.BeginOfWeek  && dateToConsult<= week.EndOfWeek 
+                    select week
+                ).FirstOrDefault();
+            if(results == null)
+            {
+                return null;
+            }
+            else
+            {
+                return results;
+            }
+            
+        }
+
+
         #endregion
     }
 }

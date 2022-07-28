@@ -1,0 +1,306 @@
+﻿@using ProjectsControl.Models;
+@model ProjectsControl.Models.Action
+@{
+    ViewData["Title"] = "Vista Imprimible";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    Seleccione el area dentro de cuadro, presione click derecho y seleccione imprimir.
+
+</p>
+
+<div style="border: 1px groove black;" class="mt-2 p-2">
+
+    <div class="d-flex flex-column w-100 p-2 " style="border: 1px solid black;">
+        <!--Header-->
+        <div class="d-flex flex-row justify-content-between">
+            <div>
+                <h2>
+                    Acción de Personal
+                </h2>
+            </div>
+            <div class="d-flex flex-column">
+                <div style="color:blue">
+                    <h4>
+                        Grupo Mecsa
+                    </h4>
+                </div>
+                <div>
+                    Fecha @DateTime.Today.ToLongDateString()
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>
+                        Id Registro
+                    </th>
+                    <td>
+                        @Model.ActionId
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Nombre Empleado
+                    </th>
+                    <td>
+                        @Model.Employee.Name
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Tipo de Acción
+                    </th>
+                    <td>
+                        @Model.TypeOfAction
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Descripción
+                    </th>
+                    <td>
+                        @Model.Description
+                    </td>
+                </tr>
+            </table>
+            <div class="d-flex flex-row justify-content-around mt-3 ">
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Empleado
+                    </label>
+
+                </div>
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Gerencia
+                    </label>
+
+                </div>
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Jefe Inmediato
+                    </label>
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+            <i>Copia Empresa</i>
+            <i style="color:lightgray">Autor: @Model.Author</i>
+        </div>
+
+    </div>
+    <hr class="mt-2 mb-2" />
+    <div class="d-flex flex-column w-100 p-2" style="border: 1px solid black;">
+        <!--Header-->
+        <div class="d-flex flex-row justify-content-between">
+            <div>
+                <h2>
+                    Acción de Personal
+                </h2>
+            </div>
+            <div class="d-flex flex-column">
+                <div style="color:blue">
+                    <h4>
+                        Grupo Mecsa
+                    </h4>
+                </div>
+                <div>
+                    Fecha @DateTime.Today.ToLongDateString()
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>
+                        Id Registro
+                    </th>
+                    <td>
+                        @Model.ActionId
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Nombre Empleado
+                    </th>
+                    <td>
+                        @Model.Employee.Name
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Tipo de Acción
+                    </th>
+                    <td>
+                        @Model.TypeOfAction
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Descripción
+                    </th>
+                    <td>
+                        @Model.Description
+                    </td>
+                </tr>
+            </table>
+            <div class="d-flex flex-row justify-content-around mt-3 ">
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Empleado
+                    </label>
+
+                </div>
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Gerencia
+                    </label>
+
+                </div>
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Jefe Inmediato
+                    </label>
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+            <i>Copia Empresa</i>
+            <i style="color:lightgray">Autor: @Model.Author</i>
+        </div>
+    </div>
+    <hr class="mt-2 mb-2" />
+    <div class="d-flex flex-column w-100 p-2" style="border: 1px solid black;">
+        <!--Header-->
+        <div class="d-flex flex-row justify-content-between">
+            <div>
+                <h2>
+                    Acción de Personal
+                </h2>
+            </div>
+            <div class="d-flex flex-column">
+                <div style="color:blue">
+                    <h4>
+                        Grupo Mecsa
+                    </h4>
+                </div>
+                <div>
+                    Fecha @DateTime.Today.ToLongDateString()
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>
+                        Id Registro
+                    </th>
+                    <td>
+                        @Model.ActionId
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Nombre Empleado
+                    </th>
+                    <td>
+                        @Model.Employee.Name
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Tipo de Acción
+                    </th>
+                    <td>
+                        @Model.TypeOfAction
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Descripción
+                    </th>
+                    <td>
+                        @Model.Description
+                    </td>
+                </tr>
+            </table>
+             <div class="d-flex flex-row justify-content-around mt-3 ">
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Empleado
+                    </label>
+
+                </div>
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Gerencia
+                    </label>
+
+                </div>
+                <!--firmas-->
+                <div class="d-flex flex-column justify-content-center">
+
+                    <label>
+                        ___________________
+                    </label>
+                    <label>
+                        Jefe Inmediato
+                    </label>
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+            <i>Copia Empresa</i>
+            <i style="color:lightgray">Autor: @Model.Author</i>
+        </div>
+    </div>
+</div>
+
+
+

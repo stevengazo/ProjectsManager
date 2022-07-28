@@ -36,6 +36,7 @@ Este sistema se encarga de la gestión interna de:
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.32" />
   </ItemGroup>
 
   <ItemGroup>

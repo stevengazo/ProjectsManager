@@ -74,14 +74,14 @@
         </p>
         <div class="form-group">
             <form asp-area="admin" asp-controller="Manage" asp-action="SetRoleUser">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <select id="RolToSet" onclick="SetRolId(this)"  name="rolid"  class="form-control-sm">
-                @for (var i = 0; i < tmpRoles.Count ; i++)
-               {
-                   <option value="@tmpRoles[i].Id">@tmpRoles[i].Name</option>
-               }
-            </select>
-            <input type="submit" class="btn btn-outline-success" value="Añadir" />          
+                <input type="hidden" name="id" value="@Model.Id" />
+                <select id="RolToSet" onclick="SetRolId(this)" name="rolid" class="form-control-sm">
+                    @for (var i = 0; i < tmpRoles.Count; i++)
+                    {
+                        <option value="@tmpRoles[i].Id">@tmpRoles[i].Name</option>
+                    }
+                </select>
+                <input type="submit" class="btn btn-outline-success" value="Añadir" />
             </form>
 
         </div>
@@ -92,33 +92,42 @@
         </p>
         <table class="table table-light">
             <tbody>
-                @foreach (IdentityRole dictRow in ViewBag.UserRoles)
+                @if (ViewBag.UserRoles != null)
                 {
-                    <tr>
-                        <!--Rol-->
-                        <td>
-                            Role
-                        </td>
-                        <!--Rol Id-->
-                        <td>
-                            @dictRow.Id
-                        </td>
-                        <!--Rol Name-->
-                        <td>
-                            @dictRow.Name
-                        </td>
-                    </tr>
+                    foreach (IdentityRole dictRow in ViewBag.UserRoles)
+                    {
+                        <tr>
+                            <!--Rol-->
+                            <td>
+                                Role
+                            </td>
+                            <!--Rol Id-->
+                            <td>
+                                @dictRow.Id
+                            </td>
+                            <!--Rol Name-->
+                            <td>
+                                @dictRow.Name
+                            </td>
+                            <!--Actions-->
+                            <td>
+                                <form asp-controller="Manage" asp-action="RemoveRol">
+                                    <input type="hidden" name="Id" value="@Model.Id" />
+                                    <input type="hidden" name="Rolid" value="@dictRow.Id" />
+                                    <input type="submit" value="Eliminar" class="btn btn-outline-danger" />
+                                </form>
+                            </td>
+                        </tr>
+                    }
                 }
-
             </tbody>
         </table>
     </div>
 </div>
-
 <div>
 </div>
 
 
 <script src="~/js/utilsManage.js" type="text/javascript">
-    
+
 </script>

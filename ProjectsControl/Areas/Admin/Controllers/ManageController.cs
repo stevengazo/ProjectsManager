@@ -36,6 +36,23 @@ namespace ProjectsControl.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult RemoveRol(string id= null, string rolid = null)
+        {
+
+            var resultQuery = _ContextIdentity.UserRoles.FromSqlInterpolated($@"SELECT * from AspNetUserRoles
+                                                                            where UserId = {id} and RoleId = {rolid}").FirstOrDefault();
+            _ContextIdentity.UserRoles.Remove(resultQuery);
+            _ContextIdentity.SaveChanges();
+
+            var _user = (from user in _ContextIdentity.Users
+                        where user.Id.Contains(id)
+                        select user
+                       ).FirstOrDefault();
+            ViewBag.UserRoles = GetRoles(idUser: id);
+            ViewBag.Roles = GetRoles();
+            return View("ViewUser", User);
+        }
+
         /// <summary>
         /// Display the view to change the password of the user
         /// </summary>
@@ -245,20 +262,29 @@ namespace ProjectsControl.Areas.Admin.Controllers
         /// <returns>List of Roles</returns>
         private List<IdentityRole> GetRoles(string idUser = null)
         {
+            List<IdentityRole> result = new List<IdentityRole>();
             if (idUser == null)
             {
                 // Trae todos los roles
-                List<IdentityRole> roles = _ContextIdentity.Roles.ToList();
-                return roles;
+                result = _ContextIdentity.Roles.ToList();
+                return result;
             }
             else
             {
                 // Trae los roles de un usuaior
-                var tmpResult = _ContextIdentity.Roles.FromSqlInterpolated(@$"
+                var tmp  = _ContextIdentity.Roles.FromSqlInterpolated(@$"
                                     select id,Name,NormalizedName,ConcurrencyStamp from AspNetRoles
                                     inner join AspNetUserRoles on AspNetUserRoles.RoleId = AspNetRoles.Id
                                     where AspNetUserRoles.UserId = {idUser}").ToList();
-                return tmpResult;
+                if(tmp.Count > 0)
+                {
+                    return tmp;
+                }
+                else
+                {
+                    return result;
+                }
+
             }
         }
 

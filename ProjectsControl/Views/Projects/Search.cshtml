@@ -43,44 +43,47 @@
         </div>
     </div>
     <div class="row">
-            <div class="col-4">
-                <select style="background-color: #f5f5f5;" name="MonthToSearch" class=" rounded form-control">
-                    <option value="0">Seleccione un mes</option>
-                    <option value="1">Enero</option>
-                    <option value="2">Febrero</option>
-                    <option value="3">Marzo</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Mayo</option>
-                    <option value="6">Junio</option>
-                    <option value="7">Julio</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Septiembre</option>
-                    <option value="10">Octubre</option>
-                    <option value="11">Noviembre</option>
-                    <option value="12">Diciembre</option>
-                </select>
-            </div>
-            <div class="col col-4">
-                <select style="background-color: #f5f5f5;" name="SearchYear"  class=" rounded form-control">
-                    <option value="0">Seleccione un año...</option>
-                    @foreach (var item in ViewBag.YearOfProject)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
-            </div>
-            <div class="col col-4">
-                <select style="background-color: #f5f5f5;" name="StatusToSearch" class=" rounded form-control">
-                    <option value="">Seleccione...</option>
-                    @foreach (var item in ViewBag.Status)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
-            </div>
-            <div  class="col ">
-                <input type="submit" value="Buscar" class="btn btn-light " />
-            </div>
+        <div class="col-4">
+            <select style="background-color: #f5f5f5;" name="MonthToSearch" class=" rounded form-control">
+                <option value="0">Seleccione un mes</option>
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+        </div>
+        <div class="col col-4">
+            <select style="background-color: #f5f5f5;" name="SearchYear" class=" rounded form-control">
+                <option value="0">Seleccione un año...</option>
+                @foreach (var item in ViewBag.YearOfProject)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="col col-4">
+            <select style="background-color: #f5f5f5;" name="StatusToSearch" class=" rounded form-control">
+                <option value="">Seleccione...</option>
+                @foreach (var item in ViewBag.Status)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col ">
+            <input type="submit" value="Buscar" class="btn btn-outline-primary " />
+        </div>
     </div>
 
 </form>
@@ -109,49 +112,48 @@
     <tbody style="font-size: 12px;">
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfProject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfTask)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfOffer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OCDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeginDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfJob)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ubication)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Name)
-            </td>
-            <td>
-                
-            </td>
-            <td class="flex-row align-content-between">
-                <a asp-action="Edit" asp-route-id="@item.ProjectId" class="btn-sm  btn-outline-success">Editar</a>
-                <a asp-action="Details" asp-route-id="@item.ProjectId" class="btn-sm btn-outline-info">Detalles</a>
-                <a style="color:red;" asp-action="Delete" asp-route-id="@item.ProjectId" class="btn-sm  btn-outline-danger" >Eliminar</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfProject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfTask)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfOffer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OCDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfJob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ubication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                </td>
+                <td class="flex-row align-content-between">
+                    <a asp-action="Edit" asp-route-id="@item.ProjectId" class="btn-sm  btn-outline-success">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.ProjectId" class="btn-sm btn-outline-info">Detalles</a>
+                    <a style="color:red;" asp-action="Delete" asp-route-id="@item.ProjectId" class="btn-sm  btn-outline-danger">Eliminar</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

@@ -51,8 +51,34 @@ namespace ProjectsControl.Controllers
             ViewBag.Message = "";
             ViewBag.DateEnd = GetLastDateTime();
             ViewBag.Code = code;
-            ViewBag.BeginDate = (from eek in _context.Week select eek.EndOfWeek).Max().AddDays(1);
+            var tmpResult = (from eek in _context.Week select eek.EndOfWeek).ToList();
+            if (tmpResult.Count == 0)
+            {
+                ViewBag.BeginDate = DateTime.Today;
+            }
+            else
+            {
+                ViewBag.BeginDate =tmpResult.Max().AddDays(1);
+            }
+            
             return View();
+        }
+
+        public IActionResult GenerateWeek()
+        {
+            ViewData["lastWeek"] = (from week in _context.Week 
+                                    orderby week.WeekId descending
+                                    select week                                
+                                ).FirstOrDefault();
+            Week newWeek = new Week();
+            GetCodeOfWeek(out string code, out int eweek, out int year);
+            newWeek.WeekId = code;
+            newWeek.NumberOfWeek = code;
+            var tmp = GetLastDateTime().AddDays(1);
+            newWeek.BeginOfWeek = tmp;
+            newWeek.EndOfWeek = newWeek.BeginOfWeek.AddDays(6);
+            
+            return View(newWeek);
         }
 
         // POST: Weeks/Create
@@ -73,12 +99,14 @@ namespace ProjectsControl.Controllers
             }
             else
             {
-                ViewBag.Code = code;
-                ViewBag.BeginDate = (from eek in _context.Week select eek.EndOfWeek).Max().AddDays(1);
+                
+                
                 week.WeekId = code;
                 week.NumberOfWeek = code;
-                _context.Add(week);
+                _context.Add(week);             
                 await _context.SaveChangesAsync();
+                ViewBag.Code = code;
+                ViewBag.BeginDate = (from eek in _context.Week select eek.EndOfWeek).Max().AddDays(1);
                 return View("Details", week);
             }
 
@@ -189,7 +217,7 @@ namespace ProjectsControl.Controllers
         /// <param name="NWeek">Output number of Week</param>
         /// <param name="NYear">Output Year</param>
         [AllowAnonymous]
-        private void GetCodeOfWeek(out string Code, out int NWeek, out int NYear)
+        public  void  GetCodeOfWeek(out string Code, out int NWeek, out int NYear)
         {
             int numberOfWeekAux = 0;
             var ActualYear = DateTime.Today.Year.ToString();
@@ -197,29 +225,39 @@ namespace ProjectsControl.Controllers
                          where week.NumberOfWeek.Contains(ActualYear)
                          select week
                          ).ToList();
-            foreach (var item in query)
+            if (query.Count > 0)
             {
-                string[] codearray = item.NumberOfWeek.Split('-');
-                // Position codearray[1] -> number of week
-                int.TryParse(codearray[1], out int resultNumberWeek);
-                if (resultNumberWeek > numberOfWeekAux)
+                foreach (var item in query)
                 {
-                    numberOfWeekAux = resultNumberWeek;
+                    string[] codearray = item.NumberOfWeek.Split('-');
+                    // Position codearray[1] -> number of week
+                    int.TryParse(codearray[1], out int resultNumberWeek);
+                    if (resultNumberWeek > numberOfWeekAux)
+                    {
+                        numberOfWeekAux = resultNumberWeek;
+                    }
                 }
-            }
-            int.TryParse(ActualYear, out int yresult);
-            if (numberOfWeekAux >= 50)
-            {
-                numberOfWeekAux = 1;
-                NYear = yresult + 1;
+                int.TryParse(ActualYear, out int yresult);
+                if (numberOfWeekAux >= 50)
+                {
+                    numberOfWeekAux = 1;
+                    NYear = yresult + 1;
+                }
+                else
+                {
+                    numberOfWeekAux = numberOfWeekAux + 1;
+                    NYear = yresult;
+                }
+                Code = NYear.ToString() + "-" + numberOfWeekAux.ToString();
+                NWeek = numberOfWeekAux;
             }
             else
             {
-                numberOfWeekAux = numberOfWeekAux + 1;
-                NYear = yresult;
+                NYear = DateTime.Today.Year;
+                NWeek = numberOfWeekAux + 1;
+                Code = NYear.ToString() + "-" + NWeek.ToString();
             }
-            Code = NYear.ToString() + "-" + numberOfWeekAux.ToString();
-            NWeek = numberOfWeekAux;
+
         }
 
 
@@ -247,9 +285,17 @@ namespace ProjectsControl.Controllers
         public DateTime GetLastDateTime()
         {
             var resultQuery = (from week in _context.Weeks
-                               orderby week.EndOfWeek descending
-                               select week.EndOfWeek).FirstOrDefault();
-            return resultQuery;
+                               orderby week.WeekId descending
+                               select week).FirstOrDefault();
+            if(resultQuery != null)
+            {
+                return resultQuery.EndOfWeek;
+            }
+            else
+            {
+                return DateTime.Today;
+            }
+            
         }
     }
 }

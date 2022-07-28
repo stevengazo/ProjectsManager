@@ -13,10 +13,11 @@
     <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NotesId" class="control-label"></label>
-                <input asp-for="NotesId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
+            
+            <div class="d-none">
+                <input asp-for="NotesId" class="d-none" value="@Guid.NewGuid().ToString()" readonly />
             </div>
+
             <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
                 <input asp-for="ProjectId" class="form-control" value="@ViewBag.ProjectId" readonly />
@@ -33,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Autor</label>
-                <input asp-for="Author" class="form-control" />
+                <input asp-for="Author" class="form-control" value="@User.Identity.Name"  readonly/>
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             <div class="form-group">

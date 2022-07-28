@@ -8,6 +8,9 @@
 <h1>Detalles de la Asistencia</h1>
 
 <h4>Asistencia</h4>
+<p>
+    Información de la asistencia de @Model.Employee.Name el día @Model.DateOfBegin.ToLongDateString();
+</p>
 <hr />
 <div class="form-group row">    
     <div class="col">        
@@ -59,6 +62,11 @@
     </div>
     <div class="col">
         <h5>Horas Extras Asociadas</h5>
+        <p>
+            Aqui se muestran las horas extras agregadas en el <br />
+            sistema que se encuentren vinculadas a la asistencia <br />
+            de @Model.Employee.Name el día @Model.DateOfBegin.ToLongDateString()
+        </p>
         <table class="table">
             <thead>
                 <tr>
