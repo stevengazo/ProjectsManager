@@ -82,10 +82,9 @@
     <h2>Gastos Registrados en el Proyecto</h2>
     <p>A continuación se muestran los gastos registrados en el proyecto, clasificados por tipo.</p>
     <div>
-            <a asp-controller="Expensives" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nuevo Gasto</a>
-
+        <a class="btn btn-success" asp-controller="Expensives" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nuevo Gasto</a>
     </div>
-    
+
 
     <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 17px;text-align:center">
         <thead>
@@ -95,13 +94,14 @@
             </tr>
         </thead>
         <tbody>
-            @{  Dictionary<string, float> Exp = ViewBag.ExpensivesByType;
+            @{
+                Dictionary<string, float> Exp = ViewBag.ExpensivesByType;
                 foreach (var item in Exp)
                 {
-                    <tr>
-                        <td>@item.Key</td>
-                        <td>@item.Value</td>
-                    </tr>
+                                    <tr>
+                                        <td>@item.Key</td>
+                                        <td>@item.Value</td>
+                                    </tr>
                 }
             }
         </tbody>
@@ -112,7 +112,7 @@
     <h2>Facturas Registradas</h2>
     <p> A continuación se muestras las facturas realizadas por Grupo Mecsa a el cliente @Model.Customer.Name, para mayor detalle favor consulte con el departamento financiero o con el encargado de la realización de la facturas registradas.</p>
     <div>
-        <a asp-controller="Bills" asp-action="Create">Registrar Nueva Factura</a> |
+        <a class="btn btn-success" asp-controller="Bills" asp-action="Create">Registrar Nueva Factura</a> |
     </div>
     <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 17px;text-align:center">
@@ -150,9 +150,9 @@
                         @item.Amount
                     </td>
                     <td>
-                        <a asp-controller="Bills" asp-action="Edit" asp-route-id="@item.BillId">Edit</a> |
-                        <a asp-controller="Bills" asp-action="Details" asp-route-id="@item.BillId">Details</a> |
-                        <a class="text-danger" asp-controller="Bills" asp-action="Delete" asp-route-id="@item.BillId">Delete</a>
+                        <a class="btn btn-info" asp-controller="Bills" asp-action="Edit" asp-route-id="@item.BillId">Editar</a> |
+                        <a class="btn btn-primary" asp-controller="Bills" asp-action="Details" asp-route-id="@item.BillId">Detalles</a> |
+                        <a class="btn btn-danger" asp-controller="Bills" asp-action="Delete" asp-route-id="@item.BillId">Borrar</a>
                     </td>
                 </tr>
 
@@ -170,7 +170,7 @@
         <li> Cambios en la ejecución del proyecto.</li>
     </ul>
     <div>
-        <a asp-controller="Notes" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nueva Nota</a>
+        <a class="btn btn-success" asp-controller="Notes" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nueva Nota</a>
     </div>
     <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
@@ -202,8 +202,8 @@
                         @item.Title
                     </td>
                     <td>
-                        <a asp-controller="Notes" asp-action="Details" asp-route-id="@item.NotesId">Ver</a> |
-                        <a class="text-danger" asp-controller="Notes" asp-action="Delete" asp-route-id="@item.NotesId">Eliminar</a>
+                        <a class="btn btn-primary" asp-controller="Notes" asp-action="Details" asp-route-id="@item.NotesId">Ver</a> |
+                        <a class="btn btn-danger" asp-controller="Notes" asp-action="Delete" asp-route-id="@item.NotesId">Eliminar</a>
                     </td>
                 </tr>
             }
@@ -214,8 +214,8 @@
 <div>
     <h3>Informes Registrados</h3>
     <p>Informes existentes en la base de datos correspondientes al presente proyecto. A continuación se muestra la cantidad de informes registrados de este proyecto, así como el estato de cada uno. Para mayor información consulte al departamento de ingeniería o al encargado de la redacción del informe.</p>
-    <div>
-        <a asp-controller="Reports" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nuevo Informe</a> 
+    <div class="d-flex justify-content-lg-start">
+        <a class="btn btn-success" asp-controller="Reports" asp-action="CreateByProject" asp-route-id="@Model.ProjectId">Registrar Nuevo Informe</a>
     </div>
     <hr class="bg-light" />
     <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
@@ -265,9 +265,9 @@
                         @item.Notes
                     </td>
                     <td>
-                        <a asp-controller="Reports" asp-action="Edit" asp-route-id="@item.ReportId">Editar</a> |
-                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@item.ReportId">Detalles</a> |
-                        <a class="text-danger" asp-controller="Reports" asp-action="Delete" asp-route-id="@item.ReportId">Eliminar</a>
+                        <a class="btn btn-info btn-sm " asp-controller="Reports" asp-action="Edit" asp-route-id="@item.ReportId">Editar</a> |
+                        <a class="btn btn-primary btn-sm " asp-controller="Reports" asp-action="Details" asp-route-id="@item.ReportId">Detalles</a> |
+                        <a class="btn btn-danger btn-sm" asp-controller="Reports" asp-action="Delete" asp-route-id="@item.ReportId">Eliminar</a>
                     </td>
                 </tr>
             }
@@ -281,15 +281,16 @@
         <li>Cantidad Total de horas registradas por persona empleadas en el proyecto.</li>
         <li>Cantidad total de dias registrados por persona empleados en el proyecto.</li>
     </ul>
-    <div class="d-flex justify-content-around">
-        <a asp-controller="Asistances" asp-action="Create">Registrar Nueva asistencia</a>       
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-success" asp-controller="Asistances" asp-action="Create">Registrar Nueva asistencia</a>
         <!-- Default switch -->
         <div class="custom-control custom-switch">
-          <input type="checkbox" onclick="onclicked(this)" class="custom-control-input" id="customSwitches">
-          <label id="lblToogleAsistances" class="custom-control-label" for="customSwitches"></label>
-        </div>  
+            <input type="checkbox" onclick="onclickedAsistances(this)" class="custom-control-input" id="customSwitches">
+            <label id="lblToogleAsistances" class="custom-control-label" for="customSwitches"></label>
+        </div>
     </div>
     <hr />
+
     <table id="table-asistances-resume" class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
@@ -327,6 +328,7 @@
             }
         </tbody>
     </table>
+
 </div>
 
 
@@ -351,28 +353,27 @@
             </th>
         </tr>
     </thead>
-    <tbody>  
+    <tbody>
         @foreach (Asistance item in ViewBag.AsistancesDetails)
-       {
-           <tr>
-               <td>
-                   @item.DateOfBegin
-               </td>
-               <td>
-                   @item.DateOfEnd
-               </td>
-               <td>
-                   @item.Employee.Name
-               </td>
-               <td>
-                   @item.Week.NumberOfWeek
-               </td>
-               <td>
-                   <a asp-controller="Asistances" asp-action="Details" asp-route-id="@item.AsistanceId">Ver</a>
-               </td>
-           </tr>
-
-       }
+        {
+            <tr>
+                <td>
+                    @item.DateOfBegin
+                </td>
+                <td>
+                    @item.DateOfEnd
+                </td>
+                <td>
+                    @item.Employee.Name
+                </td>
+                <td>
+                    @item.Week.NumberOfWeek
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-controller="Asistances" asp-action="Details" asp-route-id="@item.AsistanceId">Ver</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -381,7 +382,16 @@
     <h3>Horas Extras Registradas</h3>
     <p>Cantidad de horas extras registradas por persona en el proyecto actual</p>
     <hr class="bg-light" />
-    <table class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+    <!-- Default switch -->
+    <div class="d-flex justify-content-end">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" onclick="onclickedExtras(this)" class="custom-control-input" id="extraHourSwitches">
+            <label id="lblToogleExtras" class="custom-control-label" for="extraHourSwitches"></label>
+        </div>
+    </div>
+
+    <!-- TABLA RESUMEN-->
+    <table id="table-extras-resumen" class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
         <thead>
             <tr>
                 <th>Persona</th>
@@ -391,13 +401,54 @@
         <tbody style="font-size: 12px;">
             @foreach (var item in ViewBag.Extras)
             {
+                if (item.Value != 0)
+                {
+                    <tr>
+                        <td>
+                            @item.Key
+                        </td>
+                        <td>
+                            @(item.Value)
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+    <!--TABLA DETALLES-->
+    <table id="table-extras-details" class="table table-hover table-striped table-responsive-sm table-bordered  " style="font-size: 16px;text-align:center">
+        <thead>
+            <tr>
+                <th>Persona</th>
+                <th>Hora Inicio</th>
+                <th>Hora Final</th>
+                <th>Cantidad Tiempo</th>
+                <th>Tipo Hora</th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 12px;">
+            @foreach (ExtraHour item in ViewBag.ExtrasDetails)
+            {
                 <tr>
                     <td>
-                        @item.Key
+                        @item.Employee.Name
                     </td>
                     <td>
-                        @(item.Value)
-                    </td>                    
+                        @item.BeginTime
+                    </td>
+                    <td>
+                        @item.EndTime
+                    </td>
+                    <td>
+                        @(item.EndTime-item.BeginTime) Time
+                    </td>
+                    <td>
+                        @item.TypeOfHour
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-info" asp-controller="ExtraHours" asp-action="Details" asp-route-id="@item.ExtraHourId">Ver</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -408,29 +459,57 @@
 
 
 
-<script>  
+<script>
 
 
     // iNTERCHANGE OF TABLES WITH THE TOOGLE
     let toogleAsistances = document.getElementById("customSwitches");
     let tableresumen = document.getElementById("table-asistances-resume");
     let tableDetails = document.getElementById("table-asistances-details");
-    tableDetails.style.display="none";
+
+    tableDetails.style.display = "none";
     console.log(tableresumen);
     console.log(tableDetails);
     console.log(toogleAsistances);
- 
+
     let lbltoogle = document.getElementById("lblToogleAsistances");
-    lbltoogle.innerText="Vista Resumen";
-    const onclicked= (element)=>{
-        if(element.checked !== true){
-            lbltoogle.innerText= "Vista Detallada";
-            tableresumen.style.display="none";
-            tableDetails.style.display="";                       
-        }else{
-          lbltoogle.innerText= "Vista Resumen";
-            tableresumen.style.display="";
-            tableDetails.style.display="none";
+    lbltoogle.innerText = "Vista Detallada";
+    const onclickedAsistances = (element) => {
+        if (element.checked !== true) {
+            lbltoogle.innerText = "Vista Resumen";
+            tableresumen.style.display = "";
+            tableDetails.style.display = "none";
+
+        } else {
+
+            lbltoogle.innerText = "Vista Detallada";
+            tableresumen.style.display = "none";
+            tableDetails.style.display = "";
+
+        }
+
+    };
+
+
+
+    let tableExtrasResumen = document.getElementById("table-extras-resumen");
+    let tableExtrasDetails = document.getElementById("table-extras-details");
+    tableExtrasDetails.style.display = "none";
+    let lbltoogleExtras = document.getElementById("lblToogleExtras");
+    lbltoogleExtras.innerText = "Vista Detallada";
+
+    const onclickedExtras = (element) => {
+        if (element.checked !== true) {
+            lbltoogleExtras.innerText = "Vista Resumen";
+            tableExtrasResumen.style.display = "";
+            tableExtrasDetails.style.display = "none";
+
+        } else {
+
+            lbltoogleExtras.innerText = "Vista Detallada";
+            tableExtrasResumen.style.display = "none";
+            tableExtrasDetails.style.display = "";
+
         }
 
     };

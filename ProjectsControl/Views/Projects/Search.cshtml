@@ -148,10 +148,10 @@
                 </td>
                 <td>
                 </td>
-                <td class="flex-row align-content-between">
-                    <a asp-action="Edit" asp-route-id="@item.ProjectId" class="btn-sm  btn-outline-success">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.ProjectId" class="btn-sm btn-outline-info">Detalles</a>
-                    <a style="color:red;" asp-action="Delete" asp-route-id="@item.ProjectId" class="btn-sm  btn-outline-danger">Eliminar</a>
+                <td class=" d-flex flex-row align-content-around">
+                    <a asp-action="Edit" asp-route-id="@item.ProjectId" class="btn btn-sm  btn-success">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.ProjectId" class="btn btn-sm btn-info">Detalles</a>
+                    <a  asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-sm  btn-danger">Eliminar</a>
                 </td>
             </tr>
         }

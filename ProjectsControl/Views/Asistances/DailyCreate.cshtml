@@ -141,12 +141,12 @@
                             </td>
                             <td>
                                 <!--DateOfBegin-->
-                                <input asp-for="@Model[i].DateOfBegin" class="form-control-sm" />
+                                <input asp-for="@Model[i].DateOfBegin" min="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-ddThh:mm")" max="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-ddThh:mm")" class="form-control-sm" />
 
                             </td>
                             <td>
                                 <!--DateOfEnd-->
-                                <input asp-for="@Model[i].DateOfEnd" class="form-control-sm" />
+                                <input  asp-for="@Model[i].DateOfEnd" min="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-ddThh:mm")" max="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-ddThh:mm")" class="form-control-sm" />
                             </td>
                             <td>
                                 <!--Number Of Week-->
@@ -161,6 +161,10 @@
                             <td>
                                 <!--Delete Row-->
                                 <div id="Delete-@i" class=" btn btn-outline-danger" onclick="deleteRow(this)">Borrar</div>
+                            </td>
+                            <td>
+                                <!--PRUEBA Row-->
+                                <input type="week" class="form-control"  />
                             </td>
                         </tr>
                     }

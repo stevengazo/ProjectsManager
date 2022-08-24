@@ -164,6 +164,7 @@ namespace ProjectsControl.Controllers
                 WeekId = tmpResult.WeekId,
                 BeginTime = tmpResult.DateOfBegin,
                 EndTime = tmpResult.DateOfEnd,
+                Asistance = tmpResult,
                 IsPaid = false
             };
             return View(extraObj);

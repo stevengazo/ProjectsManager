@@ -89,6 +89,7 @@ namespace ProjectsControl.Controllers
             ViewBag.DaysOfEmployees = GetDaysByEmployee(id);
             // Contar Cantidad Extras
             ViewBag.Extras = GetExtrasByEmployee(id);
+            ViewBag.ExtrasDetails = getListOfExtras(id);
             // Contar la cantidad de gastos registrados por categoria
             ViewBag.ExpensivesByType = GetExpensivesByProject(id);
             return View(project);
@@ -448,11 +449,10 @@ namespace ProjectsControl.Controllers
             var aux = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
             Dictionary<string, float> Extras = new();
-            var extrasAux = _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
-                                                                        from ExtraHours 
-                                                                        left join (	SELECT * FROM Asistances
-                                                                        WHERE Asistances.ProjectId = '{IdOfProject}') AS tmp
-                                                                        on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToList();
+            var extrasAux = _context.ExtraHours.FromSqlInterpolated($@"SELECT EH.*
+                                                                            FROM ExtraHours AS EH
+                                                                            INNER JOIN Asistances AS A ON EH.AsistanceId = A.AsistanceId
+                                                                            WHERE A.ProjectId = {IdOfProject.ToString()}").Include(E => E.Employee).ToList();
             foreach (var item in employees)
             {
                 var sumExtra = 0.0f;
@@ -467,6 +467,25 @@ namespace ProjectsControl.Controllers
                 Extras.Add(item, sumExtra);
             }
             return Extras;
+        }
+
+
+        public List<ExtraHour> getListOfExtras(string idProject)
+        {
+            try
+            {
+                var extrasAux = _context.ExtraHours.FromSqlInterpolated($@"SELECT EH.*
+                                                                            FROM ExtraHours AS EH
+                                                                            INNER JOIN Asistances AS A ON EH.AsistanceId = A.AsistanceId
+                                                                            WHERE A.ProjectId = {idProject.ToString()}").Include(E => E.Employee).ToList();
+                return extrasAux;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         #endregion
 
