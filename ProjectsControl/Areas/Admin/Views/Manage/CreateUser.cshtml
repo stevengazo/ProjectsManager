@@ -1,17 +1,17 @@
-﻿@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Identity;
 @model IdentityUser;
 
 @{
-    ViewData["Title"] = "Editar Usuario ";
+    ViewData["Title"] = "Crear Usuario ";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
 
 <h2>
-    Editar Usuario
+    Crear Usuario
 </h2>
 <p>
-    Seleccione la información que desee editar del usuario
+    Ingrese la información solicitada
 </p>
 
 
@@ -58,7 +58,7 @@
         </tbody>
     </table>
     <div class="d-flex flex-row">
-        <input class="btn btn-sm btn-outline-success" type="submit"  value="Actualizar" />
+        <input class="btn btn-sm btn-outline-success" type="submit"  value="Agregar" />
         <button class="btn btn-sm btn-outline-info">
             <a asp-controller="Manage" asp-action="ListOfUsers">
                 Regresar

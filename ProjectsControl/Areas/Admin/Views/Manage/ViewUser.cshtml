@@ -10,121 +10,146 @@
 }
 
 
+<div class="container">
+    <div class="row ">
 
-<h2>
-    Ver Usuario
-</h2>
-<p>
-    Ver información del usuario
-</p>
-<table class="table table-primary">
-    <thead>
-    </thead>
-    <tbody>
-        <tr style="display:none;">
-            <th>
-                ID
-            </th>
-            <td id="idUser">
-                @Model.Id
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Nombre de usuario
-            </th>
-            <td>
-                @Model.UserName
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Correo
-            </th>
-            <td>
-                @Model.Email
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Número de Telefono
-            </th>
-            <td>
-                @Model.PhoneNumber
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Cantidad de inicios de Sesión Fallidos
-            </th>
-            <td>
-                @Model.AccessFailedCount
-            </td>
-        </tr>
-    </tbody>
-</table>
-<hr />
-<h5>
-    Roles Asignados
-</h5>
-<div>
-    <div>
-        <p>
-            Agregar nuevos roles
-        </p>
-        <div class="form-group">
-            <form asp-area="admin" asp-controller="Manage" asp-action="SetRoleUser">
-                <input type="hidden" name="id" value="@Model.Id" />
-                <select id="RolToSet" onclick="SetRolId(this)" name="rolid" class="form-control-sm">
-                    @for (var i = 0; i < tmpRoles.Count; i++)
-                    {
-                        <option value="@tmpRoles[i].Id">@tmpRoles[i].Name</option>
-                    }
-                </select>
-                <input type="submit" class="btn btn-outline-success" value="Añadir" />
-            </form>
+        <div class="col-md-6">
+            <h2>
+                Ver Usuario
+            </h2>
+            <p>
+                Ver información del usuario
+            </p>
+            <table class="table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr style="display:none;">
+                        <th>
+                            ID
+                        </th>
+                        <td id="idUser">
+                            @Model.Id
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Estado del Usuario
+                        </th>
+                        <td>
+                            @if (Model.EmailConfirmed)
+                            {
+                                <i class="text-success">Usuario Activo</i>
+                            }
+                            else
+                            {
+                                <i class="text-danger">Usuario inactivo</i>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Nombre de usuario
+                        </th>
+                        <td>
+                            @Model.UserName
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Correo
+                        </th>
+                        <td>
+                            @Model.Email
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Número de Telefono
+                        </th>
+                        <td>
+                            @Model.PhoneNumber
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Cantidad de inicios de Sesión Fallidos
+                        </th>
+                        <td>
+                            @Model.AccessFailedCount
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+
+            <h5>
+                Roles Asignados
+            </h5>
+            <div>
+                <div>
+
+                    <p>
+                        Lista de roles asignados a los usuarios
+                    </p>
+                    <div class="form-group d-flex flex-row">
+                        <form asp-area="admin" asp-controller="Manage" asp-action="SetRoleUser">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <select id="RolToSet" onclick="SetRolId(this)" name="rolid" class="form-control-sm">
+                                @for (var i = 0; i < tmpRoles.Count; i++)
+                                {
+                                    <option value="@tmpRoles[i].Id">@tmpRoles[i].Name</option>
+                                }
+                            </select>
+                            <input type="submit" class="btn btn-outline-success" value="Añadir" />
+                        </form>
+                    </div>
+                </div>
+                <div>
+
+                    <table class="table ">
+                        <tbody>
+                            @if (ViewBag.UserRoles != null)
+                            {
+                                foreach (IdentityRole dictRow in ViewBag.UserRoles)
+                                {
+                                    <tr>
+                                        <!--Rol-->
+                                <td>
+                                            Role
+                                        </td>
+                                        <!--Rol Id-->
+                                <td>
+                                            @dictRow.Id
+                                        </td>
+                                        <!--Rol Name-->
+                                <td>
+                                            @dictRow.Name
+                                        </td>
+                                        <!--Actions-->
+                                <td>
+                                            <form asp-controller="Manage" method="POST" asp-action="RemoveRol">
+                                                <input type="hidden" name="Id" value="@Model.Id" />
+                                                <input type="hidden" name="Rolid" value="@dictRow.Id" />
+                                                <input type="submit" value="Eliminar" class="btn btn-outline-danger" />
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+            </div>
+
 
         </div>
+
     </div>
-    <div>
-        <p>
-            Lista de roles asignados a los usuarios
-        </p>
-        <table class="table table-light">
-            <tbody>
-                @if (ViewBag.UserRoles != null)
-                {
-                    foreach (IdentityRole dictRow in ViewBag.UserRoles)
-                    {
-                        <tr>
-                            <!--Rol-->
-                            <td>
-                                Role
-                            </td>
-                            <!--Rol Id-->
-                            <td>
-                                @dictRow.Id
-                            </td>
-                            <!--Rol Name-->
-                            <td>
-                                @dictRow.Name
-                            </td>
-                            <!--Actions-->
-                            <td>
-                                <form asp-controller="Manage" asp-action="RemoveRol">
-                                    <input type="hidden" name="Id" value="@Model.Id" />
-                                    <input type="hidden" name="Rolid" value="@dictRow.Id" />
-                                    <input type="submit" value="Eliminar" class="btn btn-outline-danger" />
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
-<div>
 </div>
 
 

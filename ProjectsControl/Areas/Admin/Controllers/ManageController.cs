@@ -11,7 +11,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
 {
 
     [Area("admin")]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class ManageController : Controller
     {
         private readonly ApplicationDbContext _ContextIdentity;
@@ -27,6 +27,8 @@ namespace ProjectsControl.Areas.Admin.Controllers
             _signInManager = signInManager;
         }
 
+
+
         /// <summary>
         /// View of Index
         /// </summary>
@@ -36,21 +38,36 @@ namespace ProjectsControl.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult RemoveRol(string id= null, string rolid = null)
+        /// <summary>
+        /// View of Create new user
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult CreateUser(){
+            IdentityUser user = new IdentityUser(){
+                Id= Guid.NewGuid().ToString()
+            };
+           return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveRol(string id = null, string rolid = null)
         {
 
             var resultQuery = _ContextIdentity.UserRoles.FromSqlInterpolated($@"SELECT * from AspNetUserRoles
                                                                             where UserId = {id} and RoleId = {rolid}").FirstOrDefault();
-            _ContextIdentity.UserRoles.Remove(resultQuery);
-            _ContextIdentity.SaveChanges();
 
+            if (resultQuery != null)
+            {
+                _ContextIdentity.UserRoles.Remove(resultQuery);
+                _ContextIdentity.SaveChanges();
+            }
             var _user = (from user in _ContextIdentity.Users
-                        where user.Id.Contains(id)
-                        select user
+                         where user.Id.Contains(id)
+                         select user
                        ).FirstOrDefault();
-            ViewBag.UserRoles = GetRoles(idUser: id);
             ViewBag.Roles = GetRoles();
-            return View("ViewUser", User);
+            return RedirectToAction("ViewUser", new { id = _user.Id });
         }
 
         /// <summary>
@@ -58,43 +75,59 @@ namespace ProjectsControl.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">id of the user to change the password</param>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult ChangePassword(string id = null)
         {
+            ViewBag.ErrorMessage = $"  ";
             var user = GetUserById(id);
             user.PasswordHash = String.Empty;
             return View("ChangePassword", user);
         }
 
-        /// <summary>
+        /// <summary>        
         /// Set the new password of the user 
         /// </summary>
         /// <param name="id">User to change the password</param>
         /// <param name="Password"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IActionResult PostChangePassword(string id = null, string Password1 = null, string Password2 = null)
-        {            
-            if(id == null || Password2 == null || Password1 == null)
+        [HttpPost]
+        public IActionResult ChangePassword(string id = null, string Password1 = null, string Password2 = null)
+        {
+            if (id == null || Password2 == null || Password1 == null)
             {
                 var listUsers = _ContextIdentity.Users.ToList();
-                return View("ListOfUsers",listUsers);
+                return View("ListOfUsers", listUsers);
             }
             else
             {
                 var user = GetUserById(id);
                 var TmpResult = _userManager.RemovePasswordAsync(user).Result;
-                if(TmpResult.Succeeded)
+                if (TmpResult.Succeeded)
                 {
                     if (Password1.Equals(Password2))
                     {
                         var FlagTMP = _userManager.AddPasswordAsync(user, Password1).Result;
-                        if(FlagTMP.Succeeded)
+                        if (FlagTMP.Succeeded)
                         {
                             ViewBag.UserRoles = GetRoles(idUser: id);
                             ViewBag.Roles = GetRoles();
                             return View("ViewUser", user);
                         }
-                    }                    
+                        else
+                        {
+                            string ErrorMessage = "";
+                            foreach (var item in FlagTMP.Errors)
+                            {
+                                ErrorMessage = ErrorMessage + item.Description;
+                            }
+                            ViewBag.ErrorMessage = ErrorMessage;
+                            var _user = GetUserById(id);
+                            _user.PasswordHash = String.Empty;
+                            return View("ChangePassword", _user);
+
+                        }
+                    }
                 }
                 var listUsers = _ContextIdentity.Users.ToList();
                 return View("ListOfUsers", listUsers);
@@ -113,7 +146,6 @@ namespace ProjectsControl.Areas.Admin.Controllers
             return View(query.ToList());
         }
 
-
         /// <summary>
         /// View the information of a specific user
         /// </summary>
@@ -122,7 +154,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ViewUser(string id)
         {
-            IdentityUser user = GetUserById(id,false);
+            IdentityUser user = GetUserById(id, false);
             if (user != null)
             {
                 ViewBag.UserRoles = new List<IdentityRole>();
@@ -133,8 +165,8 @@ namespace ProjectsControl.Areas.Admin.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = "No se logró encontrar al usuario"
-; return View(new IdentityUser());
+                ViewBag.ErrorMessage = "No se logró encontrar al usuario"; 
+                return View(new IdentityUser());
             }
 
         }
@@ -158,7 +190,6 @@ namespace ProjectsControl.Areas.Admin.Controllers
             listUsers = _ContextIdentity.Users.ToList();
             return View("ListOfUsers", listUsers);
         }
-
 
         /// <summary>
         /// Received a specific user id and role id and set the rol to the user in the DB
@@ -190,28 +221,27 @@ namespace ProjectsControl.Areas.Admin.Controllers
             return View("ViewUser", _user);
         }
 
-
         public IActionResult EditUser(string id = null)
         {
             var _user = GetUserById(id);
             return View(_user);
         }
-        public IActionResult PostEditUser([Bind("Id,UserName,Email,PhoneNumber")] IdentityUser user)
+        public IActionResult PostEditUser([Bind("Id,UserName,Email,PhoneNumber,EmailConfirmed")] IdentityUser user)
         {
-            var _tmpUser = GetUserById(user.Id,false);
+            var _tmpUser = GetUserById(user.Id, false);
             _tmpUser.PhoneNumber = user.PhoneNumber.ToString();
             _tmpUser.UserName = user.UserName.ToString();
             _tmpUser.Email = user.Email.ToString();
             _tmpUser.NormalizedUserName = user.UserName.ToUpper();
             _tmpUser.NormalizedEmail = user.Email.ToUpper();
-
+            _tmpUser.EmailConfirmed = user.EmailConfirmed;
             try
             {
                 _ContextIdentity.Users.Update(_tmpUser);
                 _ContextIdentity.SaveChanges();
                 ViewBag.UserRoles = GetRoles(idUser: _tmpUser.Id);
                 ViewBag.Roles = GetRoles();
-                return View("ViewUser",user);
+                return View("ViewUser", user);
             }
             catch (Exception f)
             {
@@ -232,15 +262,14 @@ namespace ProjectsControl.Areas.Admin.Controllers
             return View(_user);
         }
 
-        #region  Methods
-
+        #region  Methods Internal
 
         /// <summary>
         /// Search and return the information of a specific user in the DB
         /// </summary>
         /// <param name="id">Id of the user to search</param>
         /// <returns>Object with the User Information</returns>
-        private IdentityUser GetUserById(string idUSER,bool isEditable = false)
+        private IdentityUser GetUserById(string idUSER, bool isEditable = false)
         {
             var tmpResult = (
                             from user in _ContextIdentity.Users
@@ -250,7 +279,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
             if (tmpResult != null || !isEditable)
             {
                 // Dont return the hash of the User Password
-              // tmpResult.PasswordHash = string.Empty;
+                // tmpResult.PasswordHash = string.Empty;
             }
             return tmpResult;
         }
@@ -272,11 +301,11 @@ namespace ProjectsControl.Areas.Admin.Controllers
             else
             {
                 // Trae los roles de un usuaior
-                var tmp  = _ContextIdentity.Roles.FromSqlInterpolated(@$"
+                var tmp = _ContextIdentity.Roles.FromSqlInterpolated(@$"
                                     select id,Name,NormalizedName,ConcurrencyStamp from AspNetRoles
                                     inner join AspNetUserRoles on AspNetUserRoles.RoleId = AspNetRoles.Id
                                     where AspNetUserRoles.UserId = {idUser}").ToList();
-                if(tmp.Count > 0)
+                if (tmp.Count > 0)
                 {
                     return tmp;
                 }

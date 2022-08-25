@@ -138,7 +138,7 @@ namespace ProjectsControl.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin,lector")
+        [Authorize(Roles = "Admin,lector")]
         [HttpGet]
         public async Task<IActionResult> addExtra(string id)
         {

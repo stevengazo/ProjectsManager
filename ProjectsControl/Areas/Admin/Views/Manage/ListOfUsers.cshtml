@@ -17,20 +17,36 @@
     <thead>
         <tr>
             <th>
+                Estado
+            </th>
+            <th>
+                Nombre
+            </th>                        
+            <th>
                 Correo Electronico
             </th>
             <th>
                 Numero de Telefono
             </th>
-            <ht>
+            <td colspan="4" class="text-center">
                 Acciones
-            </ht>
+            </td >
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @if(item.EmailConfirmed == true){
+                        <i class="text-success">Activo</i>
+                    }else{
+                        <i class="text-danger">Inactivo</i>
+                    }
+                </td>                
+                <td>
+                    @item.UserName
+                </td>
                 <td>
                     @item.Email
                 </td>
