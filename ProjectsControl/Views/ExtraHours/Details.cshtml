@@ -11,7 +11,10 @@
     <h4>Tiempo Extra - @Model.Employee.Name</h4>
     <hr />   
   
-
+@{
+    var timeaux = (Model.EndTime - Model.BeginTime).TotalMinutes;
+    var hours = (Model.EndTime - Model.BeginTime).TotalHours;
+}
 
 <div>
     <dl class="row">
@@ -19,6 +22,7 @@
             Inicio
         </dt>
         <dd class = "col-sm-10">
+ @Html.DisplayFor(model => model.BeginTime)
             
         </dd>
         <dt class = "col-sm-2">
@@ -26,6 +30,13 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EndTime)
+        </dd>
+        <dt class = "col-sm-2">
+            Duracion
+        </dt>
+        <dd class = "col-sm-10">
+             Tiempo en minutos @timeaux.ToString() Minutos <br/>
+            Tiempo en  @hours.ToString() Horas
         </dd>
         <dt class = "col-sm-2">
             Tipo de tiempo extra

@@ -35,12 +35,12 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Fecha y tiempo Inicio</label>
-                <input asp-for="BeginTime" class="form-control" />
-                <span asp-validation-for="BeginTime" class="text-danger"></span>
+                <input asp-for="BeginTime" min="@Model.Asistance.DateOfEnd.AddHours(-24).ToString("yyyy-MM-ddThh:mm")" max="@Model.Asistance.DateOfEnd.AddHours(24).ToString("yyyy-MM-ddThh:mm")"   class="form-control" />
+                <span asp-validation-for="BeginTime"  class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Fecha y tiempo Finalización</label>
-                <input asp-for="EndTime" class="form-control" />
+                <input asp-for="EndTime" min="@Model.Asistance.DateOfEnd.AddHours(-24).ToString("yyyy-MM-ddThh:mm")" max="@Model.Asistance.DateOfEnd.AddHours(24).ToString("yyyy-MM-ddThh:mm")"   class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -65,19 +65,24 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPaid" /> @Html.DisplayNameFor(model => model.IsPaid)
+                    <input class="form-check-input" asp-for="IsPaid" /> ¿Esta Pagada?
                 </label>
             </div>
 
             <div class="form-group">
                 <label class="control-label">Empleado</label>
                 <label  class="form-control">@Model.Employee.Name</label>
-                <input asp-for="EmployeeId"  style="display:none"  class="form-control"  readonly/>
+                <input asp-for="EmployeeId"   style="display:none"  class="form-control"  readonly/>
             </div>
             <div class="form-group">
+                <p>
+                    El plazo en el cual se encuentra registrada la asistencia es desde las @Model.Asistance.DateOfBegin.ToLongDateString(), @Model.Asistance.DateOfBegin.ToLongTimeString(), hasta el @Model.Asistance.DateOfEnd.ToLongDateString(), @Model.Asistance.DateOfEnd.ToLongTimeString()
+                    <br />
+                    No se puede registrar una hora extra con fechas diferentes a la asistencia.
+                </p>
                 <label class="control-label">Fecha de asistencia</label>
                 <label class="form-control">@Model.BeginTime.ToLongDateString()</label>
-                <input asp-for="AsistanceId" style="display:none" class="form-control" readonly/>
+                <input asp-for="AsistanceId"    style="display:none" class="form-control" readonly/>
             </div>
             <div class="form-group">
                 <label class="control-label">Numero de Semana</label>

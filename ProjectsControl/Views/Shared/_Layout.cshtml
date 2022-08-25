@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="background-color: #c5c5c5; ">
+<body >
     <header >
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow" style="background: #070429;">
             <div class="container">
@@ -44,10 +44,11 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="Create">Registrar Asistencia</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Asistances" asp-action="DailyCreate">Asistencia Diaría</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Create">Registrar Extras</a>
+                                <!--<a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Create">Registrar Extras</a>--> 
                                 <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Pendientes de Pago</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="ExtraHours" asp-action="Index">Historial</a>
                                 <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="GenerateWeek">Autogenerar Semana</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Lista Semanas</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Create">Crear Semana</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Weeks" asp-action="Index">Consultar Semanas</a>
@@ -68,6 +69,16 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Create">Crear Cliente</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-area="" asp-controller="Offers" asp-action="Create">Crear Oferta</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Estadisticas
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Index">Proyectos</a>
+                                <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Index">Asistencias</a>
+                                <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Ventas">Ventas</a>
                             </div>
                         </li>
                     </ul>

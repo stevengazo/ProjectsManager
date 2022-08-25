@@ -13,20 +13,20 @@
 <a>Agregar Nuevo usuario</a>
 <hr />
 
-<table class="table table-hover table-bordered" >
-<thead>
-    <tr>
-        <th>
-            Correo Electronico
-        </th>
-        <th>
-            Id de Usuario
-        </th>
-        <th>
-            Numero de Telefono
-        </th>
-    </tr>
-</thead>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Correo Electronico
+            </th>
+            <th>
+                Numero de Telefono
+            </th>
+            <ht>
+                Acciones
+            </ht>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var item in Model)
         {
@@ -35,14 +35,26 @@
                     @item.Email
                 </td>
                 <td>
-                    @item.Id
-                </td>
-                <td>
                     @item.PhoneNumber
                 </td>
                 <td>
-                    <a class="btn btn-outline-primary" asp-action="ViewUser" asp-route-id="@item.Id">
-                        Ver usuario
+                    <a class="btn btn-primary btn-sm" asp-action="ViewUser" asp-route-id="@item.Id">
+                        Ver
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-controller="Manage" asp-action="EditUser" asp-route-id="@item.Id">
+                        Editar
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-controller="Manage" asp-action="ChangePassword" asp-route-id="@item.Id">
+                        Contraseña
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-danger btn-sm" asp-action="DeleteUser" asp-route-id="@item.Id">
+                        Eliminar
                     </a>
                 </td>
             </tr>

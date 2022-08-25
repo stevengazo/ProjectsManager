@@ -77,13 +77,13 @@
                         @item.TypeOfAction
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ActionId" class="btn btn-primary">Editar</a> 
+                        <a asp-controller="Actions" asp-action="Edit" asp-route-id="@item.ActionId" class="btn btn-primary">Editar</a> 
                     </td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.ActionId" class="btn btn-info">Detalles</a> 
+                        <a asp-controller="Actions" asp-action="Details" asp-route-id="@item.ActionId" class="btn btn-info">Detalles</a> 
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-route-id="@item.ActionId" class="btn btn-danger">Eliminar</a>
+                        <a asp-controller="Actions" asp-action="Delete" asp-route-id="@item.ActionId" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             }

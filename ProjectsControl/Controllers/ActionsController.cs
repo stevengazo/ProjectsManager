@@ -49,6 +49,24 @@ namespace ProjectsControl.Controllers
             return View(action);
         }
 
+        public async Task<IActionResult> PrintableView(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var action = await _context.Actions
+                .Include(a => a.Employee)
+                .FirstOrDefaultAsync(m => m.ActionId == id);
+            if (action == null)
+            {
+                return NotFound();
+            }
+
+            return View(action);
+        }
+
         // GET: Actions/Create
         [Authorize(Roles = "admin,editor")]
         public IActionResult Create()

@@ -9,18 +9,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-
-<style>
-    aside{
-        color:red;
-    }
-
-</style>
-
-
-<body  class="mh-100" style="background-color: #c5c5c5; ">
+<body style="background-color: #c5c5c5; ">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow" style="background: #070429;">
+        <!-- Nav Bar  -->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow" style="background: #070429;">
             <div class="container">
 
                 <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -86,14 +78,14 @@
         </nav>
     </header>
     <div class="container  ">
-        <div class="col-3">
-            <aside class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
+        <main role="main" class="pb-3 d-xl-flex">
+            <aside class="col-3 align-content-lg-between"> 
+                <ul class="list">
+                    <li class="list-group-item disabled">
                         Opciones
                     </li>
-                    <li class="nav-item">
-                        <a asp-area="admin" asp-controller="Manage" asp-action="ListOfUsers">
+                    <li class="list-group-item ">
+                        <a  asp-area="admin" asp-controller="Manage" asp-action="ListOfUsers">
                             Lista de Usuarios
                         </a>
                     </li>
@@ -109,17 +101,11 @@
                     </li>
                 </ul>
             </aside>
-        </div>
-        <div class="col">
-            <main role="main" class="">
-                <section class="col">
-                    @RenderBody()
-                </section>
-
-            </main>
-        </div>
-
-
+            <section class="col">
+                @RenderBody()                 
+            </section>
+            
+        </main>
     </div>
 
     <footer class="border-top footer text-muted">

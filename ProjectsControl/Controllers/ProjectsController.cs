@@ -89,6 +89,7 @@ namespace ProjectsControl.Controllers
             ViewBag.DaysOfEmployees = GetDaysByEmployee(id);
             // Contar Cantidad Extras
             ViewBag.Extras = GetExtrasByEmployee(id);
+            ViewBag.ExtrasDetails = getListOfExtras(id);
             // Contar la cantidad de gastos registrados por categoria
             ViewBag.ExpensivesByType = GetExpensivesByProject(id);
             return View(project);
@@ -108,7 +109,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "editor,Admin,Sales")]
+        [Authorize(Roles = "editor,admin,sales")]
         public IActionResult Create()
         {
             var aux = (from proj in _context.Projects select proj.NumberOfProject).Max() + 1;
@@ -122,7 +123,7 @@ namespace ProjectsControl.Controllers
         // POST: Projects/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,Admin,sales")]
+        [Authorize(Roles = "editor,admin,sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProjectId,NumberOfProject,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,Manager,Amount,Currency,Estatus,currency,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
@@ -177,7 +178,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Projects/Edit/5
-        [Authorize(Roles = "editor,Admin,Sales")]
+        [Authorize(Roles = "editor,admin,sales")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -199,7 +200,7 @@ namespace ProjectsControl.Controllers
         // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,Admin,Sales")]
+        [Authorize(Roles = "editor,admin,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
@@ -448,11 +449,10 @@ namespace ProjectsControl.Controllers
             var aux = (from asis in _context.Asistances select asis).Where(A => A.ProjectId == IdOfProject).Include(E => E.Employee).ToList();
             var employees = (from asis in aux select asis.Employee.Name).Distinct().ToList();
             Dictionary<string, float> Extras = new();
-            var extrasAux = _context.ExtraHours.FromSqlInterpolated($@" SELECT ExtraHours.*
-                                                                        from ExtraHours 
-                                                                        left join (	SELECT * FROM Asistances
-                                                                        WHERE Asistances.ProjectId = '{IdOfProject}') AS tmp
-                                                                        on ExtraHours.AsistanceId = tmp.AsistanceId").Include(E => E.Employee).ToList();
+            var extrasAux = _context.ExtraHours.FromSqlInterpolated($@"SELECT EH.*
+                                                                            FROM ExtraHours AS EH
+                                                                            INNER JOIN Asistances AS A ON EH.AsistanceId = A.AsistanceId
+                                                                            WHERE A.ProjectId = {IdOfProject.ToString()}").Include(E => E.Employee).ToList();
             foreach (var item in employees)
             {
                 var sumExtra = 0.0f;
@@ -467,6 +467,25 @@ namespace ProjectsControl.Controllers
                 Extras.Add(item, sumExtra);
             }
             return Extras;
+        }
+
+
+        public List<ExtraHour> getListOfExtras(string idProject)
+        {
+            try
+            {
+                var extrasAux = _context.ExtraHours.FromSqlInterpolated($@"SELECT EH.*
+                                                                            FROM ExtraHours AS EH
+                                                                            INNER JOIN Asistances AS A ON EH.AsistanceId = A.AsistanceId
+                                                                            WHERE A.ProjectId = {idProject.ToString()}").Include(E => E.Employee).ToList();
+                return extrasAux;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         #endregion
 

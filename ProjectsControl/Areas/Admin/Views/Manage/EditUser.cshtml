@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IdentityUser;
+
+@{
+    ViewData["Title"] = "Editar Usuario ";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+
+<h2>
+    Editar Usuario
+</h2>
+<p>
+    Seleccione la información que desee editar del usuario
+</p>
+
+
+
+<form asp-controller="Manage" asp-action="PostEditUser" method="post">
+    <input type="hidden" name="Id" asp-for="Id" value="@Model.Id" />
+    <table class="table table-sm">
+        <tbody>
+            <tr>
+                <td>
+                    Nombre Usuario
+                </td>
+                <td>
+                   <input asp-for="UserName" class="form-control form-control-sm" name="UserName"  />    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Correo
+                </td>
+                <td>
+                      <input asp-for="Email" class="form-control form-control-sm" name="Email" readonly />
+                      <i>Este valor no puede ser editado</i>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                        Telefono
+                </td>
+                <td>
+                        <input asp-for="PhoneNumber" class="form-control form-control-sm" name="PhoneNumber" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex flex-row">
+        <input class="btn btn-sm btn-success" type="submit"  value="Actualizar" />
+        <button class="btn btn-sm btn-info">
+            <a asp-controller="Manage" asp-action="ListOfUsers">
+                Regresar
+            </a>
+        </button>
+    </div>
+</form>
