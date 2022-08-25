@@ -44,7 +44,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Weeks/Create
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public IActionResult Create()
         {
             GetCodeOfWeek(out string code, out int eweek, out int year);
@@ -84,7 +84,7 @@ namespace ProjectsControl.Controllers
         // POST: Weeks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WeekId,NumberOfWeek,BeginOfWeek,EndOfWeek")] Week week)
@@ -114,7 +114,7 @@ namespace ProjectsControl.Controllers
 
 
         // GET: Weeks/Edit/5
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -133,7 +133,7 @@ namespace ProjectsControl.Controllers
         // POST: Weeks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("WeekId,NumberOfWeek,BeginOfWeek,EndOfWeek")] Week week)
@@ -168,7 +168,7 @@ namespace ProjectsControl.Controllers
 
 
         // GET: Weeks/Delete/5
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -187,7 +187,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Weeks/Delete/5
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

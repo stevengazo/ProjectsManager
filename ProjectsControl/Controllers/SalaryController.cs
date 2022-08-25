@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectsControl.Models;
 using ProjectsControl.Data;
+using ChartJSCore.Models;
+
 namespace ProjectsControl.Controllers
 {
     public class SalaryController : Controller

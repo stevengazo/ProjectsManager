@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ProjectsControl.Controllers
 {
-    [Authorize(Roles = "lector,editor,admin")]
+    [Authorize(Roles = "Lector,Editor,Admin")]
     public class ProjectsController : Controller
     {
         private readonly DBProjectContext _context;
@@ -95,7 +95,7 @@ namespace ProjectsControl.Controllers
             return View(project);
         }
 
-        [Authorize(Roles = "lector,editor,admin")]
+        [Authorize(Roles = "Lector,Editor,Admin")]
         public async Task<IActionResult> WithoutReports()
         {
             var AUX = _context.Projects.FromSqlInterpolated($@"
@@ -109,7 +109,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "editor,admin,sales")]
+        [Authorize(Roles = "Editor,Admin,sales")]
         public IActionResult Create()
         {
             var aux = (from proj in _context.Projects select proj.NumberOfProject).Max() + 1;
@@ -123,7 +123,7 @@ namespace ProjectsControl.Controllers
         // POST: Projects/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,admin,sales")]
+        [Authorize(Roles = "Editor,Admin,sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProjectId,NumberOfProject,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,Manager,Amount,Currency,Estatus,currency,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
@@ -178,7 +178,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Projects/Edit/5
-        [Authorize(Roles = "editor,admin,sales")]
+        [Authorize(Roles = "Editor,Admin,sales")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -200,7 +200,7 @@ namespace ProjectsControl.Controllers
         // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,admin,Sales")]
+        [Authorize(Roles = "Editor,Admin,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
@@ -237,7 +237,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Projects/Delete/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -258,7 +258,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Projects/Delete/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -307,7 +307,7 @@ namespace ProjectsControl.Controllers
         /// <param name="SearchYear"></param>        
         /// <param name="StatusToSearch"></param>
         /// <returns></returns>
-        [Authorize(Roles = "lector,editor,admin")]
+        [Authorize(Roles = "Lector,Editor,Admin")]
         private async Task<List<Project>> Consult(string SearchName = null,
                                           string NumberOfProject = null,
                                           int MonthToSearch = 0,

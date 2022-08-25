@@ -49,7 +49,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Create
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public IActionResult Create()
         {
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId");
@@ -68,7 +68,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -85,7 +85,7 @@ namespace ProjectsControl.Controllers
             return View(extraHour);
         }
 
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "Admin,Lector")]
         public async Task<IActionResult> WithoutPaid()
         {
             var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E => E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
@@ -93,7 +93,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Edit/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -113,7 +113,7 @@ namespace ProjectsControl.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> addExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
         {
             try
@@ -138,7 +138,7 @@ namespace ProjectsControl.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "Admin,Lector")]
         [HttpGet]
         public async Task<IActionResult> addExtra(string id)
         {
@@ -172,7 +172,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -209,7 +209,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Delete/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -231,7 +231,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: ExtraHours/Delete/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

@@ -47,7 +47,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Reports/Create
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public IActionResult Create()
         {
             ViewBag.ActivesProjects = (from proj in _context.Projects select proj).Where(P => P.IsOver != true).ToList();
@@ -57,7 +57,7 @@ namespace ProjectsControl.Controllers
         }
 
 
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [Route("Reports/CreateByProject/{id}")]
         public async Task<IActionResult> CreateByProject(string id)
         {
@@ -67,7 +67,7 @@ namespace ProjectsControl.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateByProject([Bind("ReportId,NumberOfReport,Author,BeginDate,EndDate,Status,Notes,ProjectId")] Report report)
@@ -86,7 +86,7 @@ namespace ProjectsControl.Controllers
         // POST: Reports/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReportId,NumberOfReport,Author,BeginDate,EndDate,Status,Notes,ProjectId")] Report report)
@@ -105,7 +105,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Reports/Edit/5
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -125,7 +125,7 @@ namespace ProjectsControl.Controllers
         // POST: Reports/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ReportId,NumberOfReport,Author,BeginDate,EndDate,Status,Notes,ProjectId")] Report report)
@@ -160,7 +160,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Reports/Delete/5
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -180,7 +180,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Reports/Delete/5
-        [Authorize(Roles = "Admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
