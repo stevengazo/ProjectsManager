@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using ProjectsControl.Data;
 using System;
@@ -48,6 +49,11 @@ namespace ProjectsControl.Areas.Admin.Controllers
                 Id= Guid.NewGuid().ToString()
             };
            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult PostCreateUser([Bind("UserName,Email,PhoneNumber,PasswordHash,EmailConfirmed")] IdentityUser user ){
+            return View();
         }
 
         [HttpPost]

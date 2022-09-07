@@ -16,7 +16,7 @@
 
 
 
-<form asp-controller="Manage" asp-action="PostEditUser" method="post">
+<form asp-controller="Manage" asp-action="PostCreateUser" method="post">
     <input type="hidden" name="Id" asp-for="Id" value="@Model.Id" />
     <table class="table table-sm">
         <tbody>
@@ -75,3 +75,8 @@
         </button>
     </div>
 </form>
+
+
+<script>
+    alert("script funcional");
+</script>
