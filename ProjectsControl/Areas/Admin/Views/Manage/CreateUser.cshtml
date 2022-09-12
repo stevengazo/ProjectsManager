@@ -25,7 +25,8 @@
                     Nombre Usuario
                 </td>
                 <td>
-                   <input asp-for="UserName" class="form-control form-control-sm" name="UserName" placeholder="Sample"  required />    
+                    <input asp-for="UserName" class="form-control form-control-sm" name="UserName" placeholder="Sample"
+                        required />
                 </td>
             </tr>
             <tr>
@@ -33,41 +34,43 @@
                     Correo
                 </td>
                 <td>
-                      <input asp-for="Email" class="form-control form-control-sm" name="Email" placeholder="sample@email.com" required />   
+                    <input asp-for="Email" class="form-control form-control-sm" name="Email"
+                        placeholder="sample@email.com" required />
                 </td>
             </tr>
             <tr>
                 <td>
-                        Telefono
+                    Telefono
                 </td>
                 <td>
-                        <input asp-for="PhoneNumber" class="form-control form-control-sm" name="PhoneNumber" required />
+                    <input asp-for="PhoneNumber" class="form-control form-control-sm" name="PhoneNumber" required />
                 </td>
             </tr>
-          
+
             <tr>
                 <td>
-                        Contraseña
+                    Contraseña
                 </td>
                 <td>
-                        <input type="password" asp-for="PasswordHash" class="form-control form-control-sm" name="PasswordHash" required />
+                    <input type="password" asp-for="PasswordHash" class="form-control form-control-sm"
+                        name="PasswordHash" required />
                 </td>
-            </tr>                        
+            </tr>
             <tr>
                 <td>
-                        Estado del Usuario
+                    Estado del Usuario
                 </td>
                 <td>
-                        <select asp-for="EmailConfirmed" class="form-control form-control-sm" name="EmailConfirmed" >
-                            <option value="@true">Activo</option>
-                            <option value="@false">Inactiva</option>                            
-                        </select>
+                    <select asp-for="EmailConfirmed" class="form-control form-control-sm" name="EmailConfirmed">
+                        <option value="@true">Activo</option>
+                        <option value="@false">Inactiva</option>
+                    </select>
                 </td>
-            </tr>            
+            </tr>
         </tbody>
     </table>
     <div class="d-flex flex-row">
-        <input class="btn btn-sm btn-outline-success" type="submit"  value="Agregar" />
+        <input class="btn btn-sm btn-outline-success" type="submit" value="Agregar" />
         <button class="btn btn-sm btn-outline-info">
             <a asp-controller="Manage" asp-action="ListOfUsers">
                 Regresar
@@ -75,8 +78,6 @@
         </button>
     </div>
 </form>
-
-
-<script>
-    alert("script funcional");
-</script>
+<p class="text-danger">
+    @ViewBag.ErrorMessage
+</p>

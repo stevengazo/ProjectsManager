@@ -7,6 +7,7 @@ using ProjectsControl.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProjectsControl.Areas.Admin.Controllers
 {
@@ -48,12 +49,24 @@ namespace ProjectsControl.Areas.Admin.Controllers
             IdentityUser user = new IdentityUser(){
                 Id= Guid.NewGuid().ToString()
             };
+            ViewBag.ErrorMessage="";
            return View(user);
-        }
+        }        
+
 
         [HttpPost]
-        public IActionResult PostCreateUser([Bind("UserName,Email,PhoneNumber,PasswordHash,EmailConfirmed")] IdentityUser user ){
-            return View();
+        public async Task<IActionResult> PostCreateUser([Bind("UserName,Email,PhoneNumber,PasswordHash,EmailConfirmed")] IdentityUser user ){
+            bool result = CheckEmailByUser(user.Email);
+            if(result){
+                ViewBag.ErrorMessage="El correo ya se encuentra registrado";
+            }else{
+                var password = user.PasswordHash;
+                user.PasswordHash=string.Empty;
+                ViewBag.ErrorMessage="";                
+                await _userManager.CreateAsync(user,password);
+                return View("Index");
+            }
+            return View("CreateUser",user);
         }
 
         [HttpPost]
@@ -269,6 +282,28 @@ namespace ProjectsControl.Areas.Admin.Controllers
         }
 
         #region  Methods Internal
+        /// <summary>
+        /// Check if an email exists in the Database 
+        /// </summary>
+        /// <param name="emailToCheck"></param>
+        /// <returns>False if not exists, true if exists or present errors</returns>
+        private bool CheckEmailByUser(string emailToCheck) {
+            try{
+                var Result = (
+                    from User in _ContextIdentity.Users
+                    where emailToCheck == User.Email
+                    select User
+                ).FirstOrDefault();
+                if(Result!= null){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch(Exception f){
+                Console.WriteLine(f.Message);
+                return true;
+            }
+        }
 
         /// <summary>
         /// Search and return the information of a specific user in the DB
