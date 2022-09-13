@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -88,8 +89,15 @@ namespace ProjectsControl.Models
                 IsActive = true,
                 Position = "d",
                 MobileNumber = 888,
-                Email = "sample@grupomecsa.net",
-                Salary = 100
+                Email = "sample@grupomecsa.net",                
+            };
+            Salary OSalary = new() {
+                EmployeeId = Oemployee.EmployeeId,
+                SalaryId = Guid.NewGuid().ToString(),
+                SalaryAmount = 100,
+                notes = "Sample of salary",
+                DayOfApplication = DateTime.Today,
+                isActive = false
             };
             Project oProject = new()
             {
@@ -209,5 +217,7 @@ namespace ProjectsControl.Models
         public DbSet<ProjectsControl.Models.Report> Report { get; set; }
     
         public DbSet<ProjectsControl.Models.Week> Week { get; set; }
+    
+        public DbSet<ProjectsControl.Models.Salary> Salary { get; set; }
     }
 }

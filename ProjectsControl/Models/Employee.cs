@@ -37,6 +37,7 @@ namespace ProjectsControl.Models
         public ICollection<Asistance> Asistances { get; set; } 
         public ICollection<Action> Actions { get; set; }
         public ICollection<Project> Projects { get; set; }
+        public ICollection<Salary> Salaries { get; set; }
     }
    
 }
