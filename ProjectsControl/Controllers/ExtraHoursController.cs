@@ -23,7 +23,7 @@ namespace ProjectsControl.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var dBProjectContext = _context.ExtraHours.Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week);
+            var dBProjectContext = _context.ExtraHours.Include(e => e.Asistance).Include(e => e.Employee);
             return View(await dBProjectContext.ToListAsync());
         }
 
@@ -38,7 +38,6 @@ namespace ProjectsControl.Controllers
             var extraHour = await _context.ExtraHours
                 .Include(e => e.Asistance)
                 .Include(e => e.Employee)
-                .Include(e => e.Week)
                 .FirstOrDefaultAsync(m => m.ExtraHourId == id);
             if (extraHour == null)
             {
@@ -54,7 +53,6 @@ namespace ProjectsControl.Controllers
         {
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             var aux = (from a in _context.Employees select a).ToList();
             var dicEmpl = new Dictionary<string, string>();
             foreach (var item in aux)
@@ -81,14 +79,13 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
         [Authorize(Roles = "Admin,lector")]
         public async Task<IActionResult> WithoutPaid()
         {
-            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E => E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
+            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E => E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).ToList();
             return View(aux);
         }
 
@@ -108,13 +105,12 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
         [HttpPost]
         [Authorize(Roles = "editor,admin")]
-        public async Task<IActionResult> addExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
+        public async Task<IActionResult> AddExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId")] ExtraHour extraHour)
         {
             try
             {
@@ -129,18 +125,17 @@ namespace ProjectsControl.Controllers
                 ViewBag.FlagExistHour = false;
                 ViewBag.Message = $"Error al ingresar la hora extra. {ef.Message}";
                 var tmpId = extraHour.AsistanceId;
-                var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId.Equals(tmpId));
+                var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId.Equals(tmpId));
                 ExtraHour tmpObj = extraHour;
                 tmpObj.Employee = _context.Employees.FirstOrDefault(E => E.EmployeeId == tmpObj.EmployeeId);
                 tmpObj.Asistance = _context.Asistances.FirstOrDefault(A => A.AsistanceId == tmpObj.AsistanceId);
-                tmpObj.Week = _context.Week.FirstOrDefault(W => W.WeekId == tmpObj.WeekId);
                 return View(tmpObj);
             }
         }
 
         [Authorize(Roles = "Admin,lector")]
         [HttpGet]
-        public async Task<IActionResult> addExtra(string id)
+        public async Task<IActionResult> AddExtra(string id)
         {
             /// Check if exist any extra linked with the asistance
 
@@ -154,14 +149,12 @@ namespace ProjectsControl.Controllers
             {
                 ViewBag.FlagExistHour = false;
             }
-            var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
-            ExtraHour extraObj = new ExtraHour()
+            var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
+            ExtraHour extraObj = new()
             {
                 AsistanceId = tmpResult.AsistanceId,
                 Employee = tmpResult.Employee,
-                EmployeeId = tmpResult.EmployeeId,
-                Week = tmpResult.Week,
-                WeekId = tmpResult.WeekId,
+                EmployeeId = tmpResult.EmployeeId,                
                 BeginTime = tmpResult.DateOfBegin,
                 EndTime = tmpResult.DateOfEnd,
                 Asistance = tmpResult,
@@ -204,7 +197,6 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
@@ -220,7 +212,7 @@ namespace ProjectsControl.Controllers
             var extraHour = await _context.ExtraHours
                 .Include(e => e.Asistance)
                 .Include(e => e.Employee)
-                .Include(e => e.Week)
+
                 .FirstOrDefaultAsync(m => m.ExtraHourId == id);
             if (extraHour == null)
             {

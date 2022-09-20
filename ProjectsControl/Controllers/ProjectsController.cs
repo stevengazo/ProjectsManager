@@ -82,7 +82,7 @@ namespace ProjectsControl.Controllers
             // Carga todos los reportes asociados al proyecto
             ViewBag.Reports = (from reports in _context.Report select reports).Where(R => R.ProjectId == id).ToList();
             // cargar asistencias del proyecto
-            ViewBag.AsistancesDetails = (from asist in _context.Asistances select asist).Include(A => A.Employee).Include(W => W.Week).Where(A => A.ProjectId == id).OrderBy(E => E.EmployeeId).ToList();
+            ViewBag.AsistancesDetails = (from asist in _context.Asistances select asist).Include(A => A.Employee).Where(A => A.ProjectId == id).OrderBy(E => E.EmployeeId).ToList();
             //Contar cantidad de Horas en el trabajo por persona
             ViewBag.Hours = GetHoursByEmployee(id);
             // Cantidad de dias por persona            

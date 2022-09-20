@@ -149,12 +149,11 @@
                                 <input  asp-for="@Model[i].DateOfEnd" min="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-ddThh:mm")" max="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-ddThh:mm")" class="form-control-sm" />
                             </td>
                             <td>
-                                <!--Number Of Week-->
-                                <select asp-for="@Model[i].WeekId" class="form-control" asp-items="ViewBag.WeekId"></select>
+                                <!--Number Of Week-->                                
+                                <input type="week" asp-for="@Model[i].NumberOfWeek" class="form-control" />
                             </td>
                             <td>
                                 <!--is absent-->
-
                                 <input id="checkbox-@i" type="checkbox">
 
                             </td>

@@ -35,9 +35,9 @@
                 <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WeekId" class="control-label"></label>
-                <select asp-for="WeekId" class="form-control" asp-items="ViewBag.WeekId"></select>
-                <span asp-validation-for="WeekId" class="text-danger"></span>
+                <label  class="control-label">Week Number</label>
+                <input type="week" asp-for="NumberOfWeek"  class="form-control" />
+                <span asp-validation-for="NumberOfWeek" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Actualizar" class="btn btn-primary" />

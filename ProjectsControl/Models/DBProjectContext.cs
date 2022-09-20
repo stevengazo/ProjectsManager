@@ -26,7 +26,6 @@ namespace ProjectsControl.Models
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Project> Projects { get; set; }        
         public DbSet<Report> Reports { get; set; }
-        public DbSet<Week> Weeks { get; set; }
 
 
         public DBProjectContext(DbContextOptions<DBProjectContext> options) : base(options)
@@ -54,10 +53,6 @@ namespace ProjectsControl.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            Week oweek = new() { WeekId = "01-2010",
-                BeginOfWeek = DateTime.Today,
-                EndOfWeek = DateTime.Today,
-            };
             Customer ocustomer = new()
             {
                 CustomerId = Guid.NewGuid().ToString(),
@@ -172,12 +167,12 @@ namespace ProjectsControl.Models
                 IsActive = true,
                 EmployeeId= Oemployee.EmployeeId
             };
-            Asistance oAsistance = new() { 
-                AsistanceId= Guid.NewGuid().ToString(),
-                DateOfBegin= DateTime.Today,
+            Asistance oAsistance = new() {
+                AsistanceId = Guid.NewGuid().ToString(),
+                DateOfBegin = DateTime.Today,
                 DateOfEnd = DateTime.Today,
                 EmployeeId = Oemployee.EmployeeId,
-                WeekId = oweek.WeekId,
+                NumberOfWeek = "01",
                 ProjectId= oProject.ProjectId
             };
             ExtraHour oextra = new() {
@@ -191,13 +186,12 @@ namespace ProjectsControl.Models
                 AceptedBy = "Nyree",
                 EmployeeId = Oemployee.EmployeeId,
                 AsistanceId= oAsistance.AsistanceId,
-                WeekId= oweek.WeekId
+                NumberOfWeek = "01"
             };
 
 
 
             modelBuilder.Entity<Employee>().HasData(Oemployee);
-            modelBuilder.Entity<Week>().HasData(oweek);
             modelBuilder.Entity<Customer>().HasData(ocustomer);
             modelBuilder.Entity<Offer>().HasData(oOffer);            
             modelBuilder.Entity<Project>().HasData(oProject);
@@ -212,11 +206,9 @@ namespace ProjectsControl.Models
         }
     
         public DbSet<ProjectsControl.Models.Bill> Bill { get; set; }
-            
-    
+                
         public DbSet<ProjectsControl.Models.Report> Report { get; set; }
-    
-        public DbSet<ProjectsControl.Models.Week> Week { get; set; }
+   
     
         public DbSet<ProjectsControl.Models.Salary> Salary { get; set; }
     }

@@ -43,19 +43,11 @@ namespace ProjectsControl.Controllers
                 {
                     foreach (Asistance asistance in asistances)
                     {
-                        var tmpResult = getWeekByDate(asistance.DateOfBegin);
-                        if (tmpResult != null)
-                        {
-                            asistance.WeekId = tmpResult.WeekId;
-                        }
                         asistance.AsistanceId = Guid.NewGuid().ToString();
                     }
                     _context.Asistances.AddRange(asistances);
-                    _context.SaveChanges();
-                   
+                    _context.SaveChanges();                   
                     ViewBag.ErrorMessage = "Asistencias Agregadas";
-                    ViewBag.WeeksList = _context.Weeks.FromSqlInterpolated(@$"select top 5 * from Week
-                                                                    ORDER BY WeekId DESC").ToList();
                     List<Asistance> sample1 = new List<Asistance>();
                     return View(sample1);
                 }
@@ -64,8 +56,6 @@ namespace ProjectsControl.Controllers
                     ViewBag.ErrorMessage = "No hay asistencias registradas";    
                     ViewBag.ErrorMessage.Style = "btn-danger";
                     List<Asistance> sample1 = new List<Asistance>();
-                    ViewBag.WeeksList = _context.Weeks.FromSqlInterpolated(@$"select top 5 * from Week
-                                                                    ORDER BY WeekId DESC").ToList();
                     return View(sample1);
                 }
                 
@@ -88,8 +78,6 @@ namespace ProjectsControl.Controllers
         public async Task<IActionResult> DailyCreate()
         {               
 
-            //  List of Weeks registered in the DB
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             //  List of employees in the DB
             var employees  = (from employee in _context.Employees select employee).Where(E=> E.Position.Equals("Ayudante") || E.Position.Equals("tecnico")).ToList();
             //  Lista de proyectos 
@@ -108,9 +96,7 @@ namespace ProjectsControl.Controllers
                     
                 };
                 assistancesByPerson.Add(tmpAsistance);
-            }
-            ViewBag.WeeksList = _context.Weeks.FromSqlInterpolated(@$"select top 5 * from Week
-                                                                    ORDER BY WeekId DESC").ToList();
+            }            
             ViewBag.ErrorMessage = "";
             //  Retorno de la vista                    
             return View(assistancesByPerson);
@@ -124,7 +110,7 @@ namespace ProjectsControl.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var dBProjectContext = _context.Asistances.Include(a => a.Employee).Include(a => a.Project).Include(a => a.Week);
+            var dBProjectContext = _context.Asistances.Include(a => a.Employee).Include(a => a.Project);
             return View(await dBProjectContext.ToListAsync());
         }
 
@@ -144,7 +130,6 @@ namespace ProjectsControl.Controllers
             var asistance = await _context.Asistances
                 .Include(a => a.Employee)
                 .Include(a => a.Project)
-                .Include(a => a.Week)
                 .FirstOrDefaultAsync(m => m.AsistanceId == id);
             if (asistance == null)
             {
@@ -162,7 +147,6 @@ namespace ProjectsControl.Controllers
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             ViewData["ProjectName"] = new SelectList(_context.Employees, "ProjectName", "ProjectName");
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
 
             var aux = (from a in _context.Employees select a).ToList();
             var dicEmpl = new Dictionary<string, string>();
@@ -192,13 +176,7 @@ namespace ProjectsControl.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
-        {
-            var tmpResult = getWeekByDate(asistance.DateOfBegin);
-            if (tmpResult != null)
-            {
-                asistance.WeekId = tmpResult.WeekId;
-            }
-            
+        {            
             if (ModelState.IsValid)
             {
                 _context.Add(asistance);
@@ -207,7 +185,6 @@ namespace ProjectsControl.Controllers
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", asistance.EmployeeId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", asistance.ProjectId);
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", asistance.WeekId);
             var aux = (from a in _context.Employees select a).ToList();
             var dicEmpl = new Dictionary<string, string>();
             foreach (var item in aux)
@@ -243,7 +220,6 @@ namespace ProjectsControl.Controllers
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", asistance.EmployeeId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", asistance.ProjectId);
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", asistance.WeekId);
             return View(asistance);
         }
 
@@ -282,7 +258,6 @@ namespace ProjectsControl.Controllers
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", asistance.EmployeeId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", asistance.ProjectId);
-            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", asistance.WeekId);
             return View(asistance);
         }
 
@@ -298,7 +273,6 @@ namespace ProjectsControl.Controllers
             var asistance = await _context.Asistances
                 .Include(a => a.Employee)
                 .Include(a => a.Project)
-                .Include(a => a.Week)
                 .FirstOrDefaultAsync(m => m.AsistanceId == id);
             if (asistance == null)
             {
@@ -348,7 +322,6 @@ namespace ProjectsControl.Controllers
                        
             ViewBag.Employees = _context.Employees.ToList();
             ViewBag.Projects = (from proj in _context.Projects select proj).ToList();
-            ViewBag.Weeks = _context.Week.ToList();
             var tmpResult = await SearchInDb(DateToSearch, NameToSearch, ProjectToSearch, WeekToSearch);
             if (tmpResult != null)
             {
@@ -430,31 +403,6 @@ namespace ProjectsControl.Controllers
         {
             return _context.Asistances.Any(e => e.AsistanceId == id);
         }
-
-
-        /// <summary>
-        /// Check if a specific Date exist in a row in the DB and return the element
-        /// </summary>
-        /// <param name="dateToConsult">Date to consult</param>
-        /// <returns>Week element</returns>
-        private Week getWeekByDate(DateTime dateToConsult)
-        {
-            var results = (
-                    from week in _context.Weeks
-                    where dateToConsult>= week.BeginOfWeek  && dateToConsult<= week.EndOfWeek 
-                    select week
-                ).FirstOrDefault();
-            if(results == null)
-            {
-                return null;
-            }
-            else
-            {
-                return results;
-            }
-            
-        }
-
 
         #endregion
     }
