@@ -36,10 +36,13 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
-            var actions = (from act in _context.Actions select act).Where(E => E.EmployeeId == id).OrderByDescending(E=>E.DateOfCreation).ToList();
+            var Salary = GetActiveSalary(id);
+            ViewBag.ActiveSalary = Salary;
+            var actions = (from act in _context.Actions select act).Where(E => E.EmployeeId == id).OrderByDescending(E => E.DateOfCreation).ToList();
             ViewBag.actions = actions;
             var employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
+            
             if (employee == null)
             {
                 return NotFound();
@@ -145,7 +148,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Employees/Delete/5
-        [Authorize(Roles ="admin,editor")]
+        [Authorize(Roles = "admin,editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -162,6 +165,19 @@ namespace ProjectsControl.Controllers
         {
             return _context.Employees.Any(e => e.EmployeeId == id);
         }
+        private Salary GetActiveSalary(string id = null)
+        {
+            if (id != null)
+            {
+                var tmpResults = _context.Salary.FirstOrDefault(S => S.EmployeeId == id && S.isActive);
+                return tmpResults;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 }

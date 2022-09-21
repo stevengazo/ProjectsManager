@@ -11,29 +11,63 @@
     <h4>Empleado</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Nombre
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Fecha de Contratación
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateofHiring)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Posición
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Position)
         </dd>
     </dl>
 </div>
+<div class="border border-rounded">
+    @if (ViewBag.ActiveSalary != null)
+    {
+        <h5>
+            Salario Activo
+        </h5>
+        <div>
+            <label>
+                <b>Id</b>
+            </label>
+            <label>
+                @ViewBag.ActiveSalary.SalaryId
+            </label>
+        </div>
+        <div>
+            <label>
+                <b>Monto</b>
+            </label>
+            <label>
+                @ViewBag.ActiveSalary.SalaryAmount
+            </label>            
+        </div>
+        <div>
+            <label>
+                <b>Fecha de Aplicación</b>
+            </label>
+            <label>
+                @ViewBag.ActiveSalary.DayOfApplication.ToShortDateString()
+            </label>
+        </div>        
+    }
+</div>
 <div>
-    <a asp-controller="Salaries" asp-action="CreateByEmployee" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Cambiar Salario</a> |
-    <a asp-controller="Salaries" asp-action="ListSalariesByEmployee" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Historial de Salarios</a>
+    <a asp-controller="Salaries" asp-action="CreateByEmployee" asp-route-id="@Model.EmployeeId"
+        class="btn btn-primary">Cambiar Salario</a> |
+    <a asp-controller="Salaries" asp-action="ListSalariesByEmployee" asp-route-id="@Model.EmployeeId"
+        class="btn btn-primary">Historial de Salarios</a>
     <a asp-action="Edit" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Editar</a> |
     <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
 </div>
@@ -79,13 +113,16 @@
                         @item.TypeOfAction
                     </td>
                     <td>
-                        <a asp-controller="Actions" asp-action="Edit" asp-route-id="@item.ActionId" class="btn btn-primary">Editar</a> 
+                        <a asp-controller="Actions" asp-action="Edit" asp-route-id="@item.ActionId"
+                        class="btn btn-primary">Editar</a>
                     </td>
                     <td>
-                        <a asp-controller="Actions" asp-action="Details" asp-route-id="@item.ActionId" class="btn btn-info">Detalles</a> 
+                        <a asp-controller="Actions" asp-action="Details" asp-route-id="@item.ActionId"
+                        class="btn btn-info">Detalles</a>
                     </td>
                     <td>
-                        <a asp-controller="Actions" asp-action="Delete" asp-route-id="@item.ActionId" class="btn btn-danger">Eliminar</a>
+                        <a asp-controller="Actions" asp-action="Delete" asp-route-id="@item.ActionId"
+                        class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             }
