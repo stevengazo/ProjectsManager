@@ -33,6 +33,7 @@
 </div>
 <div>
     <a asp-controller="Salaries" asp-action="CreateByEmployee" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Cambiar Salario</a> |
+    <a asp-controller="Salaries" asp-action="ListSalariesByEmployee" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Historial de Salarios</a>
     <a asp-action="Edit" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Editar</a> |
     <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
 </div>

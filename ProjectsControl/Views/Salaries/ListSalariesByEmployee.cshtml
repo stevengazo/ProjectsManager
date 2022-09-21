@@ -1,0 +1,68 @@
+@model List<ProjectsControl.Models.Salary>
+
+@{
+    ViewData["Title"] = "Historial Salarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Historial Salarios</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Monto
+            </th>
+            <th>
+                Fecha Aplicación
+            </th>
+            <th>
+                Notas
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.isActive)
+            {                
+                    <tr class="table-active">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SalaryAmount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DayOfApplication)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.notes)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.SalaryId">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.SalaryId">Detalles</a> |
+                        </td>
+                    </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SalaryAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DayOfApplication)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.notes)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.SalaryId">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.SalaryId">Detalles</a> |
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>

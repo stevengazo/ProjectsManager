@@ -50,9 +50,10 @@ namespace ProjectsControl.Controllers
             var Employee = _context.Employees.FirstOrDefault(E => E.EmployeeId.Equals(id));
             if (Employee != null)
             {
-                Salary oSalary = new(){
+                Salary oSalary = new()
+                {
                     SalaryId = Guid.NewGuid().ToString(),
-                    DayOfApplication= DateTime.Today,
+                    DayOfApplication = DateTime.Today,
                     EmployeeId = Employee.EmployeeId,
                     Employee = Employee
                 };
@@ -65,12 +66,18 @@ namespace ProjectsControl.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateByEmployee([Bind("SalaryId,SalaryAmount,DayOfApplication,notes,EmployeeId")] Salary salary)
+        public async Task<IActionResult> CreateByEmployee([Bind("SalaryId,SalaryAmount,DayOfApplication,notes,EmployeeId")] Salary salary)
         {
-            _context.Salary.Add(salary);
+            salary.isActive = true;
+            var salaries = await GetSalariesByEmployee(salary.EmployeeId);
+            foreach (var item in salaries)
+            {
+                item.isActive = false;
+            }
+            _context.Salary.UpdateRange(salaries);
+            _context.Salary.Add(salary);            
             _context.SaveChanges();
-            return RedirectToAction("Details","Employees" , new {id=salary.EmployeeId});
-            //return View();
+            return RedirectToAction("Details", "Employees", new { id = salary.EmployeeId });
         }
 
         // GET: Salaries/Create
@@ -150,6 +157,16 @@ namespace ProjectsControl.Controllers
             return View(salary);
         }
 
+        public async Task<IActionResult> ListSalariesByEmployee(string id)
+        {
+            if(id == null){
+                return RedirectToAction("index");                
+            }else{
+                var ListSalaries = await GetSalariesByEmployee(id);
+                return View(ListSalaries);          
+            }
+        }
+
         // GET: Salaries/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -188,6 +205,29 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+/// Search in the DB the salaries of a specific Employee
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
+        private async Task<List<Salary>> GetSalariesByEmployee(string id = null)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+            else
+            {
+                List<Salary> Results = await (
+                    from Payment
+                    in _context.Salary
+                    where Payment.EmployeeId == id
+                    select Payment
+                ).ToListAsync();
+                return Results;
+            }
+
+        }
         private bool SalaryExists(string id)
         {
             return _context.Salary.Any(e => e.SalaryId == id);
