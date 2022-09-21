@@ -12,86 +12,86 @@ namespace ProjectsControl.Models.StoredProcedures
 		public static void BuildStoredProcedures(MigrationBuilder migrationBuilder)
         {
 			string spSearchIncidents = $@"-- =============================================
--- Author:		Steven Gazo
--- Create date: 02-03-2022
--- Description:	Search in the table Asistances and return and specifics rows
--- =============================================
-Create PROCEDURE SearchAsistances
-	-- Add the parameters for the stored procedure here
-	@_EmployeeId varchar(max)= null,
-	@_ProjectId varchar(max)= null,
-	@_DateToSearch varchar(max) = null,
-	@_WeekId varchar(max) =  null
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+										-- Author:		Steven Gazo
+										-- Create date: 02-03-2022
+										-- Description:	Search in the table Asistances and return and specifics rows
+										-- =============================================
+										Create PROCEDURE SearchAsistances
+											-- Add the parameters for the stored procedure here
+											@_EmployeeId varchar(max)= null,
+											@_ProjectId varchar(max)= null,
+											@_DateToSearch varchar(max) = null,
+											@_WeekId varchar(max) =  null
+										AS
+										BEGIN
+											-- SET NOCOUNT ON added to prevent extra result sets from
+											-- interfering with SELECT statements.
+											SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	DECLARE @_sqlCommand varchar(max) = 'SELECT Asistances.* FROM ASISTANCES';
-	DECLARE @_flagParameters binary = 0 ;
-	IF( @_EmployeeId IS NOT NULL)
-	BEGIN
-		if(@_flagParameters = 0)
-			BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE EmployeeId = ''' + @_EmployeeId  + '''';
-			END
-		ELSE 
-			BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' AND EmployeeId = ''' + @_EmployeeId  + '''';
-			END	
-	END
-	IF( @_ProjectId IS NOT NULL )
-	BEGIN
-		if(@_flagParameters = 0)
-		BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE ProjectId =  ''' + @_ProjectId + '''';
-		END
-		ELSE
-			BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' AND ProjectId =  ''' + @_ProjectId + '''';
-			END	
-	END
-	IF( @_WeekId IS NOT NULL)
-	BEGIN
-		IF( @_flagParameters = 0)
-			BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE WeekId =  ''' + @_WeekId + '''';
-			END
-		ELSE
-			BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' AND WeekId =  ''' + @_WeekId + '''';
-			END
-	END
-	IF( @_DateToSearch IS NOT NULL)
-	BEGIN
-		IF( @_flagParameters = 0)
-		BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE	CAST(DateOfBegin AS date) = CAST( ''' + @_DateToSearch+ ''' AS date) ';
-				
-		END
-		ELSE
-		BEGIN
-				SET @_flagParameters = 1;
-				set @_sqlCommand  = @_sqlCommand + ' ' + ' AND	CAST(DateOfBegin AS date) = CAST( ''' + @_DateToSearch+ ''' AS date) ';
-		END
-	END
-	PRINT(@_sqlCommand)
-	IF( @_flagParameters = 1)
-	BEGIN
-		EXEC (@_sqlCommand);
-	END	
-END
-GO
-";
+											-- Insert statements for procedure here
+											DECLARE @_sqlCommand varchar(max) = 'SELECT Asistances.* FROM ASISTANCES';
+											DECLARE @_flagParameters binary = 0 ;
+											IF( @_EmployeeId IS NOT NULL)
+											BEGIN
+												if(@_flagParameters = 0)
+													BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE EmployeeId = ''' + @_EmployeeId  + '''';
+													END
+												ELSE 
+													BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' AND EmployeeId = ''' + @_EmployeeId  + '''';
+													END	
+											END
+											IF( @_ProjectId IS NOT NULL )
+											BEGIN
+												if(@_flagParameters = 0)
+												BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE ProjectId =  ''' + @_ProjectId + '''';
+												END
+												ELSE
+													BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' AND ProjectId =  ''' + @_ProjectId + '''';
+													END	
+											END
+											IF( @_WeekId IS NOT NULL)
+											BEGIN
+												IF( @_flagParameters = 0)
+													BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE WeekId =  ''' + @_WeekId + '''';
+													END
+												ELSE
+													BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' AND WeekId =  ''' + @_WeekId + '''';
+													END
+											END
+											IF( @_DateToSearch IS NOT NULL)
+											BEGIN
+												IF( @_flagParameters = 0)
+												BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE	CAST(DateOfBegin AS date) = CAST( ''' + @_DateToSearch+ ''' AS date) ';
+														
+												END
+												ELSE
+												BEGIN
+														SET @_flagParameters = 1;
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' AND	CAST(DateOfBegin AS date) = CAST( ''' + @_DateToSearch+ ''' AS date) ';
+												END
+											END
+											PRINT(@_sqlCommand)
+											IF( @_flagParameters = 1)
+											BEGIN
+												EXEC (@_sqlCommand);
+											END	
+										END
+										GO
+										";
 			string SP2 = @"SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

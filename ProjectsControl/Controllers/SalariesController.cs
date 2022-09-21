@@ -44,6 +44,35 @@ namespace ProjectsControl.Controllers
             return View(salary);
         }
 
+        [HttpGet]
+        public IActionResult CreateByEmployee(string id)
+        {
+            var Employee = _context.Employees.FirstOrDefault(E => E.EmployeeId.Equals(id));
+            if (Employee != null)
+            {
+                Salary oSalary = new(){
+                    SalaryId = Guid.NewGuid().ToString(),
+                    DayOfApplication= DateTime.Today,
+                    EmployeeId = Employee.EmployeeId,
+                    Employee = Employee
+                };
+                return View(oSalary);
+            }
+            else
+            {
+                RedirectToAction("Create");
+            }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateByEmployee([Bind("SalaryId,SalaryAmount,DayOfApplication,notes,EmployeeId")] Salary salary)
+        {
+            _context.Salary.Add(salary);
+            _context.SaveChanges();
+            return RedirectToAction("Details","Employees" , new {id=salary.EmployeeId});
+            //return View();
+        }
+
         // GET: Salaries/Create
         public IActionResult Create()
         {
@@ -154,14 +183,14 @@ namespace ProjectsControl.Controllers
             {
                 _context.Salary.Remove(salary);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SalaryExists(string id)
         {
-          return _context.Salary.Any(e => e.SalaryId == id);
+            return _context.Salary.Any(e => e.SalaryId == id);
         }
     }
 }

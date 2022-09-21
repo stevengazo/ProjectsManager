@@ -185,38 +185,6 @@
             bien la creación de nueva semana.
         </p>
         <div class="d-flex flex-column ">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th>
-                            Codigo
-                        </th>
-                        <th>
-                            Inicia
-                        </th>
-                        <th>
-                            Finaliza
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (Week item in ViewBag.WeeksList)
-                    {
-                        <tr>
-                            <td>
-                                @item.WeekId
-                            </td>
-                            <td>
-                                @item.BeginOfWeek.ToShortDateString()
-                            </td>
-                            <td>
-                                @item.EndOfWeek.ToShortDateString()
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
         </div>
     </div>
 </div>
