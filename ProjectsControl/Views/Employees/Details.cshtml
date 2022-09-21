@@ -7,8 +7,16 @@
 
 <h1>Detalles</h1>
 
-<div>
-    <h4>Empleado</h4>
+
+<div class="border rounded m-2 p-2">
+    <div class="d-flex flex-row justify-content-between">
+        <h4>Empleado</h4>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Editar</a> |
+            <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
+        </div>
+    </div>
+
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -16,6 +24,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de Nacimiento
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateOfBirth.Date)
         </dd>
         <dt class="col-sm-2">
             Fecha de Contratación
@@ -29,29 +43,55 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Position)
         </dd>
+        <dt class="col-sm-2">
+            Correo
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Telefono
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MobileNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Correo
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsActive)
+            {
+                <label>Empleado Activo</label>
+            }
+            else
+            {
+                <label>Empleado Desactivado</label>
+            }
+        </dd>
     </dl>
 </div>
-<div class="border border-rounded">
+<div class="border rounded m-2 p-2">
     @if (ViewBag.ActiveSalary != null)
     {
-        <h5>
-            Salario Activo
-        </h5>
-        <div>
-            <label>
-                <b>Id</b>
-            </label>
-            <label>
-                @ViewBag.ActiveSalary.SalaryId
-            </label>
+        <div class="d-flex flex-row justify-content-between">
+            <h5>
+                Salario Activo
+            </h5>
+            <div>
+                <a asp-controller="Salaries" asp-action="CreateByEmployee" asp-route-id="@Model.EmployeeId"
+                class="btn btn-primary">Cambiar Salario</a> |
+                <a asp-controller="Salaries" asp-action="ListSalariesByEmployee" asp-route-id="@Model.EmployeeId"
+                class="btn btn-primary">Historial de Salarios</a>
+            </div>
         </div>
+        <hr />
         <div>
             <label>
                 <b>Monto</b>
             </label>
             <label>
-                @ViewBag.ActiveSalary.SalaryAmount
-            </label>            
+                @ViewBag.ActiveSalary.SalaryAmount -(Salario en colones)
+            </label>
         </div>
         <div>
             <label>
@@ -60,24 +100,27 @@
             <label>
                 @ViewBag.ActiveSalary.DayOfApplication.ToShortDateString()
             </label>
-        </div>        
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-row justify-content-between">
+            <h5>
+                Salario no registrado
+            </h5>
+            <div>
+                <a asp-controller="Salaries" asp-action="CreateByEmployee" asp-route-id="@Model.EmployeeId"
+                class="btn btn-primary">Cambiar Salario</a> |
+            </div>
+        </div>
     }
 </div>
-<div>
-    <a asp-controller="Salaries" asp-action="CreateByEmployee" asp-route-id="@Model.EmployeeId"
-        class="btn btn-primary">Cambiar Salario</a> |
-    <a asp-controller="Salaries" asp-action="ListSalariesByEmployee" asp-route-id="@Model.EmployeeId"
-        class="btn btn-primary">Historial de Salarios</a>
-    <a asp-action="Edit" asp-route-id="@Model.EmployeeId" class="btn btn-primary">Editar</a> |
-    <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
-</div>
 
-
-
-<div>
+<div class="border rounded m-2 p-2">
     <h2>
         Historial de Acciones de Personal Registradas
     </h2>
+    <hr />
     <table class="table">
         <thead>
             <tr>
