@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
 using ProjectsControl.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
         /// Declararación de UserController e injección de dependencia
         /// </summary>
         /// <param name="_context"></param>
-        public UsersController( ApplicationDbContext context,
+        public UsersController(ApplicationDbContext context,
                                 UserManager<IdentityUser> userManager,
                                 SignInManager<IdentityUser> signInManager
             )
@@ -33,11 +35,11 @@ namespace ProjectsControl.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChanceUserPassword(string idUser= null)
+        public async Task<IActionResult> ChanceUserPassword(string idUser = null)
         {
             try
             {
-                IdentityUser user = null ;                
+                IdentityUser user = null;
                 if (idUser == null)
                 {
                     if (user == null)
@@ -59,10 +61,11 @@ namespace ProjectsControl.Areas.Admin.Controllers
             }
             catch (System.Exception f)
             {
+                Console.WriteLine($"Error: {f.Message}");
                 ViewBag.ErrorMessage = "El usuario no fue encontrado";
                 ViewBag.UserId = idUser;
                 return View();
-            }            
+            }
         }
 
 
@@ -77,7 +80,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
         public async Task<IActionResult> ChanceUserPassword(string idUser, string Password, string confirmPassword)
         {
             IdentityUser user = GetUser(idUser);
-            if (!Password.Equals(confirmPassword) || (user== null))
+            if (!Password.Equals(confirmPassword) || (user == null))
             {
                 ViewBag.ErrorMessage = "Verifique la contraseña y el usuario";
                 ViewBag.UserId = idUser;
@@ -97,14 +100,12 @@ namespace ProjectsControl.Areas.Admin.Controllers
                     ViewBag.UserId = idUser;
                     return View();
                 }
-
             }
-            
         }
 
 
         #region Internal_Methods
-        
+
         /// <summary>
         /// Search an especific user by the id
         /// </summary>
@@ -116,7 +117,7 @@ namespace ProjectsControl.Areas.Admin.Controllers
                       in _ContextIdentity.Users
                        where user.Id == idUser
                        select user).FirstOrDefault();
-            if(tmp == null)
+            if (tmp == null)
             {
                 return null;
             }
