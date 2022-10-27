@@ -75,7 +75,7 @@ namespace ProjectsControl.Controllers
                 item.isActive = false;
             }
             _context.Salary.UpdateRange(salaries);
-            _context.Salary.Add(salary);            
+            _context.Salary.Add(salary);
             _context.SaveChanges();
             return RedirectToAction("Details", "Employees", new { id = salary.EmployeeId });
         }
@@ -126,19 +126,36 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("SalaryId,SalaryAmount,DayOfApplication,notes,EmployeeId")] Salary salary)
+        public async Task<IActionResult> Edit(string id, [Bind("SalaryId,SalaryAmount,DayOfApplication,notes,EmployeeId,isActive")] Salary salary)
         {
             if (id != salary.SalaryId)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(salary);
-                    await _context.SaveChangesAsync();
+                    if (salary.isActive)
+                    {
+                        var salaries = await GetSalariesByEmployee(salary.EmployeeId);
+                        for (int i = 0; i < salaries.Count; i++)
+                        {
+                            if (!salaries[i].SalaryId.Equals(salary.SalaryId))
+                            {
+                                salaries[i].isActive = false;
+                            }
+                            else
+                            {
+                                salaries[i] = salary;
+                            }
+                        }
+                        _context.Salary.UpdateRange(salaries);
+                        _context.SaveChanges();
+                    }else{
+                        _context.Salary.Update(salary);
+                        _context.SaveChanges();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -159,11 +176,14 @@ namespace ProjectsControl.Controllers
 
         public async Task<IActionResult> ListSalariesByEmployee(string id)
         {
-            if(id == null){
-                return RedirectToAction("index");                
-            }else{
+            if (id == null)
+            {
+                return RedirectToAction("index");
+            }
+            else
+            {
                 var ListSalaries = await GetSalariesByEmployee(id);
-                return View(ListSalaries);          
+                return View(ListSalaries);
             }
         }
 
@@ -206,10 +226,10 @@ namespace ProjectsControl.Controllers
         }
 
         /// <summary>
-/// Search in the DB the salaries of a specific Employee
-/// </summary>
-/// <param name="id"></param>
-/// <returns></returns>
+        /// Search in the DB the salaries of a specific Employee
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task<List<Salary>> GetSalariesByEmployee(string id = null)
         {
             if (id == null)
