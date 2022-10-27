@@ -34,7 +34,7 @@ namespace ProjectsControl.Controllers
         /// <param name="asistances">List of asistances </param>
         /// <returns>Same view</returns>
         [HttpPost] 
-        [Authorize(Roles ="admin,editor")]
+        [Authorize(Roles ="Admin,Editor")]
         public async Task<ActionResult> DailyCreate(List<Asistance> asistances )
         {
             try
@@ -73,7 +73,7 @@ namespace ProjectsControl.Controllers
         ///  Return the basic information for the Daily Asistences
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public async Task<IActionResult> DailyCreate()
         {               
@@ -141,7 +141,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Asistances/Create        
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
@@ -172,7 +172,7 @@ namespace ProjectsControl.Controllers
         // POST: Asistances/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
@@ -205,7 +205,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Asistances/Edit/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -226,7 +226,7 @@ namespace ProjectsControl.Controllers
         // POST: Asistances/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
@@ -262,7 +262,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Asistances/Delete/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -283,7 +283,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Asistances/Delete/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

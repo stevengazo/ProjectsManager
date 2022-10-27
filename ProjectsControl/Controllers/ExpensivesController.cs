@@ -28,7 +28,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives/Details/5
-        [Authorize(Roles = "admin,editor,lector")]
+        [Authorize(Roles = "Admin,Editor,Lector")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -50,7 +50,7 @@ namespace ProjectsControl.Controllers
 
 
         // GET: Expensives/Create        
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public IActionResult CreateByProject(string id)
         {
             ViewData["ProjectId"] = id;
@@ -61,7 +61,7 @@ namespace ProjectsControl.Controllers
         // POST: Expensives/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateByProject(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
@@ -77,7 +77,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives/Create        
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public IActionResult Create(string id)
         {
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
@@ -87,7 +87,7 @@ namespace ProjectsControl.Controllers
         // POST: Expensives/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
@@ -103,7 +103,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives/Edit/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -123,7 +123,7 @@ namespace ProjectsControl.Controllers
         // POST: Expensives/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
@@ -158,7 +158,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Expensives/Delete/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -178,7 +178,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Expensives/Delete/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

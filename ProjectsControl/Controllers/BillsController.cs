@@ -50,7 +50,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Bills/Create
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public IActionResult Create()
         {            
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
@@ -61,7 +61,7 @@ namespace ProjectsControl.Controllers
         // POST: Bills/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BillId,NumberOfBill,DateOfCreation,Author,Amount,ProjectId")] Bill bill)
@@ -77,7 +77,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Bills/Edit/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -97,7 +97,7 @@ namespace ProjectsControl.Controllers
         // POST: Bills/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("BillId,NumberOfBill,DateOfCreation,Author,Amount,ProjectId")] Bill bill)
@@ -132,7 +132,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Bills/Delete/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -152,7 +152,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Bills/Delete/5
-        [Authorize(Roles = "admin,editor")]
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

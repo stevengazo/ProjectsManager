@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ChartJSCore.Helpers;
-using ChartJSCore.Models;
-using ChartJSCore.Models.ChartJSCore.Models;
-using ChartJSCore.Models.Polar;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProjectsControl.Models;
@@ -27,7 +23,6 @@ namespace ProjectsControl.Controllers
         public ActionResult Index()
         {
             GetQuantityOfProjectsByYear();
-            getTypesOfProjectsByYear(2022);
             return View();
 
         }
@@ -71,39 +66,7 @@ namespace ProjectsControl.Controllers
             }
         }
 
-        /// <summary>
-        /// Get Quantity of projects in a specific year by the type of job
-        /// </summary>
-        /// <param name="year">Year to search</param>
-        /// <returns>Dictionary of types, Key = type of job, Value = Quantity of Projects</returns>
-        private Dictionary<string, int> getTypesOfProjectsByYear(int year)
-        {
-            try
-            {
-                Dictionary<string, int> dicResults = new();
-                var tmpResult = (
-                        from project in _context.Projects
-                        group project by project.TypeOfJob into projectGroup
-                        select projectGroup.Key
-                    ).ToList();
-                foreach (var item in tmpResult)
-                {
-                    var tmpItem = (
-                           from Project in _context.Projects
-                           where Project.TypeOfJob.Equals(item)
-                           select Project
-                       ).Count();
-                    dicResults.Add(item.ToString(), tmpItem);   
-                    
-                }
-                return dicResults;
-            }
-            catch (Exception f)
-            {
-                Console.WriteLine(f.Message);
-                throw;
-            }
-        }
+     
 
         #endregion
 

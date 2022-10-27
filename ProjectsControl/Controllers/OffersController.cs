@@ -47,7 +47,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Offers/Create
-        [Authorize(Roles = "Admin,editor,Sales")]
+        [Authorize(Roles = "Admin,Editor,Sales")]
         public IActionResult Create()
         {
             var tmplist = _context.Customers.ToList();
@@ -58,7 +58,7 @@ namespace ProjectsControl.Controllers
         // POST: Offers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,editor,Sales")]
+        [Authorize(Roles = "Admin,Editor,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NumberOfOffer,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
@@ -75,7 +75,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Offers/Edit/5
-        [Authorize(Roles = "Admin,editor,Sales")]
+        [Authorize(Roles = "Admin,Editor,Sales")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -96,7 +96,7 @@ namespace ProjectsControl.Controllers
         // POST: Offers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,editor,Sales")]
+        [Authorize(Roles = "Admin,Editor,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("NumberOfOffer,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,LastEdition,CustomerId")] Offer offer)
@@ -132,7 +132,7 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: Offers/Delete/5
-        [Authorize(Roles = "Admin,editor,Sales")]
+        [Authorize(Roles = "Admin,Editor,Sales")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -152,7 +152,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Offers/Delete/5
-        [Authorize(Roles = "Admin,editor,Sales")]
+        [Authorize(Roles = "Admin,Editor,Sales")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

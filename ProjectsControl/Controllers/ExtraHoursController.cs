@@ -23,7 +23,7 @@ namespace ProjectsControl.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var dBProjectContext = _context.ExtraHours.Include(e => e.Asistance).Include(e => e.Employee);
+            var dBProjectContext = _context.ExtraHours.Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week);
             return View(await dBProjectContext.ToListAsync());
         }
 
@@ -38,6 +38,7 @@ namespace ProjectsControl.Controllers
             var extraHour = await _context.ExtraHours
                 .Include(e => e.Asistance)
                 .Include(e => e.Employee)
+                .Include(e => e.Week)
                 .FirstOrDefaultAsync(m => m.ExtraHourId == id);
             if (extraHour == null)
             {
@@ -48,11 +49,12 @@ namespace ProjectsControl.Controllers
         }
 
         // GET: ExtraHours/Create
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public IActionResult Create()
         {
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId");
             var aux = (from a in _context.Employees select a).ToList();
             var dicEmpl = new Dictionary<string, string>();
             foreach (var item in aux)
@@ -66,7 +68,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -79,18 +81,19 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "Admin,Lector")]
         public async Task<IActionResult> WithoutPaid()
         {
-            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E => E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).ToList();
+            var aux = (from extra in _context.ExtraHours select extra).Where(E => E.IsPaid == false).OrderBy(E => E.EmployeeId).Include(e => e.Asistance).Include(e => e.Employee).Include(e => e.Week).ToList();
             return View(aux);
         }
 
         // GET: ExtraHours/Edit/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -105,12 +108,13 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
         [HttpPost]
-        [Authorize(Roles = "editor,admin")]
-        public async Task<IActionResult> AddExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId")] ExtraHour extraHour)
+        [Authorize(Roles = "Editor,Admin")]
+        public async Task<IActionResult> addExtra([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
         {
             try
             {
@@ -125,17 +129,18 @@ namespace ProjectsControl.Controllers
                 ViewBag.FlagExistHour = false;
                 ViewBag.Message = $"Error al ingresar la hora extra. {ef.Message}";
                 var tmpId = extraHour.AsistanceId;
-                var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId.Equals(tmpId));
+                var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId.Equals(tmpId));
                 ExtraHour tmpObj = extraHour;
                 tmpObj.Employee = _context.Employees.FirstOrDefault(E => E.EmployeeId == tmpObj.EmployeeId);
                 tmpObj.Asistance = _context.Asistances.FirstOrDefault(A => A.AsistanceId == tmpObj.AsistanceId);
+                tmpObj.Week = _context.Week.FirstOrDefault(W => W.WeekId == tmpObj.WeekId);
                 return View(tmpObj);
             }
         }
 
-        [Authorize(Roles = "Admin,lector")]
+        [Authorize(Roles = "Admin,Lector")]
         [HttpGet]
-        public async Task<IActionResult> AddExtra(string id)
+        public async Task<IActionResult> addExtra(string id)
         {
             /// Check if exist any extra linked with the asistance
 
@@ -149,12 +154,14 @@ namespace ProjectsControl.Controllers
             {
                 ViewBag.FlagExistHour = false;
             }
-            var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
-            ExtraHour extraObj = new()
+            var tmpResult = (from asis in _context.Asistances select asis).Include(A => A.Week).Include(A => A.Employee).FirstOrDefault(A => A.AsistanceId == id);
+            ExtraHour extraObj = new ExtraHour()
             {
                 AsistanceId = tmpResult.AsistanceId,
                 Employee = tmpResult.Employee,
-                EmployeeId = tmpResult.EmployeeId,                
+                EmployeeId = tmpResult.EmployeeId,
+                Week = tmpResult.Week,
+                WeekId = tmpResult.WeekId,
                 BeginTime = tmpResult.DateOfBegin,
                 EndTime = tmpResult.DateOfEnd,
                 Asistance = tmpResult,
@@ -165,7 +172,7 @@ namespace ProjectsControl.Controllers
         // POST: ExtraHours/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
@@ -197,11 +204,12 @@ namespace ProjectsControl.Controllers
             }
             ViewData["AsistanceId"] = new SelectList(_context.Asistances, "AsistanceId", "AsistanceId", extraHour.AsistanceId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", extraHour.EmployeeId);
+            ViewData["WeekId"] = new SelectList(_context.Set<Week>(), "WeekId", "WeekId", extraHour.WeekId);
             return View(extraHour);
         }
 
         // GET: ExtraHours/Delete/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -212,7 +220,7 @@ namespace ProjectsControl.Controllers
             var extraHour = await _context.ExtraHours
                 .Include(e => e.Asistance)
                 .Include(e => e.Employee)
-
+                .Include(e => e.Week)
                 .FirstOrDefaultAsync(m => m.ExtraHourId == id);
             if (extraHour == null)
             {
@@ -223,7 +231,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: ExtraHours/Delete/5
-        [Authorize(Roles = "editor,admin")]
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
