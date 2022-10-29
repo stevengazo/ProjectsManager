@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,14 @@ namespace ProjectsControl.Controllers
     [Authorize]
     public class ExtraHoursController : Controller
     {
+        CultureInfo cultureInfo = new CultureInfo("en-US");
+        Calendar calendar;
         private readonly DBProjectContext _context;
 
         public ExtraHoursController(DBProjectContext context)
         {
             _context = context;
+            calendar = cultureInfo.Calendar;
         }
 
         // GET: ExtraHours
@@ -69,10 +73,11 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
+        public async Task<IActionResult> Create([Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId")] ExtraHour extraHour)
         {
             if (ModelState.IsValid)
             {
+                extraHour.NumberOfWeek = calendar.GetWeekOfYear(extraHour.BeginTime, CalendarWeekRule.FirstDay, DayOfWeek.Thursday).ToString();
                 _context.Add(extraHour);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -168,7 +173,7 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId,WeekId")] ExtraHour extraHour)
+        public async Task<IActionResult> Edit(string id, [Bind("ExtraHourId,BeginTime,EndTime,TypeOfHour,Reason,Notes,IsPaid,EmployeeId,AsistanceId")] ExtraHour extraHour)
         {
             if (id != extraHour.ExtraHourId)
             {
@@ -179,6 +184,7 @@ namespace ProjectsControl.Controllers
             {
                 try
                 {
+                    extraHour.NumberOfWeek = calendar.GetWeekOfYear(extraHour.BeginTime, CalendarWeekRule.FirstDay, DayOfWeek.Thursday).ToString();
                     _context.Update(extraHour);
                     await _context.SaveChangesAsync();
                 }

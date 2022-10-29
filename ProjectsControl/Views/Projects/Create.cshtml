@@ -11,23 +11,23 @@
 <hr />
 
 
-<div class="container py-5">
-    <div class="row">
-        <div class="col-md-10 mx-auto">
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Id de Referencia</label>
-                        <input asp-for="ProjectId" class="form-control" value="@Guid.NewGuid().ToString()" readonly/>
+                        <input asp-for="ProjectId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
                         <span asp-validation-for="ProjectId" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
                         <label class="control-label">Numero de Proyecto</label>
-                        <input asp-for="NumberOfProject" class="form-control" value="@ViewData["NumberOfProject"]" readonly/>
+                        <input asp-for="NumberOfProject" class="form-control" value="@ViewData["NumberOfProject"]" readonly />
                         <span asp-validation-for="ProjectId" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Numero de Tarea en Bitrix</label>
@@ -39,7 +39,7 @@
                         <input asp-for="ProjectName" class="form-control" />
                         <span asp-validation-for="ProjectName" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Orden de Compra</label>
@@ -51,7 +51,7 @@
                         <input type="date" asp-for="OCDate" class="form-control" />
                         <span asp-validation-for="OCDate" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Monto Sin IVA</label>
@@ -61,14 +61,14 @@
                     <div class="col-sm-6">
                         <label class="control-label">Moneda</label>
                         <select asp-for="Currency" class="form-control">
-                        <option value="">Seleccione...</option>
-                        <option value="Dolar">Dolar</option>
-                        <option value="Colón">Colón</option>
-                        <option value="Euro">Euro</option>
+                            <option value="">Seleccione...</option>
+                            <option value="Dolar">Dolar</option>
+                            <option value="Colón">Colón</option>
+                            <option value="Euro">Euro</option>
                         </select>
                         <span asp-validation-for="Currency" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Ing. Encargado</label>
@@ -78,15 +78,15 @@
                     <div class="col-sm-6">
                         <label class="control-label">Estado</label>
                         <select asp-for="Estatus" class="form-control">
-                        <option value="">Seleccione...</option>
-                        <option value="Finalizado">Finalizado</option>
-                        <option value="Pendiente de coordinar">Pendiente de coordinar</option>
-                        <option value="En ejecución">En ejecución</option>
-                        <option value="Atrasado por el cliente">Atrasado por el cliente</option>
+                            <option value="">Seleccione...</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="Pendiente de coordinar">Pendiente de coordinar</option>
+                            <option value="En ejecución">En ejecución</option>
+                            <option value="Atrasado por el cliente">Atrasado por el cliente</option>
                         </select>
                         <span asp-validation-for="OCDate" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label class="control-label">Fecha de Inicio</label>
@@ -98,14 +98,14 @@
                         <input asp-for="EndDate" class="form-control" />
                         <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label class="control-label">Esta Terminado</label> 
-                            <input class="form-check-input" asp-for="IsOver" /> @Html.DisplayNameFor(model => model.IsOver)
+                        <label class="control-label">Esta Terminado</label>
+                        <input class="form-check-input" asp-for="IsOver" /> @Html.DisplayNameFor(model => model.IsOver)
                     </div>
                     <div class="col-sm-6">
-                        <label class="control-label">Tipo de Trabajo</label>                
+                        <label class="control-label">Tipo de Trabajo</label>
                         <input type="text" list="list-type-jobs" asp-for="TypeOfJob" class="form-control" />
                         <datalist id="list-type-jobs">
                             <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
@@ -119,55 +119,85 @@
                             <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
                             <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
                             <option value="Otros">Otros</option>
-                        </datalist>                                              
+                        </datalist>
                         <span asp-validation-for="TypeOfJob" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label class="control-label">Detalles</label> 
-                        <textarea asp-for="Details" class=" form-control" > </textarea>
+                        <label class="control-label">Detalles</label>
+                        <textarea asp-for="Details" class=" form-control"> </textarea>
                         <span asp-validation-for="Details" class="text-danger"></span>
                     </div>
                     <div class="col-sm-6">
-                        <label class="control-label">Ubicación</label> 
+                        <label class="control-label">Ubicación</label>
                         <input asp-for="Ubication" class="form-control" />
                         <span asp-validation-for="Ubication" class="text-danger"></span>
                     </div>
-                 </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label class="control-label">Cliente</label>                
-                        <input type="text" list="list-customers" asp-for="CustomerId" class="form-control" /> 
+                        <label class="control-label">Cliente</label>
+                        <input type="text" list="list-customers" asp-for="CustomerId" class="form-control" />
                         <datalist id="list-customers">
-                            @foreach (   Customer customer in ViewBag.Customers)
+                            @foreach (Customer customer in ViewBag.Customers)
                             {
-                            <option value="@customer.CustomerId">@customer.Name</option>		 
-                            }                        
+                                <option value="@customer.CustomerId">@customer.Name</option>
+                            }
                         </datalist>
                     </div>
                     <div class="col-sm-6">
                         <label asp-for="EmployeeId" class="control-label">Vendedor</label>
                         <select asp-for="EmployeeId" class="form-control">
-                        @foreach ( Employee item in ViewBag.Employees)
-                        {
-                        <option value="@item.EmployeeId">@item.Name</option>	 
-                        }
+                            @foreach (Employee item in ViewBag.Employees)
+                            {
+                                <option value="@item.EmployeeId">@item.Name</option>
+                            }
                         </select>
                     </div>
-                 </div>               
+                </div>
 
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </form>
         </div>
+
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Pagina de inserción de proyecto:</b> Ingrese la información requerida en los campos indicados en la columnas derechas.
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>El proyecto debe tener su orden de compra para ingresarlo</b>, en el caso que no requiera ingresar una orden de compra indique un “N/A”  (la fecha de orden de compra será el día de ingreso)
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Detalles del Proyecto:</b> brinde una descripción básica del proyecto. El tipo de proyecto se indica en otro campo…
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Número de tarea en bitrix:</b> el proyecto debe encontrarse previamente registrado en una tarea en bitrix antes de su ingreso en este sistema.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    
 
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }

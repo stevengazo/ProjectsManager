@@ -9,80 +9,119 @@
 
 <h4>Registro de Empleado</h4>
 <hr />
-<div >
-    <div >
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Id de Referencia Interno</label>
-                <input asp-for="EmployeeId" class="form-control" value="@Guid.NewGuid().ToString()"  readonly />
-                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+<div class="container">
+    <div class="row align-items-start">
+        <!-- FORM-->
+        <div class="col">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Id de Referencia Interno</label>
+                    <input asp-for="EmployeeId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
+                    <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Cedula</label>
+                    <input asp-for="EmployeeDNI" class="form-control" />
+                    <span asp-validation-for="EmployeeDNI" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Nombre</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Cargo</label>
+                    <select asp-for="Position" class="form-control">
+                        <option value="Vendedor">Vendedor</option>
+                        <option value="Asistente Ventas">Asistente Ventas</option>
+                        <option value="Ayudante">Ayudante</option>
+                        <option value="Tecnico">Tecnico</option>
+                        <option value="Ingeniero">Ingeniero</option>
+                        <option value="Asistente Ingenieria">Asistente Ingenieria</option>
+                        <option value="Asistente administrativo">Asistente administrativo</option>
+                        <option value="Contador">Contador</option>
+                    </select>
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de nacimiento</label>
+                    <input asp-for="DateOfBirth" class="form-control" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Contratación</label>
+                    <input asp-for="DateofHiring" class="form-control" />
+                    <span asp-validation-for="DateofHiring" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de despido</label>
+                    <input asp-for="DateOfFired" class="form-control" />
+                    <span asp-validation-for="DateOfFired" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Esta activo</label>
+                    <input asp-for="IsActive" class="form-control" />
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Numero de Telefono</label>
+                    <input asp-for="MobileNumber" class="form-control" />
+                    <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Correo</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Crear" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- INFORMATION -->
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Esta sección permite el ingreso de un nuevo empleado en la base de datos.  <b>antes de realizar la inserción, verifique que posea todos los datos necesarios del empleado </b>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Verifique que este empleado no se encuentre previamente registrado en el sistema.</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Esta activo</b> indique que el empleado se encuentra activo, de esta forma estará disponible para seleccionar dentro del sistema. Una vez el empleado no sea parte de la organización, indique que ya no se encuentra activo.
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Fecha despido:</b> Este dato solamente es relevante al momento de una renuncia o despido. Para efectos de ingreso, este dato será el mismo que la fecha de contratación.
+                        </div>
+                    </div>
+                </div>              
             </div>
-            <div class="form-group">
-                <label class="control-label">Cedula</label>
-                <input asp-for="EmployeeDNI" class="form-control" />
-                <span asp-validation-for="EmployeeDNI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Nombre</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Cargo</label>                
-                <select asp-for="Position" class="form-control">
-                    <option value="Vendedor">Vendedor</option>
-                    <option value="Asistente Ventas">Asistente Ventas</option>
-                    <option value="Ayudante">Ayudante</option>
-                    <option value="Tecnico">Tecnico</option>
-                    <option value="Ingeniero">Ingeniero</option>
-                    <option value="Asistente Ingenieria">Asistente Ingenieria</option>
-                    <option value="Asistente administrativo">Asistente administrativo</option>
-                    <option value="Contador">Contador</option>
-                </select>
-                <span asp-validation-for="Position" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de nacimiento</label>
-                <input asp-for="DateOfBirth" class="form-control" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Contratación</label>
-                <input asp-for="DateofHiring" class="form-control" />
-                <span asp-validation-for="DateofHiring" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de despido</label>
-                <input asp-for="DateOfFired" class="form-control" />
-                <span asp-validation-for="DateOfFired" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Esta activo</label>
-                <input asp-for="IsActive" class="form-control" />
-                <span asp-validation-for="IsActive" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Numero de Telefono</label>
-                <input asp-for="MobileNumber" class="form-control" />
-                <span asp-validation-for="MobileNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Correo</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+
 
 <div>
     <a asp-action="Index" class="btn btn-secondary">Volver a Index</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
