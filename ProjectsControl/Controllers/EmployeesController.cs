@@ -148,10 +148,7 @@ namespace ProjectsControl.Controllers
         }
 
         // POST: Employees/Delete/5
-<<<<<<< 
-=======
-        [Authorize(Roles ="Admin,Editor")]
->>>>>>> a6efa87b07fb1be7d7c08648edb89f1660c86054
+        [Authorize(Roles ="Admin,Editor")]        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

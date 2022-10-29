@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel;
+using System.Globalization;
 using ProjectsControl.Models;
 using ProjectsControl.Data;
 
@@ -16,6 +17,9 @@ namespace ProjectsControl.Controllers
     [Authorize]        
     public class AsistancesController : Controller
     {
+        private CultureInfo cultureInfo = new CultureInfo("en-US");
+        private Calendar calendar;
+
         private readonly DBProjectContext _context;
         private readonly ApplicationDbContext _applicationDb;
 
@@ -23,6 +27,7 @@ namespace ProjectsControl.Controllers
         {
             _context = context;
             _applicationDb = applicationDb;
+            this.calendar = this.cultureInfo.Calendar;
 
         }
 
@@ -43,7 +48,10 @@ namespace ProjectsControl.Controllers
                 {
                     foreach (Asistance asistance in asistances)
                     {
+                        // Create new id for the Object
                         asistance.AsistanceId = Guid.NewGuid().ToString();
+                        // Create the number of week by
+                        asistance.NumberOfWeek = this.calendar.GetWeekOfYear(asistance.DateOfBegin, CalendarWeekRule.FirstDay, DayOfWeek.Thursday).ToString();
                     }
                     _context.Asistances.AddRange(asistances);
                     _context.SaveChanges();                   
@@ -169,16 +177,21 @@ namespace ProjectsControl.Controllers
             return View();
         }
 
+
+
+
         // POST: Asistances/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
+        public async Task<IActionResult> Create([Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId")] Asistance asistance)
         {            
             if (ModelState.IsValid)
-            {
+            {                
+                var week = this.calendar.GetWeekOfYear(asistance.DateOfBegin, CalendarWeekRule.FirstDay, DayOfWeek.Thursday);
+                asistance.NumberOfWeek = week.ToString();
                 _context.Add(asistance);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -229,7 +242,7 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId,WeekId")] Asistance asistance)
+        public async Task<IActionResult> Edit(string id, [Bind("AsistanceId,DateOfBegin,DateOfEnd,EmployeeId,ProjectId")] Asistance asistance)
         {
             if (id != asistance.AsistanceId)
             {
@@ -240,6 +253,7 @@ namespace ProjectsControl.Controllers
             {
                 try
                 {
+                    asistance.NumberOfWeek = this.calendar.GetWeekOfYear(asistance.DateOfBegin, CalendarWeekRule.FirstDay, DayOfWeek.Thursday).ToString();
                     _context.Update(asistance);
                     await _context.SaveChangesAsync();
                 }
@@ -305,8 +319,9 @@ namespace ProjectsControl.Controllers
         }*/
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Search( string DateToSearch= null, string NameToSearch= null, string ProjectToSearch= null,string WeekToSearch= null )
+        public async Task<IActionResult> Search( string DateToSearch= null, string NameToSearch= null, string ProjectToSearch= null,int _WeekToSearch=0 )
         {
+            string WeekToSearch = _WeekToSearch.ToString();
             if (NameToSearch != null)
             {
                 NameToSearch = (NameToSearch.Equals("0") || NameToSearch == null) ? null : NameToSearch;
@@ -374,7 +389,7 @@ namespace ProjectsControl.Controllers
                 bool bandDate = (DateToSearch != null) ? true : false;
                 if (bandDate || bandName || bandProject || bandWeek)
                 {
-                    var result = _context.Asistances.FromSqlInterpolated($" EXECUTE SearchAsistances @_EmployeeId = {NameToSearch}, @_ProjectId = {ProjectToSearch}, @_DateToSearch ={DateToSearch}, @_WeekId = {WeekToSearch}");
+                    var result = _context.Asistances.FromSqlInterpolated($" EXECUTE SearchAsistances @_EmployeeId = {NameToSearch}, @_ProjectId = {ProjectToSearch}, @_DateToSearch ={DateToSearch}, @_WeekNumber = {WeekToSearch}");
                     var employees = _context.Employees.ToList();
                     var projects = _context.Projects.ToList();
                     foreach (var item in result)

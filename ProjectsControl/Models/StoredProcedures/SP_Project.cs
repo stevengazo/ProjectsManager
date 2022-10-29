@@ -21,7 +21,7 @@ namespace ProjectsControl.Models.StoredProcedures
 											@_EmployeeId varchar(max)= null,
 											@_ProjectId varchar(max)= null,
 											@_DateToSearch varchar(max) = null,
-											@_WeekId varchar(max) =  null
+											@_WeekNumber varchar(max) =  null
 										AS
 										BEGIN
 											-- SET NOCOUNT ON added to prevent extra result sets from
@@ -57,17 +57,17 @@ namespace ProjectsControl.Models.StoredProcedures
 														set @_sqlCommand  = @_sqlCommand + ' ' + ' AND ProjectId =  ''' + @_ProjectId + '''';
 													END	
 											END
-											IF( @_WeekId IS NOT NULL)
+											IF( @_WeekNumber IS NOT NULL)
 											BEGIN
 												IF( @_flagParameters = 0)
 													BEGIN
 														SET @_flagParameters = 1;
-														set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE WeekId =  ''' + @_WeekId + '''';
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' WHERE NumberOfWeek =  ''' + @_WeekNumber + '''';
 													END
 												ELSE
 													BEGIN
 														SET @_flagParameters = 1;
-														set @_sqlCommand  = @_sqlCommand + ' ' + ' AND WeekId =  ''' + @_WeekId + '''';
+														set @_sqlCommand  = @_sqlCommand + ' ' + ' AND NumberOfWeek =  ''' + @_WeekNumber + '''';
 													END
 											END
 											IF( @_DateToSearch IS NOT NULL)
