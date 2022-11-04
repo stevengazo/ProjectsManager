@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body >
-    <header >
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow" style="background: #070429;">
-            <div class="container">
+
+<body style="   background: rgb(9,9,121);
+                background: linear-gradient(0deg, rgba(9,9,121,1) 0%, rgba(250,254,255,1) 100%);">
+    <header  class="text-dark" >
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow bg-light text-dark opacity-75 ">
+            <div class="container opacity-100">
              
                 <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -19,10 +21,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <a class="navbar text-light" asp-area="" asp-controller="Home" asp-action="Index">Control Proyectos</a>
+                            <a class="navbar" asp-area="" asp-controller="Home" asp-action="Index">Control Proyectos</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Gestion Proyectos
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -36,7 +38,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Personal y Asistencia
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -56,7 +58,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Ventas
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -67,7 +69,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Estadisticas
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -82,13 +84,14 @@
             </div>
         </nav>
     </header>
-    <div class="container  ">
-        <main role="main" class="pb-3">
+    
+    <div class="container bg-light rounded" style="margin-top:10px!important; margin-bottom:20px!important;">
+        <main role="main" class="pb-4">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class=" footer text-muted bg-light bg-opacity-10" style="margin-top: 5%!important;">
         <div class="container">
             &copy; 2021 - Control de Proyectos - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
         </div>

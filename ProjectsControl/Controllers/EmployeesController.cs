@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectsControl.Models;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace ProjectsControl.Controllers
 {
     [Authorize]
@@ -26,6 +27,7 @@ namespace ProjectsControl.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.Employees.ToListAsync());
         }
 

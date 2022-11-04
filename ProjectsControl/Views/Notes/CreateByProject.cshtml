@@ -19,7 +19,7 @@
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="d-none">
+                <div class="d-none" style="display:none;">
                     <input asp-for="NotesId" class="d-none" value="@Guid.NewGuid().ToString()" readonly />
                 </div>
 
@@ -58,14 +58,7 @@
                 <div class="row m-3">
                     <div class="card">
                         <div class="card-body">
-                            INFORMACIÓN
-                        </div>
-                    </div>
-                </div>
-                <div class="row m-3">
-                    <div class="card">
-                        <div class="card-body">
-                            INFORMACIÓN
+                            <b>Notas:</b> corresponde a un historial o bitácora del proyecto. Todos los indicentes o información que sea necesario almancenar a futuro es necesario su inclusión. Este registro esta orientado a los coordinadores de proyecto, sin embargo puede extenderse a otros según sea necesario. <b>El autor de esta nota no puede ser modificado</b>
                         </div>
                     </div>
                 </div>

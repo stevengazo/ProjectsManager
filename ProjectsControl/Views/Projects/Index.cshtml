@@ -17,7 +17,7 @@
 <h1>Lista de Proyectos Registrados</h1>
 
 <p>
-    <a asp-action="Create">Registrar nuevo proyecto</a>
+    <a class="btn btn-outline-success" asp-action="Create">Registrar nuevo proyecto</a>
 </p>
 
 
@@ -115,9 +115,9 @@
                                 @Html.DisplayFor(modelItem => item.Customer.Name)
                             </td>
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
-                                <a asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
-                                <a class="text-danger" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
+                                <a class="btn btn-sm btn-outline-success" asp-action="Edit" asp-route-id="@item.ProjectId">Editar</a>
+                                <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-route-id="@item.ProjectId">Detalles</a>
+                                <a class="btn btn-sm btn-outline-error" asp-action="Delete" asp-route-id="@item.ProjectId">Eliminar</a>
                             </td>
                         </tr>
                 }

@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<ProjectsControl.Models.Employee>
 
 @{
+    List<Employee> listEmployee = Model.OrderByDescending(E=> E.IsActive).ToList();
     ViewData["Title"] = "Lista de Empleados ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,39 +15,64 @@
     <thead>
         <tr>
             <th>
-                Nombre                
+                Nombre
             </th>
             <th>
-                Fecha Contratación                
+                Fecha Contratación
             </th>
             <th>
-                Cargo                
+                Cargo
             </th>
-            <th colspan="3" >Acciones</th>
+            <th colspan="3">Acciones</th>
         </tr>
     </thead>
     <tbody style="font-size: 12px;">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateofHiring)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-primary">Editar</a> 
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-info">Detalles</a> 
-            </td>
-            <td>                               
-                <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="btn btn-danger">Borrar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in listEmployee)
+        {
+            if (item.IsActive)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateofHiring)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-primary">Editar</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-info">Detalles</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateofHiring)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-primary">Editar</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-info">Detalles</a>
+                    </td>
+                    <td class="">
+                        Desactivado<br/>
+                        No es posible la inserción de datos
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

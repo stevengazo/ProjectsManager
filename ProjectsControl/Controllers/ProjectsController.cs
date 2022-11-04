@@ -115,7 +115,7 @@ namespace ProjectsControl.Controllers
             var aux = (from proj in _context.Projects select proj.NumberOfProject).Max() + 1;
             ViewData["NumberOfProject"] = aux;
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
-            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
+            ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor") && E.IsActive == true);
             ViewBag.Customers = (from cust in _context.Customers select cust).OrderBy(C => C.Name);
             return View();
         }

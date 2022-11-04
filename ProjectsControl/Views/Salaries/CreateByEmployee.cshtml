@@ -9,42 +9,60 @@
 
 <h4>Salary</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateByEmployee">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="SalaryId" class="control-label"></label>
-                <input asp-for="SalaryId" class="form-control" />
-                <span asp-validation-for="SalaryId" class="text-danger"></span>
+
+<div class="container">
+    <div class="row align-items-start">
+        <!-- FORM-->
+        <div class="col">
+            <form asp-action="CreateByEmployee">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SalaryId" class="control-label"></label>
+                    <input asp-for="SalaryId" class="form-control" />
+                    <span asp-validation-for="SalaryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SalaryAmount" class="control-label"></label>
+                    <input asp-for="SalaryAmount" class="form-control" />
+                    <label><i>Salario en colones</i></label>
+                    <span asp-validation-for="SalaryAmount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DayOfApplication" class="control-label"></label>
+                    <input asp-for="DayOfApplication" type="date" class="form-control" />
+                    <span asp-validation-for="DayOfApplication" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="notes" class="control-label"></label>
+                    <input asp-for="notes" class="form-control" />
+                    <span asp-validation-for="notes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Empleado: </label>
+                    <label class="control-label">@Model.Employee.Name</label>
+                    <input type="text" asp-for="EmployeeId" value="@Model.EmployeeId" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- INFORMATION -->
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Indique el nuevo salario que posee el empleado.
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-            <div class="form-group">
-                <label asp-for="SalaryAmount" class="control-label"></label>
-                <input asp-for="SalaryAmount" class="form-control"  />
-                <label><i>Salario en colones</i></label>
-                <span asp-validation-for="SalaryAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DayOfApplication" class="control-label"></label>
-                <input asp-for="DayOfApplication" type="date" class="form-control" />
-                <span asp-validation-for="DayOfApplication" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="notes" class="control-label"></label>
-                <input asp-for="notes" class="form-control" />
-                <span asp-validation-for="notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Empleado: </label>
-                <label class="control-label">@Model.Employee.Name</label>
-                <input type="text" asp-for ="EmployeeId" value="@Model.EmployeeId" class ="form-control"  readonly />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+
 
 <div>
     <a asp-action="Index">Volver Atras</a>

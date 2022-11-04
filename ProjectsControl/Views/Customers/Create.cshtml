@@ -9,37 +9,60 @@
 
 <h4>Cliente</h4>
 <hr />
-<div >
-    <div>
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Id de Cliente</label>
-                <input asp-for="CustomerId" class="form-control" value="@Guid.NewGuid().ToString()"  readonly />
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Numero de cédula</label>
-                <input asp-for="DNIOfCustomer" class="form-control"/>
-                <span asp-validation-for="DNIOfCustomer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Nombre</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Sector</label>
-                <input asp-for="Sector" class="form-control" />
-                <span asp-validation-for="Sector" class="text-danger"></span>
-            </div>
-            <div class="d-flex flex-row ">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-                <div>
-                    <a asp-action="Index"  class="btn btn-secondary">Volver Atrás</a>
+
+<div class="container">
+    <div class="row align-items-start">
+        <!-- FORM-->
+        <div class="col">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Id de Cliente</label>
+                    <input asp-for="CustomerId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
+                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Numero de cédula</label>
+                    <input asp-for="DNIOfCustomer" class="form-control" />
+                    <span asp-validation-for="DNIOfCustomer" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Nombre</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Sector</label>
+                    <input asp-for="Sector" class="form-control" />
+                    <span asp-validation-for="Sector" class="text-danger"></span>
+                </div>
+                <div class="d-flex flex-row ">
+                    <input type="submit" value="Crear" class="btn btn-primary" />
+                    <div>
+                        <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- INFORMATION -->
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Pagina de registro de clientes. Esta pagina ingresa la información básica del cliente. Posteriormente al registro, podrá añadir proyectos al mismo.
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Verifique los registros del CRM. Los datos se pueden encontrar registrados.
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 

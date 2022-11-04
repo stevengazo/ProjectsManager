@@ -9,59 +9,93 @@
 
 <h4>Registro de nuevo Informe</h4>
 <hr />
-<div>
-    <div>
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="d-none">
-                <label class="control-label">Id De Reporte</label>
-                <input asp-for="ReportId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
-                <span asp-validation-for="ReportId" class="text-danger"></span>
+
+
+
+<div class="container">
+    <div class="row align-items-start">
+        <!-- FORM-->
+        <div class="col">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="d-none">
+                    <label class="control-label">Id De Reporte</label>
+                    <input asp-for="ReportId" class="form-control" value="@Guid.NewGuid().ToString()" readonly />
+                    <span asp-validation-for="ReportId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Numero de informe</label>
+                    <input asp-for="NumberOfReport" class="form-control" value="@ViewBag.NumberOfReport" readonly />
+                    <span asp-validation-for="NumberOfReport" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Autor</label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Inicio</label>
+                    <input asp-for="BeginDate" class="form-control" />
+                    <span asp-validation-for="BeginDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Finalización (o Fecha estimada)</label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Estado</label>
+                    <select asp-for="Status" class="form-control">
+                        <option value="">Seleccione...</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En ejecución">En ejecucion</option>
+                        <option value="En revision">En revision</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notes" class="control-label"></label>
+                    <input asp-for="Notes" class="form-control" />
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProjectId" class="control-label"></label>
+                    <input asp-for="ProjectId" class="form-control" value="@ViewBag.Project.ProjectId" readonly />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+
+
+        </div>
+        <!-- INFORMATION -->
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Número de informe:</b> es asignado de forma automática  una vez se haya realizado el registro del mismo.
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Notas:</b> Indique notas correspondientes a la información del informe. ( así como problemas en su redacción)
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Proyectos sin informe:</b>  Si un proyecto no necesita la redacción de un informe, deberá generar un informe vacio. El sistema marcará que el proyecto ya tiene su informe asignado.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="control-label">Numero de informe</label>
-                <input asp-for="NumberOfReport" class="form-control" value="@ViewBag.NumberOfReport" readonly/>
-                <span asp-validation-for="NumberOfReport" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Autor</label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Inicio</label>
-                <input asp-for="BeginDate" class="form-control" />
-                <span asp-validation-for="BeginDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Finalización (o Fecha estimada)</label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Estado</label>
-                <select asp-for="Status" class="form-control">
-                    <option value="">Seleccione...</option>
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="En ejecución">En ejecucion</option>
-                    <option value="En revision">En revision</option>
-                    <option value="Finalizado">Finalizado</option>
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
-                <input asp-for="ProjectId" class="form-control" value="@ViewBag.Project.ProjectId" readonly/>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
