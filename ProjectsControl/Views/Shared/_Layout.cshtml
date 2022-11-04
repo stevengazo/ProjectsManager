@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
-<body style="   background: rgb(9,9,121);
-                background: linear-gradient(0deg, rgba(9,9,121,1) 0%, rgba(250,254,255,1) 100%);">
+<body style="   background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(72,123,186,1) 100%);">
+
     <header  class="text-dark" >
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow bg-light text-dark opacity-75 ">
+        <nav class="navbar border borderalert-dark rounded navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow bg-light text-dark opacity-75 ">
             <div class="container opacity-100">
              
                 <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -85,14 +86,14 @@
         </nav>
     </header>
     
-    <div class="container bg-light rounded" style="margin-top:10px!important; margin-bottom:20px!important;">
-        <main role="main" class="pb-4">
+    <div class="container mt-4 bg-light rounded border" style="border:1px solid gray;">
+        <main role="main" class="pb-4 mb-2">
             @RenderBody()
         </main>
     </div>
 
-    <footer class=" footer text-muted bg-light bg-opacity-10" style="margin-top: 5%!important;">
-        <div class="container">
+    <footer class=" footer text-muted text-dark bg-opacity-10" >
+        <div class="container text-dark">
             &copy; 2021 - Control de Proyectos - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
         </div>
     </footer>
