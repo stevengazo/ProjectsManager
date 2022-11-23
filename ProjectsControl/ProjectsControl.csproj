@@ -13,6 +13,7 @@ Este sistema se encarga de la gestión interna de:
 -Gastos</Description>
     <PackageProjectUrl>https://github.com/stevengazo/Platzi-MVC</PackageProjectUrl>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
