@@ -1,74 +1,85 @@
 ﻿@model ProjectsControl.Models.Offer
 
 @{
-    ViewData["Title"] = $"Detales Oferta {Model.NumberOfOffer}";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Detalles de la oferta</h1>
-
+<h1>Details</h1>
 
 <div>
     <h4>Offer</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            Numero de Oferta
+            @Html.DisplayNameFor(model => model.NumberOfOffer)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NumberOfOffer)
         </dd>
         <dt class = "col-sm-2">
-            Titulo
+            @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class = "col-sm-2">
-            Tipo
+            @Html.DisplayNameFor(model => model.Type)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Type)
         </dd>
         <dt class = "col-sm-2">
-            Descripción
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
-            Autor
+            @Html.DisplayNameFor(model => model.Author)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Author)
         </dd>
         <dt class = "col-sm-2">
-            Vendedor
+            @Html.DisplayNameFor(model => model.SaleManName)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SaleManName)
         </dd>
         <dt class = "col-sm-2">
-            Fecha de Creación
+            @Html.DisplayNameFor(model => model.DateOfCreation)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateOfCreation)
         </dd>
         <dt class = "col-sm-2">
-            Fecha de Modificación
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeCurrency)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TypeCurrency)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastEdition)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastEdition)
         </dd>
         <dt class = "col-sm-2">
-            Cliente
+            @Html.DisplayNameFor(model => model.Customer)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Name)
+            @Html.DisplayFor(model => model.Customer.CustomerId)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.OfferId" class="btn btn-primary">Editar</a> |
-    <a asp-action="Index" class="btn btn-secondary">Volver Atrás</a>
+    <a asp-action="Edit" asp-route-id="@Model.OfferId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>
