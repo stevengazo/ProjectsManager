@@ -70,6 +70,7 @@ namespace ProjectsControl.Models
                 Author = "Sample of Author",
                 SaleManName = "Sample of name",
                 DateOfCreation = DateTime.Today,
+                Amount = 100.3f,
                 LastEdition = DateTime.Today,
                 CustomerId = ocustomer.CustomerId,        
             };
@@ -116,7 +117,8 @@ namespace ProjectsControl.Models
                 Ubication = "San JoseCosta Rica",
                 NumberOfOffer = "PS1",
                 CustomerId= ocustomer.CustomerId,
-                EmployeeId= Oemployee.EmployeeId
+                EmployeeId= Oemployee.EmployeeId,
+                OfferId = oOffer.OfferId
             };
             Bill obills = new()
             {

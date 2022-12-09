@@ -69,6 +69,7 @@ namespace ProjectsControl.Controllers
             }
             var project = await _context.Projects
                             .Include(p => p.Customer)
+                            .Include(p => p.Offer)
                             .Include(p => p.Employee)
                             .FirstOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
@@ -112,9 +113,15 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Editor,Admin,sales")]
         public IActionResult Create()
         {
+            Dictionary<string,int> Offerstmp = (from offer in _context.Offers 
+                                                where offer.DateOfCreation.Year == DateTime.Today.Year 
+                                                orderby offer.NumberOfOffer descending
+                                                select offer).ToDictionary(O=>O.OfferId,o=>o.NumberOfOffer);
+            ViewBag.offers = Offerstmp;
             var aux = (from proj in _context.Projects select proj.NumberOfProject).Max() + 1;
             ViewData["NumberOfProject"] = aux;
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
+
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor") && E.IsActive == true);
             ViewBag.Customers = (from cust in _context.Customers select cust).OrderBy(C => C.Name);
             return View();
@@ -126,7 +133,7 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Editor,Admin,sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,NumberOfProject,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,Manager,Amount,Currency,Estatus,currency,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
+        public async Task<IActionResult> Create([Bind("ProjectId,NumberOfProject,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,Manager,Amount,Currency,Estatus,currency,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId,OfferId")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -142,7 +149,8 @@ namespace ProjectsControl.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DetailsSimple(string id)
         {
-            Project objProject = (from pj in _context.Projects select pj).Where(P => P.ProjectId == id).Include(P => P.Employee).Include(P => P.Customer).FirstOrDefault();
+            Project objProject = (from pj in _context.Projects select pj).Where(P => P.ProjectId == id).Include(P => P.Employee) .Include(p=>p.Offer)
+                .Include(P => P.Customer).FirstOrDefault();
             return View(objProject);
         }
 
@@ -173,8 +181,6 @@ namespace ProjectsControl.Controllers
             {
                 return View(new List<Project>());
             }
-
-
         }
 
         // GET: Projects/Edit/5
@@ -191,6 +197,12 @@ namespace ProjectsControl.Controllers
             {
                 return NotFound();
             }
+
+            Dictionary<string, int> Offerstmp = (from offer in _context.Offers
+                                                 where offer.DateOfCreation.Year == DateTime.Today.Year
+                                                 orderby offer.NumberOfOffer descending
+                                                 select offer).ToDictionary(O => O.OfferId, o => o.NumberOfOffer);
+            ViewBag.offers= Offerstmp;
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
             ViewBag.Customers = (from cust in _context.Customers select cust).ToDictionary(I => I.CustomerId, I => I.Name);
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
@@ -203,7 +215,7 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Editor,Admin,Sales")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId")] Project project)
+        public async Task<IActionResult> Edit(string id, [Bind("ProjectId,NumberOfTask,ProjectName,OC,OCDate,BeginDate,EndDate,IsOver,TypeOfJob,Details,Ubication,CustomerId,EmployeeId,OfferId")] Project project)
         {
             if (id != project.ProjectId)
             {

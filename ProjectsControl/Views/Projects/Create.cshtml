@@ -155,6 +155,15 @@
                             }
                         </select>
                     </div>
+                    <div class="col-sm-6">
+                        <label asp-for="OfferId" class="control-label">Numero Oferta</label>
+                        <select asp-for="OfferId" class="form-control">
+                            @foreach (var item in ViewBag.offers)
+                            {
+                                <option value="@item.Key">P-S @item.Value </option>
+                            }
+                        </select>
+                    </div>
                 </div>
 
                 <input type="submit" value="Crear" class="btn btn-primary" />
@@ -194,7 +203,7 @@
             </div>
         </div>
     </div>
-    
+
 
     @section Scripts {
         @{

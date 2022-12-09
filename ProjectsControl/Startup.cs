@@ -58,7 +58,7 @@ namespace ProjectsControl
                 Console.WriteLine("String Connection exist in enviroment");
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
-                        Configuration.GetConnectionString($"DefaultConnection - {DBDProjectsEnvConnection}")
+                        DBDProjectsEnvConnection
                     )
                 );
             }

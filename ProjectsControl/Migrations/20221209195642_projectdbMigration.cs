@@ -6,7 +6,7 @@ using ProjectsControl.Models.StoredProcedures;
 
 namespace ProjectsControl.Migrations
 {
-    public partial class mymigration : Migration
+    public partial class projectdbMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,6 +57,8 @@ namespace ProjectsControl.Migrations
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SaleManName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<float>(type: "real", nullable: false),
+                    TypeCurrency = table.Column<float>(type: "real", maxLength: 10, nullable: false),
                     LastEdition = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -94,6 +96,27 @@ namespace ProjectsControl.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Salary",
+                columns: table => new
+                {
+                    SalaryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SalaryAmount = table.Column<double>(type: "float", nullable: false),
+                    DayOfApplication = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Salary", x => x.SalaryId);
+                    table.ForeignKey(
+                        name: "FK_Salary_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -117,7 +140,8 @@ namespace ProjectsControl.Migrations
                     Ubication = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumberOfOffer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    OfferId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,27 +156,11 @@ namespace ProjectsControl.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Salary",
-                columns: table => new
-                {
-                    SalaryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SalaryAmount = table.Column<double>(type: "float", nullable: false),
-                    DayOfApplication = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Salary", x => x.SalaryId);
                     table.ForeignKey(
-                        name: "FK_Salary_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId");
+                        name: "FK_Projects_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "OfferId");
                 });
 
             migrationBuilder.CreateTable(
@@ -305,57 +313,57 @@ namespace ProjectsControl.Migrations
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "CustomerId", "DNIOfCustomer", "Name", "Sector" },
-                values: new object[] { "6e390172-fbf0-4e1e-a7bb-b2cd23a7f4b6", 110, "Sample", "Private" });
+                values: new object[] { "9458082e-df30-4edd-bf45-78d758ad1b43", 110, "Sample", "Private" });
 
             migrationBuilder.InsertData(
                 table: "Employees",
                 columns: new[] { "EmployeeId", "DateOfBirth", "DateOfFired", "DateofHiring", "Email", "EmployeeDNI", "IsActive", "MobileNumber", "Name", "Position", "Salary" },
-                values: new object[] { "51d9992c-dd67-4eaf-916b-bec1dd0c219b", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "sample@grupomecsa.net", 1171292, true, 888, "Sample of name", "d", 0f });
+                values: new object[] { "f677dafe-2a72-4b6c-9976-277caaf2efff", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "sample@grupomecsa.net", 1171292, true, 888, "Sample of name", "d", 0f });
 
             migrationBuilder.InsertData(
                 table: "Actions",
                 columns: new[] { "ActionId", "Author", "DateOfCreation", "Description", "EmployeeId", "IsActive", "Title", "TypeOfAction" },
-                values: new object[] { "c853b3fd-ab96-40fa-86e8-24ab3c96a063", "Sample of author", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "sample of description", "51d9992c-dd67-4eaf-916b-bec1dd0c219b", true, "Sample of title", "sample of type" });
+                values: new object[] { "c305e6c9-972f-4551-9d95-60663c1d5006", "Sample of author", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "sample of description", "f677dafe-2a72-4b6c-9976-277caaf2efff", true, "Sample of title", "sample of type" });
 
             migrationBuilder.InsertData(
                 table: "Offers",
-                columns: new[] { "OfferId", "Author", "CustomerId", "DateOfCreation", "Description", "LastEdition", "NumberOfOffer", "SaleManName", "Title", "Type" },
-                values: new object[] { "f0f87a60-c1f8-4a56-bc18-6af58b43c5f3", "Sample of Author", "6e390172-fbf0-4e1e-a7bb-b2cd23a7f4b6", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "sample of description", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), 1, "Sample of name", "Title Sample", "installation" });
+                columns: new[] { "OfferId", "Amount", "Author", "CustomerId", "DateOfCreation", "Description", "LastEdition", "NumberOfOffer", "SaleManName", "Title", "Type", "TypeCurrency" },
+                values: new object[] { "2b10e1f4-ee65-41ac-999e-56bcf3033b6b", 100.3f, "Sample of Author", "9458082e-df30-4edd-bf45-78d758ad1b43", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "sample of description", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), 1, "Sample of name", "Title Sample", "installation", 0f });
 
             migrationBuilder.InsertData(
                 table: "Projects",
-                columns: new[] { "ProjectId", "Amount", "BeginDate", "Currency", "CustomerId", "Details", "EmployeeId", "EndDate", "Estatus", "IsOver", "Manager", "NumberOfOffer", "NumberOfProject", "NumberOfTask", "OC", "OCDate", "PendingAmount", "ProjectName", "Technician", "TypeOfJob", "Ubication" },
-                values: new object[] { "fed6b256-4e1b-426f-97a1-ce8976e5d10b", 100f, new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "Dolar", "6e390172-fbf0-4e1e-a7bb-b2cd23a7f4b6", "Sample of details", "51d9992c-dd67-4eaf-916b-bec1dd0c219b", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "In progress", false, "Sample of Name", "PS1", 1, 1, "Oc Id Sample", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), 0.0, "Sample Of Project", "Sample", "Sample of Job", "San JoseCosta Rica" });
+                columns: new[] { "ProjectId", "Amount", "BeginDate", "Currency", "CustomerId", "Details", "EmployeeId", "EndDate", "Estatus", "IsOver", "Manager", "NumberOfOffer", "NumberOfProject", "NumberOfTask", "OC", "OCDate", "OfferId", "PendingAmount", "ProjectName", "Technician", "TypeOfJob", "Ubication" },
+                values: new object[] { "cab19fb2-a49b-47e7-8a5a-1168ee3450cd", 100f, new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "Dolar", "9458082e-df30-4edd-bf45-78d758ad1b43", "Sample of details", "f677dafe-2a72-4b6c-9976-277caaf2efff", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "In progress", false, "Sample of Name", "PS1", 1, 1, "Oc Id Sample", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "2b10e1f4-ee65-41ac-999e-56bcf3033b6b", 0.0, "Sample Of Project", "Sample", "Sample of Job", "San JoseCosta Rica" });
 
             migrationBuilder.InsertData(
                 table: "Asistances",
                 columns: new[] { "AsistanceId", "DateOfBegin", "DateOfEnd", "EmployeeId", "NumberOfWeek", "ProjectId" },
-                values: new object[] { "ece3af32-30aa-48b3-912b-e84d39a6149a", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "51d9992c-dd67-4eaf-916b-bec1dd0c219b", "01", "fed6b256-4e1b-426f-97a1-ce8976e5d10b" });
+                values: new object[] { "5c4c26c5-1007-4060-963f-906f01c159b9", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "f677dafe-2a72-4b6c-9976-277caaf2efff", "01", "cab19fb2-a49b-47e7-8a5a-1168ee3450cd" });
 
             migrationBuilder.InsertData(
                 table: "Bill",
                 columns: new[] { "BillId", "Amount", "Author", "Currency", "DateOfCreation", "Notes", "NumberOfBill", "ProjectId" },
-                values: new object[] { "96e460ff-e949-47f8-a2ff-d2a7732757d1", 1f, "Sample", "Dolar", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "Sample of notes", 1, "fed6b256-4e1b-426f-97a1-ce8976e5d10b" });
+                values: new object[] { "f7794f38-9206-43a0-8b5e-cad5ca3918e7", 1f, "Sample", "Dolar", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "Sample of notes", 1, "cab19fb2-a49b-47e7-8a5a-1168ee3450cd" });
 
             migrationBuilder.InsertData(
                 table: "Expensives",
                 columns: new[] { "ExpensiveId", "Amount", "Author", "Currency", "LastModification", "Note", "ProjectId", "Type" },
-                values: new object[] { "0dd145f1-8a55-495e-9452-69b648318644", 1.12f, "Sample Of authot", "Dolar", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "Sample", "fed6b256-4e1b-426f-97a1-ce8976e5d10b", "Km Cost" });
+                values: new object[] { "70d2d552-b460-4801-ac7f-d628651f2964", 1.12f, "Sample Of authot", "Dolar", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "Sample", "cab19fb2-a49b-47e7-8a5a-1168ee3450cd", "Km Cost" });
 
             migrationBuilder.InsertData(
                 table: "Notes",
                 columns: new[] { "NotesId", "Author", "DateOfCreation", "NoteDescription", "ProjectId", "Title" },
-                values: new object[] { "d2631946-81f8-4b25-ac17-43bd916a295b", "Sample", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "Description of the action", "fed6b256-4e1b-426f-97a1-ce8976e5d10b", "Sample" });
+                values: new object[] { "03f3c3a1-0566-4af7-8aba-4a257773895b", "Sample", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "Description of the action", "cab19fb2-a49b-47e7-8a5a-1168ee3450cd", "Sample" });
 
             migrationBuilder.InsertData(
                 table: "Report",
                 columns: new[] { "ReportId", "Author", "BeginDate", "EndDate", "Notes", "NumberOfReport", "ProjectId", "Status" },
-                values: new object[] { "8431a55c-0413-489b-a505-3b28259c12d0", "Sample of author", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "sample of notes", 1, "fed6b256-4e1b-426f-97a1-ce8976e5d10b", "sample of estatus" });
+                values: new object[] { "e858869a-6bc8-49f0-b359-97e51cff7c36", "Sample of author", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "sample of notes", 1, "cab19fb2-a49b-47e7-8a5a-1168ee3450cd", "sample of estatus" });
 
             migrationBuilder.InsertData(
                 table: "ExtraHours",
                 columns: new[] { "ExtraHourId", "AceptedBy", "AsistanceId", "BeginTime", "EmployeeId", "EndTime", "IsPaid", "Notes", "NumberOfWeek", "Reason", "TypeOfHour" },
-                values: new object[] { "ba96ff28-8492-4989-85e1-a49319e4fce9", "Nyree", "ece3af32-30aa-48b3-912b-e84d39a6149a", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), "51d9992c-dd67-4eaf-916b-bec1dd0c219b", new DateTime(2022, 9, 19, 0, 0, 0, 0, DateTimeKind.Local), false, "as", "01", "ad", "double" });
+                values: new object[] { "ac7d68e0-c829-417e-b890-cea7d1abe2d8", "Nyree", "5c4c26c5-1007-4060-963f-906f01c159b9", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), "f677dafe-2a72-4b6c-9976-277caaf2efff", new DateTime(2022, 12, 9, 0, 0, 0, 0, DateTimeKind.Local), false, "as", "01", "ad", "double" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Actions_EmployeeId",
@@ -413,6 +421,11 @@ namespace ProjectsControl.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_OfferId",
+                table: "Projects",
+                column: "OfferId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Report_ProjectId",
                 table: "Report",
                 column: "ProjectId");
@@ -442,9 +455,6 @@ namespace ProjectsControl.Migrations
                 name: "Notes");
 
             migrationBuilder.DropTable(
-                name: "Offers");
-
-            migrationBuilder.DropTable(
                 name: "Report");
 
             migrationBuilder.DropTable(
@@ -457,10 +467,13 @@ namespace ProjectsControl.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "Offers");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
         }
     }
 }
