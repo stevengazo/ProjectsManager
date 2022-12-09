@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Gestión Proyectos Grupo Mecsa</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    
 </head>
 
 <body style="   background: rgb(255,255,255);
@@ -74,7 +75,7 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(72,123,186,1) 100
                                 Estadisticas
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Index">Proyectos</a>
+                                <a class="dropdown-item"  asp-controller="Chart" asp-action="Projects">Proyectos</a>
                                 <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Index">Asistencias</a>
                                 <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Ventas">Ventas</a>
                             </div>
@@ -97,6 +98,7 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(72,123,186,1) 100
             &copy; 2021 - Control de Proyectos - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js" integrity="sha512-tQYZBKe34uzoeOjY9jr3MX7R/mo7n25vnqbnrkskGr4D6YOoPYSpyafUAzQVjV6xAozAqUFIEFsCO4z8mnVBXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
