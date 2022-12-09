@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  projectscontrol:
+    image: ${DOCKER_REGISTRY-}projectscontrol
+    build:
+      context: .
+      dockerfile: ProjectsControl/Dockerfile    
+    ports:
+      - 80:80
+    environment:
+      - IdentityConnection= Data Source=db;Initial Catalog=DBIdentity;User=sa;Password=Password123
+      - RayosNoConnection= Data Source=db;Initial Catalog=DBProjects;User=sa;Password=Password123"
+    depends_on:
+      - "db"
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y 
+      - SA_PASSWORD=Password123
