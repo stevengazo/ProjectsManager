@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using ProjectsControl.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,17 +24,21 @@ namespace ProjectsControl.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _applicationDb;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext dbContext
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _applicationDb = dbContext;
         }
 
         [BindProperty]
@@ -76,6 +81,25 @@ namespace ProjectsControl.Areas.Identity.Pages.Account
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                // Revisión usuarios existentes
+
+                int quantityOfUsers = _applicationDb.Users.Count();
+                if(quantityOfUsers == 1)
+                {
+                    List<IdentityRole> listRoles = _applicationDb.Roles.ToList();
+                    foreach (var rol in listRoles)
+                    {
+                        IdentityUserRole<string> identityUserRole = new();
+                        identityUserRole.RoleId = rol.Id;
+                        identityUserRole.UserId = user.Id;
+
+                        _applicationDb.UserRoles.Add(identityUserRole);
+                    }
+                    _applicationDb.SaveChanges();
+                }
+
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("usuario creó una nueva cuenta con contraseña");

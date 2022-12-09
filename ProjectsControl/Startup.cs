@@ -30,25 +30,63 @@ namespace ProjectsControl
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            // Identity
+            string IdentityEnvConnection = Environment.GetEnvironmentVariable("IdentityConnection");
+            if (!string.IsNullOrEmpty(IdentityEnvConnection))
+            {
+                Console.WriteLine($" String Connection exist in Enviroment - {IdentityEnvConnection}");
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
-                        Configuration.GetConnectionString("DefaultConnection")      
+                        IdentityEnvConnection
                     )
                );
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(
+                         Configuration.GetConnectionString("DefaultConnection")
+                    )
+               );
+                Console.WriteLine($"String connection in Configuration - {Configuration.GetConnectionString("DefaultConnection")}");
+            }
+
+            // Projects
+            string DBDProjectsEnvConnection = Environment.GetEnvironmentVariable("DBProjectsConnection");
+            if (!string.IsNullOrEmpty(DBDProjectsEnvConnection))
+            {
+                Console.WriteLine("String Connection exist in enviroment");
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString($"DefaultConnection - {DBDProjectsEnvConnection}")
+                    )
+                );
+            }
+            else
+            {
+                Console.WriteLine($"String Connection exist in configuration -{Configuration.GetConnectionString("DBProjectsConnection")}");
+                services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer(
+                            Configuration.GetConnectionString("DBProjectsConnection")
+                        )
+                   );
+            }
+
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(
                 options => options.SignIn.RequireConfirmedAccount = true
                 ).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-         
+
 
             services.AddControllersWithViews();
 
             /// DEPENDENCY INJECTION PROJECTS DATA BASE 
             string connString = ConfigurationExtensions.GetConnectionString(this.Configuration, "DBProjectsConnection");
             services.AddDbContext<DBProjectContext>(
-                    option=>option.UseSqlServer(connString)
+                    option => option.UseSqlServer(connString)
                 );
             services.AddMvc(options => options.EnableEndpointRouting = true);
         }
@@ -71,7 +109,7 @@ namespace ProjectsControl
             app.UseStaticFiles();
 
             app.UseRouting();
-          
+
             app.UseAuthentication();
             app.UseAuthorization();
 
