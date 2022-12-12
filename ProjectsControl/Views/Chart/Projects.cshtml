@@ -6,12 +6,44 @@
   }
  
 
+  <div id="chartContainer" style="height: 400px; width: 60%;"></div>
+
+<script type="text/javascript">
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+			text: "My First Chart in ASP.NET MVC"
+		},
+		data: [
+		{
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "column",
+			dataPoints: [
+				{ label: "apple",  y: 10  },
+				{ label: "orange", y: 15  },
+				{ label: "banana", y: 25  },
+				{ label: "mango",  y: 30  },
+				{ label: "grape",  y: 28  }
+			]
+		}
+		]
+	});
+	chart.render();
+}
+</script>
+
+
+
+
+
 <div>
     <h3>
         Estadisticas de Proyectos
     </h3>
     <div>
     <canvas id="myCanvas" width="400" height="400"></canvas>
-        @Html.
     </div>
 </div>
+
+
+

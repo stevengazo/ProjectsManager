@@ -7,7 +7,8 @@
 
 <h1>Detalles del cliente</h1>
 
-<div>
+<div class="align-items-end">
+    <a asp-controller="Offers" asp-action="Create" asp-route-id="@Model.CustomerId" class="btn btn-success">Agregar Oferta</a> |  
     <a asp-action="Edit" asp-route-id="@Model.CustomerId" class="btn btn-primary">Editar</a> |  
     <a asp-action="Index" class="btn btn-secondary"> Volver Atrás</a>
 </div>

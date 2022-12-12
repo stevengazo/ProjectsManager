@@ -19,7 +19,7 @@
             <th>
                 Sector                
             </th>
-            <th>
+            <th colspan="3">
                 Acciones
             </th>
         </tr>
@@ -34,10 +34,11 @@
                 @Html.DisplayFor(modelItem => item.Sector)
             </td>
             <td>
+                <a asp-controller="Offers" asp-action="Create" asp-route-id="@item.CustomerId" class="btn btn-success">Agregar Oferta</a> |  
                 <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-primary">Editar</a> 
             </td>
             <td>
-                <a asp-controller="Customer" asp-action="Details" asp-route-id="@item.CustomerId" class="btn btn-info">Detalles</a> |
+                <a asp-controller="Customer" asp-action="Details" asp-route-id="@item.CustomerId" class="btn btn-info">Detalls</a> |
             </td>
             <td>                
                 <a   asp-action="Delete" asp-route-id="@item.CustomerId" class="btn btn-danger">Eliminar</a>

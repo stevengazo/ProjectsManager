@@ -18,6 +18,13 @@ namespace ProjectsControl.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SearchOffer()
+        {
+            return View();
+        }
+
+
         // GET: Offers
         public async Task<IActionResult> Index()
         {
@@ -56,8 +63,10 @@ namespace ProjectsControl.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OfferId,NumberOfOffer,Title,Type,Description,Author,SaleManName,DateOfCreation,Amount,TypeCurrency,LastEdition,CustomerId")] Offer offer)
+        public async Task<IActionResult> Create([Bind("OfferId,NumberOfOffer,Title,Type,Description,Author,SaleManName,Amount,TypeCurrency,CustomerId")] Offer offer)
         {
+            offer.DateOfCreation = DateTime.Now;
+            offer.LastEdition = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _context.Add(offer);

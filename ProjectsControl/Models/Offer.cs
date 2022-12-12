@@ -56,7 +56,7 @@ namespace ProjectsControl.Models
         /// type of currency
         /// </summary>
         [MaxLength(10)]
-        public float TypeCurrency { get; set; }
+        public string TypeCurrency { get; set; }
         /// <summary>
         /// Date of last Modification
         /// </summary>

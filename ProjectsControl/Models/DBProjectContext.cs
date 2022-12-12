@@ -71,6 +71,7 @@ namespace ProjectsControl.Models
                 SaleManName = "Sample of name",
                 DateOfCreation = DateTime.Today,
                 Amount = 100.3f,
+                TypeCurrency = "dolar",
                 LastEdition = DateTime.Today,
                 CustomerId = ocustomer.CustomerId,        
             };

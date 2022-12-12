@@ -28,7 +28,6 @@ Este sistema se encarga de la gestión interna de:
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chart.js" Version="3.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
