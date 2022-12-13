@@ -26,7 +26,7 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Admin,Editor,Lector")]
         public ActionResult Projects()
         {
-           /* Dictionary<int,int> ProjectsByYear = new Dictionary<int,int>();
+            Dictionary<int,int> ProjectsByYear = new Dictionary<int,int>();
             int[] years = (from project in _context.Projects
                            select project.BeginDate.Year).Distinct().ToArray();
             for (int i = 0; i < years.Length; i++)
@@ -37,7 +37,8 @@ namespace ProjectsControl.Controllers
                                 ).Count();
                 ProjectsByYear.Add(years[i], quantity);
             }
-            ViewBag.ProjectsByYear = ProjectsByYear;*/
+
+            ViewBag.ProjectsByYear = ProjectsByYear;
             return View();
         }
 

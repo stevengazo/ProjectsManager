@@ -16,7 +16,7 @@ namespace ProjectsControl.Models
         /// Number of DNI of the client
         /// </summary>
         [Required(ErrorMessage ="Numero de Cedula Requerido")]
-        public double DNIOfCustomer { get; set; }
+        public int DNIOfCustomer { get; set; }
         /// <summary>
         /// Name of the client 
         /// </summary>

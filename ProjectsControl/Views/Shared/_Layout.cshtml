@@ -75,9 +75,9 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(72,123,186,1) 100
                                 Estadisticas
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"  asp-controller="Chart" asp-action="Projects">Proyectos</a>
-                                <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Index">Asistencias</a>
-                                <a class="dropdown-item"  asp-controller="Stadistic" asp-action="Ventas">Ventas</a>
+                                <!---<a class="dropdown-item"  asp-controller="Chart" asp-action="Projects">Proyectos</a> -->
+                                <!--<a class="dropdown-item"  asp-controller="Stadistic" asp-action="Index">Asistencias</a> -->
+                                <!--<a class="dropdown-item"  asp-controller="Stadistic" asp-action="Ventas">Ventas</a>-->
                             </div>
                         </li>
                     </ul>
@@ -87,7 +87,7 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(72,123,186,1) 100
         </nav>
     </header>
     
-    <div class="container mt-4 bg-light rounded border" style="border:1px solid gray;">
+    <div class="container mt-1 bg-light rounded border w-75" style="border:1px solid gray;">
         <main role="main" class="pb-4 mb-2">
             @RenderBody()
         </main>
