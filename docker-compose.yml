@@ -9,7 +9,7 @@ services:
     ports:
       - 80:80
     environment:
-      - IdentityConnection= Data Source=db;Initial Catalog=DBIdentity;User=sa;Password=Password123
+      - IdentityConnection= Data Source=db;Initial Catalog=DBIdentityProjects;User=sa;Password=Password123
       - DBProjectsConnection= Data Source=db;Initial Catalog=DBProjects;User=sa;Password=Password123
     depends_on:
       - "db"

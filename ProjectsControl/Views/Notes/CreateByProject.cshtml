@@ -68,6 +68,11 @@
 </div>
 
 
+<div>
+    <a asp-controller="Projects" asp-action="Details" asp-route-id="@ViewBag.ProjectId" class="btn btn-secondary">Volver atrás</a>
+</div>
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

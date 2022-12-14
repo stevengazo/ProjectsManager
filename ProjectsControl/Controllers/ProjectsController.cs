@@ -113,10 +113,10 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Editor,Admin,sales")]
         public IActionResult Create()
         {
-            Dictionary<string,int> Offerstmp = (from offer in _context.Offers 
-                                                where offer.DateOfCreation.Year == DateTime.Today.Year 
-                                                orderby offer.NumberOfOffer descending
-                                                select offer).ToDictionary(O=>O.OfferId,o=>o.NumberOfOffer);
+            Dictionary<string, int> Offerstmp = (from offer in _context.Offers
+                                                 where offer.DateOfCreation.Year == DateTime.Today.Year
+                                                 orderby offer.NumberOfOffer descending
+                                                 select offer).ToDictionary(O => O.OfferId, o => o.NumberOfOffer);
             ViewBag.offers = Offerstmp;
             var aux = (from proj in _context.Projects select proj.NumberOfProject).Max() + 1;
             ViewData["NumberOfProject"] = aux;
@@ -143,13 +143,13 @@ namespace ProjectsControl.Controllers
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
-            return View(project);
+            return RedirectToAction("DetailsSimple", new { id = project.ProjectId });
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> DetailsSimple(string id)
         {
-            Project objProject = (from pj in _context.Projects select pj).Where(P => P.ProjectId == id).Include(P => P.Employee) .Include(p=>p.Offer)
+            Project objProject = (from pj in _context.Projects select pj).Where(P => P.ProjectId == id).Include(P => P.Employee).Include(p => p.Offer)
                 .Include(P => P.Customer).FirstOrDefault();
             return View(objProject);
         }
@@ -202,7 +202,7 @@ namespace ProjectsControl.Controllers
                                                  where offer.DateOfCreation.Year == DateTime.Today.Year
                                                  orderby offer.NumberOfOffer descending
                                                  select offer).ToDictionary(O => O.OfferId, o => o.NumberOfOffer);
-            ViewBag.offers= Offerstmp;
+            ViewBag.offers = Offerstmp;
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
             ViewBag.Customers = (from cust in _context.Customers select cust).ToDictionary(I => I.CustomerId, I => I.Name);
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
@@ -245,7 +245,7 @@ namespace ProjectsControl.Controllers
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", project.CustomerId);
             ViewBag.Employees = (from empl in _context.Employees select empl).Where(E => E.Position.Equals("Vendedor"));
-            return View(project);
+            return RedirectToAction("DetailsSimple", new { id = project.ProjectId });
         }
 
         // GET: Projects/Delete/5
@@ -278,7 +278,7 @@ namespace ProjectsControl.Controllers
             var project = await _context.Projects.FindAsync(id);
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Search");
         }
 
         [AllowAnonymous]
@@ -499,6 +499,8 @@ namespace ProjectsControl.Controllers
                 return null;
             }
         }
+
+     
         #endregion
 
     }

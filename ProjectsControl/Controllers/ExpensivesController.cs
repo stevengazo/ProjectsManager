@@ -70,7 +70,7 @@ namespace ProjectsControl.Controllers
             {
                 _context.Add(expensive);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Projects", new { id = expensive.ProjectId });
             }
             ViewData["ProjectId"] = id;
             return View(expensive);
@@ -96,7 +96,7 @@ namespace ProjectsControl.Controllers
             {
                 _context.Add(expensive);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Projects", new { id = expensive.ProjectId });
             }
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId");
             return View(expensive);
@@ -189,7 +189,47 @@ namespace ProjectsControl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ListByProject(string id)
+        {
+            var data = ArrayOfExpensives(id);
+            return View(data);
+        }
+
         #region Internal Methods
+
+        /// <summary>
+        /// Classify the Expensives of a projct
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<Expensive[]> ArrayOfExpensives(string id)
+        {
+            try
+            {
+                List<Expensive[]> ListOfArrays = new();
+                List<string> listOfTypes = new ();
+                using (var context = _context)
+                {
+                   listOfTypes = (from exp
+                                   in _context.Expensives
+                                   select exp.Type).Distinct().ToList();
+                }
+                
+                foreach (var type in listOfTypes)
+                {
+                    var tmp = (from exp in _context.Expensives
+                               where exp.Type.Equals(type)
+                               select exp).ToArray();
+                }
+                return ListOfArrays;
+            }
+            catch (Exception E)
+            {
+                return new List<Expensive[]>();
+            }
+        }
+
         [AllowAnonymous]
         private bool ExpensiveExists(string id)
         {

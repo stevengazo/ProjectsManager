@@ -71,10 +71,10 @@ namespace ProjectsControl.Controllers
             {
                 _context.Add(notes);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Projects", new { id = notes.ProjectId });
             }
             ViewData["ProjectId"] = id;
-            return View(notes);
+            return View();
         }
         // POST: Notes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -88,7 +88,7 @@ namespace ProjectsControl.Controllers
             {
                 _context.Add(notes);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Projects", new { id = notes.ProjectId });
             }
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", notes.ProjectId);
             return View(notes);
@@ -143,7 +143,8 @@ namespace ProjectsControl.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Projects", new { id = notes.ProjectId });
+                //return RedirectToAction(nameof(Index));
             }
             ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectId", notes.ProjectId);
             return View(notes);
@@ -178,7 +179,7 @@ namespace ProjectsControl.Controllers
             var notes = await _context.Notes.FindAsync(id);
             _context.Notes.Remove(notes);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Projects", new { id = notes.ProjectId });
         }
         [AllowAnonymous]
         private bool NotesExists(string id)

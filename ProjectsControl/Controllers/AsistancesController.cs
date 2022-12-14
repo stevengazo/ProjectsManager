@@ -57,7 +57,7 @@ namespace ProjectsControl.Controllers
                     _context.SaveChanges();                   
                     ViewBag.ErrorMessage = "Asistencias Agregadas";
                     List<Asistance> sample1 = new List<Asistance>();
-                    return View(sample1);
+                    return RedirectToAction("Search");
                 }
                 else
                 {

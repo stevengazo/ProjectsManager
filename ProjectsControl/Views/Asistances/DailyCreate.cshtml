@@ -65,31 +65,46 @@
 
 
 
+<div class="container">
+    <div class="col-auto">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Titulo-->
+                <div class="col-md-6">
+                    <div class="flex-row">
+                        <div>
+                            <h3>
+                                Asistencia Diaria de Proyectos
+                            </h3>
+                            <p>Esta pagina permite registrar la asistencia diaria a los proyectos. Aqui solamente se mostrará el personal con el cargo de "técnico" o "ayudante". Si no desear registrar la asistencia de una persona. Simplemente elimina su registro. </p>
+                        </div>
+                        <div class="justify-content-center">
+                            <label>@ViewBag.ErrorMessage</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Explicacion-->
+                <div class="col-6">
+                    <div class="col-auto">
+                        <h6>
+                            Intervalo de Fechas Ultimas Semanas
+                        </h6>
+                        <p>
+                            Se muestran las últimas semanas registradas en el sistema.
+                            Seleccione la semana que corresponda. Si la semana especificada,
+                            no aparece, intente realizar la inserción manual de la asistencia, o
+                            bien la creación de nueva semana.
+                        </p>
+                    </div>
+                </div>
 
-
-
-
-
-
-
-
-<div class="d-flex flex-row">
-    <div>
-        <div class="flex-row">
-            <div>
-                <h2>
-                    Asistencia Diaria de Proyectos
-                </h2>
-                <p>Esta pagina permite registrar la asistencia diaria a los proyectos. Aqui solamente se mostrará el personal con el cargo de "técnico" o "ayudante". Si no desear registrar la asistencia de una persona. Simplemente elimina su registro. </p>
-
-            </div>
-            <div class="justify-content-center">
-                <label>@ViewBag.ErrorMessage</label>
             </div>
         </div>
-
+    </div>
+    <!--Formulario-->
+    <div class="col-auto">
         <form method="post">
-            <table class="table table-hover" id="table-asistances" onchange="orderTable()">
+            <table class="table table-responsive-sm table-hover" id="table-asistances" onchange="orderTable()">
                 <thead>
                     <tr>
                         <td>
@@ -107,9 +122,9 @@
                         <td>
                             N°Semana
                         </td>
-                        <td>
+                        <td colspan="3">
                             Ausente
-                        </td>
+                            </t>
                         <td>
                         </td>
                     </tr>
@@ -146,10 +161,10 @@
                             </td>
                             <td>
                                 <!--DateOfEnd-->
-                                <input  asp-for="@Model[i].DateOfEnd" min="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-ddThh:mm")" max="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-ddThh:mm")" class="form-control-sm" />
+                                <input asp-for="@Model[i].DateOfEnd" min="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-ddThh:mm")" max="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-ddThh:mm")" class="form-control-sm" />
                             </td>
                             <td>
-                                <!--Number Of Week-->                                
+                                <!--Number Of Week-->
                                 <input type="week" asp-for="@Model[i].NumberOfWeek" class="form-control" />
                             </td>
                             <td>
@@ -161,10 +176,6 @@
                                 <!--Delete Row-->
                                 <div id="Delete-@i" class=" btn btn-outline-danger" onclick="deleteRow(this)">Borrar</div>
                             </td>
-                            <td>
-                                <!--PRUEBA Row-->
-                                <input type="week" class="form-control"  />
-                            </td>
                         </tr>
                     }
                 </tbody>
@@ -174,17 +185,7 @@
             </div>
         </form>
     </div>
-    <div class="col-6">
-        <h6>
-            Intervalo de Fechas Ultimas Semanas
-        </h6>
-        <p>
-            Se muestran las últimas semanas registradas en el sistema.<br />
-            Seleccione la semana que corresponda. Si la semana especificada,<br />
-            no aparece, intente realizar la inserción manual de la asistencia, o <br />
-            bien la creación de nueva semana.
-        </p>
-        <div class="d-flex flex-column ">
-        </div>
-    </div>
 </div>
+
+
+

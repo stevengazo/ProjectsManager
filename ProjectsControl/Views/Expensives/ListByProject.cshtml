@@ -1,0 +1,41 @@
+﻿@model List<Expensive[]>
+
+@{
+    ViewData["Title"] = "Lista de Gastos Registrados del Proyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+
+}
+
+
+
+@foreach (Expensive[] Item in Model)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Info
+                </th>
+            </tr>
+        </thead>
+       <tbody>
+           @for (var i = 0; i < Item.Count(); i++)
+          {
+           <tr>
+                @Item[i].Type   
+           </tr>              
+           <tr>
+                @Item[i].Author   
+           </tr>             
+                      <tr>
+                @Item[i].Note
+           </tr>             
+          }
+       </tbody>
+    </table>
+}
+
+
