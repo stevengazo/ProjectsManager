@@ -192,6 +192,7 @@ namespace ProjectsControl.Controllers
         [HttpGet]
         public async Task<IActionResult> ListByProject(string id)
         {
+            ViewBag.Project = (from proj in _context.Projects where proj.ProjectId == id select proj).FirstOrDefault();
             var data = ArrayOfExpensives(id);
             return View(data);
         }
@@ -211,17 +212,20 @@ namespace ProjectsControl.Controllers
                 List<string> listOfTypes = new ();
                 using (var context = _context)
                 {
-                   listOfTypes = (from exp
-                                   in _context.Expensives
-                                   select exp.Type).Distinct().ToList();
+                    listOfTypes =  (from exp
+                                    in context.Expensives
+                                    where exp.ProjectId == id
+                                    select exp.Type.ToString()).Distinct().ToList();
+                    foreach (var item in listOfTypes)
+                    {
+                        var tmp = (from data in _context.Expensives
+                                   where data.Type == item
+                                   select data);
+                        ListOfArrays.Add(tmp.ToArray());
+                    }
                 }
                 
-                foreach (var type in listOfTypes)
-                {
-                    var tmp = (from exp in _context.Expensives
-                               where exp.Type.Equals(type)
-                               select exp).ToArray();
-                }
+
                 return ListOfArrays;
             }
             catch (Exception E)

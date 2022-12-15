@@ -38,11 +38,12 @@
                 <div class="form-group">
                     <label class="control-label">Tipo</label>
                     <select asp-for="Type" class="form-control">
-                        <option value="Kilometraje">"Kilometraje"</option>
+                        <option value="Kilometraje">Kilometraje</option>
                         <option value="Materiales Varios">Materiales Varios</option>
                         <option value="Materiales Mecsa">Materiales Mecsa</option>
                         <option value="Viaticos">Viaticos</option>
                         <option value="Gastos Administrativos">Gastos Administrativos</option>
+                        <option value="Imprevistos">Otros (imprevistos)</option>
                     </select>
                     <span asp-validation-for="Type" class="text-danger"></span>
                 </div>
@@ -53,7 +54,10 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Moneda</label>
-                    <input asp-for="Currency" class="form-control" />
+                    <select asp-for="Currency" class="form-control" >
+                        <option value="Colón">Colón</option>
+                        <option value="Dolar">Dolar</option>
+                    </select>
                     <span asp-validation-for="Currency" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -72,7 +76,7 @@
                 <div class="row m-3">
                     <div class="card">
                         <div class="card-body">
-                            Esta vista permite el registro de gastos asociados al proyecto.
+                            Esta vista permite el registro de gastos asociados al proyecto. Es recomendable el ingreso de resumenes de gastos según la categoría. De esta forma se obtiene un resultado más simplificado.
                         </div>
                     </div>
                 </div>

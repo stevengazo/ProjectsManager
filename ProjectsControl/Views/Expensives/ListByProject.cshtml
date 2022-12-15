@@ -4,38 +4,102 @@
     ViewData["Title"] = "Lista de Gastos Registrados del Proyecto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    float amount = 0f;
 
+    Project project = ViewBag.Project;
 
 
 }
 
+<div class="mb-3">
+<h3>
+    Gastos del Proyecto @project.ProjectName | Número @project.NumberOfProject
+</h3>
+<p>
+    Lista de gastos detallada según el tipo de registro realizado.
+</p>
+</div>
 
 
 @foreach (Expensive[] Item in Model)
-{
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Info
-                </th>
-            </tr>
-        </thead>
-       <tbody>
-           @for (var i = 0; i < Item.Count(); i++)
-          {
-           <tr>
-                @Item[i].Type   
-           </tr>              
-           <tr>
-                @Item[i].Author   
-           </tr>             
-                      <tr>
-                @Item[i].Note
-           </tr>             
-          }
-       </tbody>
-    </table>
-}
+    if (Item.Count() > 0)
+    {
+        {
+            <h4>
+                Costos - @Item[0].Type
+            </h4>
+        }
+        <hr />
+
+        <table class="table table-light table-hover table-striped mb-2">
+            <thead>
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Moneda
+                    </th>
+                    <th>
+                        Monto
+                    </th>
+                    <th colspan="2">
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (var i = 0; i < Item.Count(); i++)
+                {
+                    <tr>
+                        <td>
+                            @Item[i].LastModification.ToShortDateString()
+                        </td>
+                        <td>
+                            @Item[i].Currency
+                        </td>
+                        <td>
+                            @if(Item[i].Currency.Equals("Dolar" )){
+                              <span>$</span> @Item[i].Amount
+                            }else{
+                              <span>₡</span> @Item[i].Amount
+                            }                            
+                            @{
+                                amount = amount + Item[i].Amount;
+                            }
+                        </td>
+                         <td>
+                        <a asp-controller="Expensives" asp-action="Details" asp-route-id="@Item[i].ExpensiveId" class="btn btn-outline-success">  Ver </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Expensives" asp-action="Delete" asp-route-id="@Item[i].ExpensiveId" class="btn btn-outline-danger">  Eliminar </a>
+                    </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                    </td>
+ 
+                    <td>
+                        <strong>
+                            Monto Total
+                        </strong>
+                    </td>
+
+                    <td>
+                        @amount.ToString()
+                        @{
+                            amount = 0;
+                        }
+                    </td>
+                    <td>
+
+                    </td>
+                   <td></td>
+                </tr>
+            </tbody>
+        </table>
+    }
 
 
