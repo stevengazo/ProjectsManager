@@ -106,7 +106,7 @@
             <th>Ubicacion</th>
             <th>Cliente</th>
             <th>Vendedor</th>
-            <th></th>
+            <th colspan="3"> Acciones</th>
         </tr>
     </thead>
     <tbody style="font-size: 12px;">
@@ -147,6 +147,7 @@
                     @Html.DisplayFor(modelItem => item.Customer.Name)
                 </td>
                 <td>
+
                 </td>
                 <td class=" d-flex flex-row align-content-around">
                     <a asp-action="Edit" asp-route-id="@item.ProjectId" class="btn btn-sm  btn-success">Editar</a>

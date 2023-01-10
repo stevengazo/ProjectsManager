@@ -1,71 +1,105 @@
 ﻿@model ProjectsControl.Models.Report
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
-<h4>Report</h4>
+<h4>Reporte</h4>
 <hr />
 <div>
-    <div >
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ReportId" />
-            <div class="form-group">
-                <label class="control-label">Numero de Reporte</label>
-                <input asp-for="NumberOfReport" class="form-control" />
-                <span asp-validation-for="NumberOfReport" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Autor</label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Inicio</label>
-                <input asp-for="BeginDate" class="form-control" />
-                <span asp-validation-for="BeginDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Finalización</label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Estado</label>
-                <select asp-for="Status" class="form-control">
-                    <option value="">Seleccione...</option>
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="En ejecución">En ejecucion</option>
-                    <option value="En revision">En revision</option>
-                    <option value="Finalizado">Finalizado</option>
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Notas</label>                
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Id de Proyecto</label>
-                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
-                <span asp-validation-for="ProjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
+    <div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+
+<div class="container">
+    <div class="row align-items-start">
+        <!-- FORM-->
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ReportId" />
+                <div class="form-group">
+                    <label class="control-label">Numero de Reporte</label>
+                    <input asp-for="NumberOfReport" class="form-control" />
+                    <span asp-validation-for="NumberOfReport" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Autor</label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Inicio</label>
+                    <input asp-for="BeginDate" class="form-control" />
+                    <span asp-validation-for="BeginDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Finalización</label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Estado</label>
+                    <select asp-for="Status" class="form-control">
+                        <option value="">Seleccione...</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En ejecución">En ejecucion</option>
+                        <option value="En revision">En revision</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Notas</label>
+                    <textarea asp-for="Notes" class="form-control" ></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Id de Proyecto</label>
+                    <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
+                    <span asp-validation-for="ProjectId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- INFORMATION -->
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Esta sección permite editar y actualizar la información de un informe
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Si desea cambiar el numero de informe asignado verifique el valor existente y la cantidad de informes registrados
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Si necesita ingresar alguna nota con respecto al proceso de redacción del informe agreguela.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

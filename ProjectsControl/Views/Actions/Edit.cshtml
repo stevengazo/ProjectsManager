@@ -8,55 +8,88 @@
 <h1>Editar Accion de Personal</h1>
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ActionId" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+
+<div class="container">
+    <div class="row align-items-start">
+        <!-- FORM-->
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ActionId" />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateOfCreation" class="control-label"></label>
+                    <input asp-for="DateOfCreation" class="form-control" />
+                    <span asp-validation-for="DateOfCreation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label"></label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TypeOfAction" class="control-label"></label>
+                    <input asp-for="TypeOfAction" class="form-control" />
+                    <span asp-validation-for="TypeOfAction" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmployeeId" class="control-label"></label>
+                    <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
+                    <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- INFORMATION -->
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Ingrese cualquier tipo de acción de personal. El sistema solo permite la realización de una acción de personal para cada tipo de acción. En el caso que requiera indicar varios tipos,  deberá ingresar varios registros de acciones.
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Descripción:</b> indique el motivo o información relevante para la acción de personal. (tiempo repuesto, motivos, etc)
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Estado:</b> marque la acción de personal como activa. Esto es requerido para conocer cuales acciones de personal deben ser tomadas en cuando durante periodos de pago, etc. La acción se “archivará” posteriormente.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DateOfCreation" class="control-label"></label>
-                <input asp-for="DateOfCreation" class="form-control" />
-                <span asp-validation-for="DateOfCreation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeOfAction" class="control-label"></label>
-                <input asp-for="TypeOfAction" class="form-control" />
-                <span asp-validation-for="TypeOfAction" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label"></label>
-                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
-                <span asp-validation-for="EmployeeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
+
+
+
 <div>
-    <a asp-action="Index"  class="btn btn-secondary">Atras</a>
+    <a  asp-controller="Employees" asp-action="Details" asp-route-id="@Model.EmployeeId"  class="btn btn-secondary">Atras</a>
 </div>
 
 @section Scripts {

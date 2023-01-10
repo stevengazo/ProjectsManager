@@ -8,122 +8,161 @@
 <h1>Edición de Proyecto</h1>
 
 <hr />
-<div>
-    <div>
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProjectId" />
-            <div class="form-group">
-                <label>Id de Referencia interno</label>
-                <p>@Model.ProjectId</p>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Numero de Tarea</label>
-                <input asp-for="NumberOfTask" class="form-control" />
-                <span asp-validation-for="NumberOfTask" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Nombre del Proyecto</label>
-                <input asp-for="ProjectName" class="form-control" />
-                <span asp-validation-for="ProjectName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Id de Orden de Compra</label>
-                <input asp-for="OC" class="form-control" />
-                <span asp-validation-for="OC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Orden de Compra</label>
-                <input asp-for="OCDate" class="form-control" />
-                <span asp-validation-for="OCDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Inicio</label>
-                <input asp-for="BeginDate" class="form-control" />
-                <span asp-validation-for="BeginDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Fecha de Finalización</label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    ¿Esta Finalizado?<input class="form-check-input" asp-for="IsOver" />
-                </label>
 
+
+
+
+
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ProjectId" />
+                <div class="form-group">
+                    <label>Id de Referencia interno</label>
+                    <p>@Model.ProjectId</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Numero de Tarea</label>
+                    <input asp-for="NumberOfTask" class="form-control" />
+                    <span asp-validation-for="NumberOfTask" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Nombre del Proyecto</label>
+                    <input asp-for="ProjectName" class="form-control" />
+                    <span asp-validation-for="ProjectName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Id de Orden de Compra</label>
+                    <input asp-for="OC" class="form-control" />
+                    <span asp-validation-for="OC" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Orden de Compra</label>
+                    <input asp-for="OCDate" class="form-control" />
+                    <span asp-validation-for="OCDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Inicio</label>
+                    <input asp-for="BeginDate" class="form-control" />
+                    <span asp-validation-for="BeginDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Finalización</label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        ¿Esta Finalizado?<input class="form-check-input" asp-for="IsOver" />
+                    </label>
+
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Tipo de Trabajo</label>
+                    <input type="text" list="list-type-jobs" asp-for="TypeOfJob" class="form-control" />
+                    <datalist id="list-type-jobs">
+                        <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
+                        <option value="Instalación Ionizante">Instalación Ionizante</option>
+                        <option value="Instalación Supresores">Instalación Supresores</option>
+                        <option value="Instalación Torre">Instalación Torre</option>
+                        <option value="Mantenimiento RAYOS-NO">Mantenimiento RAYOS-NO</option>
+                        <option value="Mantenimiento Ionizante">Mantenimiento Ionizante</option>
+                        <option value="Mantenimiento Torre">Mantenimiento Torre</option>
+                        <option value="Estudio SPAT">Estudio SPAT</option>
+                        <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
+                        <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
+                        <option value="Otros">Otros</option>
+                    </datalist>
+                    <span asp-validation-for="TypeOfJob" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Estado</label>
+                    <select asp-for="Estatus" class="form-control">
+                        <option value="">Seleccione...</option>
+                        <option value="Finalizado">Finalizado</option>
+                        <option value="Pendiente de coordinar">Pendiente de coordinar</option>
+                        <option value="En ejecución">En ejecución</option>
+                        <option value="Atrasado por el cliente">Atrasado por el cliente</option>
+                    </select>
+                    <span asp-validation-for="OCDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Detalles</label>
+                    <input asp-for="Details" class="form-control" />
+                    <span asp-validation-for="Details" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Ubicación</label>
+                    <input asp-for="Ubication" class="form-control" />
+                    <span asp-validation-for="Ubication" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Cliente</label>
+                    <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmployeeId" class="control-label">Vendedor</label>
+                    <select asp-for="EmployeeId" class="form-control">
+                        @foreach (var item in ViewBag.Employees)
+                        {
+                            <option value="@item.EmployeeId">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="OfferId" class="control-label">Numero Oferta</label>
+                    <select asp-for="OfferId" class="form-control">
+                        @foreach (Dictionary<string, int> item in ViewBag.offers)
+                        {
+                            <option value="@item.Keys">@item.Values</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Pagina de inserción de proyecto:</b> Ingrese la información requerida en los campos indicados en la columnas derechas.
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>El proyecto debe tener su orden de compra para ingresarlo</b>, en el caso que no requiera ingresar una orden de compra indique un “N/A”  (la fecha de orden de compra será el día de ingreso)
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Detalles del Proyecto:</b> brinde una descripción básica del proyecto. El tipo de proyecto se indica en otro campo…
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Número de tarea en bitrix:</b> el proyecto debe encontrarse previamente registrado en una tarea en bitrix antes de su ingreso en este sistema.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <label class="control-label">Tipo de Trabajo</label>                
-                <input type="text" list="list-type-jobs" asp-for="TypeOfJob" class="form-control" />
-                <datalist id="list-type-jobs">
-                    <option value="Instalación RAYOS-NO">Instalación RAYOS-NO</option>
-                    <option value="Instalación Ionizante">Instalación Ionizante</option>
-                    <option value="Instalación Supresores">Instalación Supresores</option>
-                    <option value="Instalación Torre">Instalación Torre</option>
-                    <option value="Mantenimiento RAYOS-NO">Mantenimiento RAYOS-NO</option>
-                    <option value="Mantenimiento Ionizante">Mantenimiento Ionizante</option>
-                    <option value="Mantenimiento Torre">Mantenimiento Torre</option>
-                    <option value="Estudio SPAT">Estudio SPAT</option>
-                    <option value="Trabajos Eléctricos">Trabajos Eléctricos</option>
-                    <option value="Trabajos Varios Asfaltos">Trabajos Varios Asfaltos</option>
-                    <option value="Otros">Otros</option>
-                </datalist>                                              
-                <span asp-validation-for="TypeOfJob" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Estado</label>
-                <select asp-for="Estatus" class="form-control">
-                    <option value="">Seleccione...</option>
-                    <option value="Finalizado">Finalizado</option>
-                    <option value="Pendiente de coordinar">Pendiente de coordinar</option>
-                    <option value="En ejecución">En ejecución</option>
-                    <option value="Atrasado por el cliente">Atrasado por el cliente</option>
-                </select>
-                <span asp-validation-for="OCDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Detalles</label>
-                <input asp-for="Details" class="form-control" />
-                <span asp-validation-for="Details" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Ubicación</label>
-                <input asp-for="Ubication" class="form-control" />
-                <span asp-validation-for="Ubication" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Cliente</label>
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
-            </div>
-              <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label">Vendedor</label>
-                <select asp-for="EmployeeId" class="form-control">
-                    @foreach (var item in ViewBag.Employees)
-                    {
-                        <option value="@item.EmployeeId">@item.Name</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="OfferId" class="control-label">Numero Oferta</label>
-                <select asp-for="OfferId" class="form-control">
-                    @foreach (Dictionary<string,int> item in ViewBag.offers)
-                    {
-                        <option value="@item.Keys">@item.Values</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
 <div>
-    <a asp-action="Search">Back to List</a>
+    <a asp-action="Search">Volver a la busqueda</a>
 </div>
 
 @section Scripts {

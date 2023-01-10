@@ -1,54 +1,54 @@
 ﻿@model ProjectsControl.Models.Expensive
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
-    <h4>Expensive</h4>
+    <h4>Gasto</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
+            Autor
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Author)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastModification)
+            Ultima Modificación
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastModification)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
+            Tipo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Type)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Amount)
+            Monto
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Amount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Currency)
+            Moneda
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Currency)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Note)
+            Notas
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Note)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
+            Número de Proyecto
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Project.ProjectId)
@@ -56,6 +56,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ExpensiveId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-success"  asp-action="Edit" asp-route-id="@Model.ExpensiveId">Editar</a> |
+    <a class="btn btn-outline-info" asp-action="ListByProject" asp-route-id="@Model.ProjectId">Volver Atras</a>
 </div>

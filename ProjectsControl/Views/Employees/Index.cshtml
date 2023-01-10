@@ -51,12 +51,45 @@
             }
             else
             {
+               
+            }
+        }
+    </tbody>
+</table>
+
+
+<hr/>
+<h3>Exempleados Inactivos</h3>
+
+<p>
+    Lista de empleados inactivos en el sistema. Estos empleados no serán visibles para la inserción de datos. Si desea volver a usar un perfil de un empleado, puede habilitar el mismo
+</p>
+<table class="table table-hover table-striped table-responsive-sm table-bordered" style="font-size: 13px;text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Fecha Despido
+            </th>
+            <th>
+                Cargo
+            </th>
+            <th colspan="3">Acciones</th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+        @foreach (var item in listEmployee)
+        {
+            if (!item.IsActive)
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DateofHiring)
+                        @Html.DisplayFor(modelItem => item.DateOfFired)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Position)
@@ -67,11 +100,11 @@
                     <td>
                         <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-info">Detalles</a>
                     </td>
-                    <td class="">
-                        Desactivado<br/>
-                        No es posible la inserción de datos
-                    </td>
                 </tr>
+            }
+            else
+            {
+
             }
         }
     </tbody>

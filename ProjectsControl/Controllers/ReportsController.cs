@@ -196,7 +196,12 @@ namespace ProjectsControl.Controllers
         {
             ViewBag.Authors = (from report in _context.Report select report.Author).Distinct().ToList();
             ViewBag.status = (from report in _context.Report select report.Status).Distinct().ToList();
-            ViewBag.Projects = (from project in _context.Projects select project).Where(P => P.IsOver == false).ToList();
+            ViewBag.Projects = (from project 
+                                in _context.Projects
+                                orderby project.NumberOfProject descending
+                                where project.BeginDate.Year == DateTime.Today.Year 
+                                select project                                                             
+                                ).Where(P => P.IsOver == false).ToList();
 
             if ((IdToSearch != null) || (AuthorToSearch != null) || (ProjectIdToSearch != null) || (StatusToSearch != null))
             {

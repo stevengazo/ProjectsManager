@@ -64,10 +64,11 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateByProject(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
+        public async Task<IActionResult> CreateByProject(string id, [Bind("ExpensiveId,Author,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
         {
             if (ModelState.IsValid)
             {
+                expensive.LastModification = DateTime.Now;
                 _context.Add(expensive);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Projects", new { id = expensive.ProjectId });
@@ -126,7 +127,7 @@ namespace ProjectsControl.Controllers
         [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ExpensiveId,Author,LastModification,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
+        public async Task<IActionResult> Edit(string id, [Bind("ExpensiveId,Author,Type,Amount,Currency,Note,ProjectId")] Expensive expensive)
         {
             if (id != expensive.ExpensiveId)
             {
@@ -137,6 +138,7 @@ namespace ProjectsControl.Controllers
             {
                 try
                 {
+                    expensive.LastModification = DateTime.Now;
                     _context.Update(expensive);
                     await _context.SaveChangesAsync();
                 }

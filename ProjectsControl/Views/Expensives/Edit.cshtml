@@ -9,55 +9,74 @@
 
 <h4>Expensive</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ExpensiveId" />
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
+
+<div class="container">
+    <div class="row align-items-start">
+        <!-- FORM-->
+        <div class="col">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ExpensiveId" />
+                <div class="form-group">
+                    <label  class="control-label">Modificador</label>
+                    <input asp-for="Author" class="form-control" readonly />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Tipo</label>
+                    <input asp-for="Type" class="form-control" />
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Monto</label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Moneda</label>
+                    <input asp-for="Currency" class="form-control" />
+                    <span asp-validation-for="Currency" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Notas</label>
+                    <input asp-for="Note" class="form-control" />
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Id Interno del Proyecto</label>
+                    <input asp-for="ProjectId" class="form-control" value="@Model.ProjectId" readonly />
+                    <span asp-validation-for="ProjectId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- INFORMATION -->
+        <div class="col-4 container m-2">
+            <div class="col">
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            Esta vista permite la actualización del proyecto. Es recomendable el ingreso de resumenes de gastos según la categoría. De esta forma se obtiene un resultado más simplificado.
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <b>Tipo:</b> indica el tipo de gasto que se encuentra registrado.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastModification" class="control-label"></label>
-                <input asp-for="LastModification" class="form-control" />
-                <span asp-validation-for="LastModification" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Currency" class="control-label"></label>
-                <input asp-for="Currency" class="form-control" />
-                <span asp-validation-for="Currency" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
-                <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
-                <span asp-validation-for="ProjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Projects" asp-action="Details" asp-route-id="@Model.ProjectId" class="btn btn-outline-info">Volver Atras</a>
 </div>
 
 @section Scripts {
