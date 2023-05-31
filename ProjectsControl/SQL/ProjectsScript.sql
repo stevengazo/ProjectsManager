@@ -1,5 +1,4 @@
-﻿Create database ProjectsManager;
-go;
+﻿
 use ProjectsManager;
 go;
 

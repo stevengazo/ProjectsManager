@@ -1,5 +1,7 @@
-﻿Create database ProjectsManagerUsers;
-use ProjectsManagerUsers;
+﻿
+use ProjectsManagerUsers
+GO
+
 
 IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
