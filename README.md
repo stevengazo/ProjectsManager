@@ -1,20 +1,17 @@
 # ProjectsControl
-This is a solution for a specific context in a company (small company). The idea is create a web application (MVC), to administrate the information in a company. This solution is design to use in:
 
-     1- Intranet: local network and VPN. This is the first scenario for use it (for cost of a storage and hosting).
-     2- Internet: solution upload in a cloud service like azure or AWS.
-     
-The principal technologies use in this solution are:
-     
-     1- .NetCore
-     2- SQL Server
-     3- EntityFrameWorkCore
-   
-The idea is generate an history about the project, and others things. We are focus on:
+ProjectsControl is a web application designed for small companies to efficiently manage project information and administrative tasks. It can be deployed either in an intranet or on the internet using cloud services like Azure or AWS. The application is built using the following technologies:
 
-     1- Projects: execution and information about the projects of the company
-             1.1: Cost of the project
-             1.2: Notes about the status of the project (issues, recommendations, incidents, etc)
-             1.3: History of bills and the amount pending to pay   
-     2- Employees: create a record about the assistance and absence at the employess and other information.
-     3- Reports: Create a central repository of the reports make it for a any project and their status.
+- **.NET Core**: The framework used for developing the web application, providing a robust and scalable foundation.
+- **SQL Server**: The database management system used for storing application data.
+- **Entity Framework Core**: An Object-Relational Mapping (ORM) framework that simplifies database access and management.
+
+The key features of ProjectsControl include:
+
+1. **Projects**: Track and manage project execution, including cost, status, and history. Record notes related to the project's status, such as issues, recommendations, and incidents. Keep a history of bills and monitor pending payments.
+
+2. **Employees**: Create and maintain employee records, including attendance, absence, and other relevant information. Centralize employee-related data for easy management.
+
+3. **Reports**: Generate custom reports based on specific criteria, providing a centralized repository for project reports. Facilitate efficient data analysis and decision-making.
+
+With ProjectsControl, small companies can streamline project management, employee administration, and reporting processes. Its flexible deployment options make it suitable for integration into existing infrastructures or cloud-based environments. The application's use of .NET Core, SQL Server, and Entity Framework Core ensures a robust and efficient solution for managing company information.
