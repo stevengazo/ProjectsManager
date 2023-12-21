@@ -38,8 +38,10 @@ namespace ProjectsControl
             services.AddControllersWithViews();
 
             string connString = ConfigurationExtensions.GetConnectionString(this.Configuration, "DBProjectsConnection");
-            services.AddDbContext<DBProjectContext>(option=>option.UseSqlServer(connString));
+            services.AddDbContext<DBProjectContext>(option => option.UseSqlServer(connString));
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,6 +60,7 @@ namespace ProjectsControl
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -70,6 +73,19 @@ namespace ProjectsControl
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var dbcontext = scope.ServiceProvider.GetRequiredService<DBProjectContext>();
+                if(dbcontext.Database.CanConnect()){
+                    Console.WriteLine("Base de datos existente");
+                }else{
+                    dbcontext.Database.MigrateAsync();
+                    Console.WriteLine("La base de Datos no existe, intentando crearla");
+                }
+            }
+
+
         }
     }
 }

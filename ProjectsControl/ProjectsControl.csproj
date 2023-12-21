@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <UserSecretsId>aspnet-ProjectsControl-E2CB10CD-D8F3-4D5F-9C25-BBA40530BE53</UserSecretsId>
     <Authors>Steven Fabricio Gazo Maliaño</Authors>
     <Product>Sistema de Control de Proyectos</Product>
